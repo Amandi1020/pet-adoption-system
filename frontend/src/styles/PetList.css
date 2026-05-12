@@ -1,0 +1,65 @@
+.petlist-header {
+  background-color: #534AB7;
+  padding: 2rem;
+  text-align: center;
+  color: #EEEDFE;
+}
+
+.petlist-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.petlist-header p {
+  color: #AFA9EC;
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  width: 300px;
+  outline: none;
+  background: #3C3489;
+  color: #EEEDFE;
+}
+
+.search-input::placeholder {
+  color: #AFA9EC;
+}
+
+.petlist-body {
+  padding: 1.5rem 2rem;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 2px solid #7F77DD;
+  background: transparent;
+  color: #3C3489;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn.active {
+  background: #7F77DD;
+  color: #EEEDFE;
+}
+
+.pets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.2rem;
+}
