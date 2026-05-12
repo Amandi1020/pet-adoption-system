@@ -1,0 +1,82 @@
+.pet-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.pet-card:hover {
+  border-color: #7F77DD;
+}
+
+.pet-img {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  position: relative;
+}
+
+.adopted-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #888;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.pet-body {
+  padding: 0.9rem;
+}
+
+.pet-body h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #3C3489;
+  margin-bottom: 4px;
+}
+
+.pet-breed {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.pet-gender {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.adopt-btn {
+  width: 100%;
+  background: #7F77DD;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.adopt-btn:hover {
+  background: #534AB7;
+}
+
+.adopted-btn {
+  width: 100%;
+  background: #f0f0f0;
+  color: #888;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 13px;
+}
