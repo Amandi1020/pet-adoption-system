@@ -86,3 +86,13 @@
   color: #7F77DD;
   font-weight: 600;
 }
+
+.auth-msg {
+  text-align: center;
+  font-size: 13px;
+  color: #1D9E75;
+  background: #E1F5EE;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
