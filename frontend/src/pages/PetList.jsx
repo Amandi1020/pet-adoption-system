@@ -1,21 +1,27 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PetCard from '../components/PetCard'
+import { getAllPets } from '../services/petService'
 import '../styles/PetList.css'
 
-const samplePets = [
-  { id: 1, name: 'Bruno', breed: 'Golden Retriever', age: 2, species: 'Dog', gender: 'Male', status: 'AVAILABLE' },
-  { id: 2, name: 'Luna', breed: 'Siamese Cat', age: 1, species: 'Cat', gender: 'Female', status: 'AVAILABLE' },
-  { id: 3, name: 'Sunny', breed: 'African Grey Parrot', age: 3, species: 'Bird', gender: 'Male', status: 'AVAILABLE' },
-  { id: 4, name: 'Coco', breed: 'Holland Lop Rabbit', age: 1, species: 'Rabbit', gender: 'Female', status: 'ADOPTED' },
-  { id: 5, name: 'Max', breed: 'Labrador', age: 4, species: 'Dog', gender: 'Male', status: 'AVAILABLE' },
-  { id: 6, name: 'Mimi', breed: 'Persian Cat', age: 2, species: 'Cat', gender: 'Female', status: 'AVAILABLE' },
-]
-
 function PetList() {
+  const [pets, setPets] = useState([])
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('All')
+  const [loading, setLoading] = useState(true)
 
-  const filtered = samplePets.filter(pet => {
+  useEffect(() => {
+    getAllPets()
+      .then(data => {
+        setPets(data)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Error fetching pets:', err)
+        setLoading(false)
+      })
+  }, [])
+
+  const filtered = pets.filter(pet => {
     const matchSearch = pet.name.toLowerCase().includes(search.toLowerCase())
     const matchFilter = filter === 'All' || pet.species === filter
     return matchSearch && matchFilter
@@ -48,11 +54,17 @@ function PetList() {
           ))}
         </div>
 
-        <div className="pets-grid">
-          {filtered.map(pet => (
-            <PetCard key={pet.id} pet={pet} />
-          ))}
-        </div>
+        {loading ? (
+          <p style={{textAlign:'center', padding:'2rem', color:'#7F77DD'}}>
+            Loading pets...
+          </p>
+        ) : (
+          <div className="pets-grid">
+            {filtered.map(pet => (
+              <PetCard key={pet.id} pet={pet} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
