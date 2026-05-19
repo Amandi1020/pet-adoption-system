@@ -1,15 +1,28 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { loginUser } from '../services/authService'
 import '../styles/Auth.css'
 
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [message, setMessage] = useState('')
+  const navigate = useNavigate()
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
-    console.log('Login:', email, password)
-    // We will connect this to Spring Boot API later
+    try {
+      const result = await loginUser({ email, password })
+      if (result && result.id) {
+        localStorage.setItem('user', JSON.stringify(result))
+        setMessage('Login successful!')
+        setTimeout(() => navigate('/'), 1500)
+      } else {
+        setMessage('Invalid email or password. Try again.')
+      }
+    } catch (err) {
+      setMessage('Something went wrong.')
+    }
   }
 
   return (
@@ -17,6 +30,7 @@ function Login() {
       <div className="auth-card">
         <h2>🐾 Welcome Back</h2>
         <p className="auth-sub">Login to your PawFind account</p>
+        {message && <p className="auth-msg">{message}</p>}
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <label>Email</label>
