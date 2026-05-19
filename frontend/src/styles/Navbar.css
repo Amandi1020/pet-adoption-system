@@ -44,3 +44,27 @@
   background-color: #ffffff;
   color: #3C3489;
 }
+
+.nav-user {
+  color: #EEEDFE;
+  font-size: 13px;
+  padding: 6px 12px;
+  background: #534AB7;
+  border-radius: 6px;
+}
+
+.logout-btn {
+  background: #D85A30;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.logout-btn:hover {
+  background: #B34A25;
+}
