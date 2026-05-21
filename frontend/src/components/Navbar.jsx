@@ -20,6 +20,7 @@ function Navbar() {
       <div className="navbar-links">
         <Link to="/" className="nav-link">Home</Link>
         <Link to="/pets" className="nav-link">Browse Pets</Link>
+        <Link to="/stories" className="nav-link">Stories</Link>
         {user ? (
           <>
             {user.role === 'ADMIN' && (
