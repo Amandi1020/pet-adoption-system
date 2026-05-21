@@ -1,0 +1,262 @@
+.admin-page {
+  padding: 2rem;
+  background: #f9f9f9;
+  min-height: 80vh;
+}
+
+.admin-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #3C3489;
+  margin-bottom: 1.5rem;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #7F77DD;
+  font-size: 14px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-box {
+  border-radius: 12px;
+  padding: 1.2rem;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+}
+
+.stat-box h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3C3489;
+  margin-bottom: 4px;
+}
+
+.stat-box p {
+  font-size: 12px;
+  color: #666;
+}
+
+.admin-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admin-link-btn {
+  background: #7F77DD;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.admin-link-btn:hover {
+  background: #534AB7;
+}
+
+.applications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.application-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.2rem;
+  border: 1px solid #e0e0e0;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.app-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #3C3489;
+}
+
+.status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+.app-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+
+.app-details p {
+  font-size: 13px;
+  color: #555;
+}
+
+.app-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.approve-btn {
+  background: #1D9E75;
+  color: white;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.approve-btn:hover {
+  background: #0F6E56;
+}
+
+.reject-btn {
+  background: #D85A30;
+  color: white;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.reject-btn:hover {
+  background: #B34A25;
+}
+
+.review-btn {
+  background: #BA7517;
+  color: white;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.review-btn:hover {
+  background: #8A5510;
+}
+
+.add-pet-btn {
+  background: #7F77DD;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-pet-btn:hover {
+  background: #534AB7;
+}
+
+.pet-form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #EEEDFE;
+  margin-bottom: 1.5rem;
+}
+
+.pet-form-card h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #3C3489;
+  margin-bottom: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.form-row input,
+.form-row select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1.5px solid #e0e0e0;
+  font-size: 14px;
+  outline: none;
+}
+
+.form-row input:focus,
+.form-row select:focus {
+  border-color: #7F77DD;
+}
+
+.success-msg {
+  background: #E1F5EE;
+  color: #085041;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.pets-table {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+.pets-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pets-table th {
+  background: #7F77DD;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-size: 13px;
+}
+
+.pets-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 13px;
+  color: #555;
+}
+
+.pets-table tr:hover {
+  background: #f9f9f9;
+}
