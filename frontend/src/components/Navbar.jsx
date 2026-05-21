@@ -22,6 +22,10 @@ function Navbar() {
         <Link to="/pets" className="nav-link">Browse Pets</Link>
         {user ? (
           <>
+            {user.role === 'ADMIN' && (
+              <Link to="/admin" className="nav-link">Admin</Link>
+            )}
+            <Link to="/adopt" className="nav-link">Apply</Link>
             <span className="nav-user">👤 {user.name}</span>
             <button className="logout-btn" onClick={handleLogout}>
               Logout
