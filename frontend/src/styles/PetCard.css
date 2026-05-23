@@ -1,22 +1,24 @@
 .pet-card {
   background: white;
   border-radius: 12px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #D7CCC8;
   overflow: hidden;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, transform 0.2s;
 }
 
 .pet-card:hover {
-  border-color: #7F77DD;
+  border-color: #8D6E63;
+  transform: translateY(-2px);
 }
 
 .pet-img {
-  height: 120px;
+  height: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 3.5rem;
   position: relative;
+  background: #EFEBE9;
 }
 
 .adopted-badge {
@@ -38,26 +40,26 @@
 .pet-body h3 {
   font-size: 15px;
   font-weight: 600;
-  color: #3C3489;
+  color: #4E342E;
   margin-bottom: 4px;
 }
 
 .pet-breed {
   font-size: 12px;
-  color: #888;
+  color: #8D6E63;
   margin-bottom: 2px;
 }
 
 .pet-gender {
   font-size: 12px;
-  color: #888;
+  color: #8D6E63;
   margin-bottom: 10px;
 }
 
 .adopt-btn {
   width: 100%;
-  background: #7F77DD;
-  color: white;
+  background: #8D6E63;
+  color: #FFF8E7;
   border: none;
   padding: 8px;
   border-radius: 8px;
@@ -68,13 +70,13 @@
 }
 
 .adopt-btn:hover {
-  background: #534AB7;
+  background: #6D4C41;
 }
 
 .adopted-btn {
   width: 100%;
-  background: #f0f0f0;
-  color: #888;
+  background: #EFEBE9;
+  color: #8D6E63;
   border: none;
   padding: 8px;
   border-radius: 8px;
