@@ -1,13 +1,13 @@
 .admin-page {
   padding: 2rem;
-  background: #f9f9f9;
+  background: #FFF8E7;
   min-height: 80vh;
 }
 
 .admin-title {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #3C3489;
+  color: #4E342E;
   margin-bottom: 1.5rem;
 }
 
@@ -21,7 +21,7 @@
 .loading {
   text-align: center;
   padding: 2rem;
-  color: #7F77DD;
+  color: #8D6E63;
   font-size: 14px;
 }
 
@@ -36,19 +36,19 @@
   border-radius: 12px;
   padding: 1.2rem;
   text-align: center;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #D7CCC8;
 }
 
 .stat-box h2 {
   font-size: 2rem;
   font-weight: bold;
-  color: #3C3489;
+  color: #4E342E;
   margin-bottom: 4px;
 }
 
 .stat-box p {
   font-size: 12px;
-  color: #666;
+  color: #8D6E63;
 }
 
 .admin-links {
@@ -58,8 +58,8 @@
 }
 
 .admin-link-btn {
-  background: #7F77DD;
-  color: white;
+  background: #8D6E63;
+  color: #FFF8E7;
   padding: 12px 24px;
   border-radius: 8px;
   text-decoration: none;
@@ -69,7 +69,7 @@
 }
 
 .admin-link-btn:hover {
-  background: #534AB7;
+  background: #6D4C41;
 }
 
 .applications-list {
@@ -82,7 +82,7 @@
   background: white;
   border-radius: 12px;
   padding: 1.2rem;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #D7CCC8;
 }
 
 .app-header {
@@ -95,7 +95,7 @@
 .app-header h3 {
   font-size: 15px;
   font-weight: 600;
-  color: #3C3489;
+  color: #4E342E;
 }
 
 .status-badge {
@@ -115,7 +115,7 @@
 
 .app-details p {
   font-size: 13px;
-  color: #555;
+  color: #6D4C41;
 }
 
 .app-actions {
@@ -125,22 +125,21 @@
 }
 
 .approve-btn {
-  background: #1D9E75;
-  color: white;
+  background: #6D4C41;
+  color: #FFF8E7;
   border: none;
   padding: 7px 16px;
   border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
-.approve-btn:hover {
-  background: #0F6E56;
-}
+.approve-btn:hover { background: #4E342E; }
 
 .reject-btn {
-  background: #D85A30;
+  background: #D84315;
   color: white;
   border: none;
   padding: 7px 16px;
@@ -150,12 +149,10 @@
   cursor: pointer;
 }
 
-.reject-btn:hover {
-  background: #B34A25;
-}
+.reject-btn:hover { background: #BF360C; }
 
 .review-btn {
-  background: #BA7517;
+  background: #8D6E63;
   color: white;
   border: none;
   padding: 7px 16px;
@@ -165,37 +162,34 @@
   cursor: pointer;
 }
 
-.review-btn:hover {
-  background: #8A5510;
-}
+.review-btn:hover { background: #6D4C41; }
 
 .add-pet-btn {
-  background: #7F77DD;
-  color: white;
+  background: #8D6E63;
+  color: #FFF8E7;
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
-.add-pet-btn:hover {
-  background: #534AB7;
-}
+.add-pet-btn:hover { background: #6D4C41; }
 
 .pet-form-card {
   background: white;
   border-radius: 12px;
   padding: 1.5rem;
-  border: 1px solid #EEEDFE;
+  border: 1px solid #D7CCC8;
   margin-bottom: 1.5rem;
 }
 
 .pet-form-card h3 {
   font-size: 15px;
   font-weight: 600;
-  color: #3C3489;
+  color: #4E342E;
   margin-bottom: 1rem;
 }
 
@@ -210,19 +204,20 @@
 .form-row select {
   padding: 10px;
   border-radius: 8px;
-  border: 1.5px solid #e0e0e0;
+  border: 1.5px solid #D7CCC8;
   font-size: 14px;
   outline: none;
+  background: #FFF8E7;
 }
 
 .form-row input:focus,
 .form-row select:focus {
-  border-color: #7F77DD;
+  border-color: #8D6E63;
 }
 
 .success-msg {
-  background: #E1F5EE;
-  color: #085041;
+  background: #EFEBE9;
+  color: #4E342E;
   padding: 10px;
   border-radius: 8px;
   font-size: 13px;
@@ -234,7 +229,7 @@
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #D7CCC8;
 }
 
 .pets-table table {
@@ -243,8 +238,8 @@
 }
 
 .pets-table th {
-  background: #7F77DD;
-  color: white;
+  background: #8D6E63;
+  color: #FFF8E7;
   padding: 12px;
   text-align: left;
   font-size: 13px;
@@ -252,11 +247,11 @@
 
 .pets-table td {
   padding: 10px 12px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #EFEBE9;
   font-size: 13px;
-  color: #555;
+  color: #6D4C41;
 }
 
 .pets-table tr:hover {
-  background: #f9f9f9;
+  background: #FFF8E7;
 }
