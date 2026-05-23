@@ -13,7 +13,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/" style={{textDecoration:'none', color:'#EEEDFE'}}>
+        <Link to="/" style={{textDecoration:'none', color:'#FFF8E7'}}>
           🐾 PawFind
         </Link>
       </div>
