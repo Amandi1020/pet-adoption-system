@@ -1,6 +1,6 @@
 .footer {
-  background: #3C3489;
-  color: #AFA9EC;
+  background: #4E342E;
+  color: #D7CCC8;
   text-align: center;
   padding: 1.5rem;
   font-size: 13px;
@@ -10,5 +10,5 @@
 .footer-sub {
   font-size: 11px;
   margin-top: 4px;
-  color: #7F77DD;
+  color: #8D6E63;
 }
