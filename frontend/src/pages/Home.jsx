@@ -218,6 +218,34 @@ function Home() {
         </div>
       </div>
 
+      {/* HOW IT WORKS */}
+<div className="how-it-works">
+  <h2 className="sec-title">How it works</h2>
+  <p className="sec-sub">Adopt your perfect pet in 4 simple steps</p>
+  <div className="steps-grid">
+    <div className="step-item">
+      <div className="step-num">1</div>
+      <h3>Browse pets</h3>
+      <p>Search and filter through all available pets by species, age, size and gender</p>
+    </div>
+    <div className="step-item">
+      <div className="step-num">2</div>
+      <h3>Take the quiz</h3>
+      <p>Answer 7 lifestyle questions and we match you with your perfect pet type</p>
+    </div>
+    <div className="step-item">
+      <div className="step-num">3</div>
+      <h3>Apply online</h3>
+      <p>Submit your adoption application online in minutes — no paperwork needed</p>
+    </div>
+    <div className="step-item">
+      <div className="step-num">4</div>
+      <h3>Bring them home</h3>
+      <p>Once approved, visit the shelter and bring your new companion home!</p>
+    </div>
+  </div>
+</div>
+
       {/* CTA */}
       <div className="home-cta">
         <h2>Ready to find your companion?</h2>
