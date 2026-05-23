@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import AdminStories from './pages/admin/AdminStories'
 import Stories from './pages/Stories'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -25,6 +26,7 @@ function App() {
         <Route path="/admin/pets" element={<ManagePets />} />
         <Route path="/admin/applications" element={<Applications />} />
         <Route path="/stories" element={<Stories />} />
+        <Route path="/admin/stories" element={<AdminStories />} />
       </Routes>
       <Footer />
     </BrowserRouter>
