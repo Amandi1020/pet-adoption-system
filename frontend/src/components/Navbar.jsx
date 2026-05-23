@@ -28,11 +28,14 @@ function Navbar() {
               <Link to="/admin" className="nav-link">Admin</Link>
             )}
             <Link to="/adopt" className="nav-link">Apply</Link>
+            <Link to="/my-applications" className="nav-link">My Applications</Link>
             <span className="nav-user">👤 {user.name}</span>
             <button className="logout-btn" onClick={handleLogout}>
               Logout
             </button>
+            
           </>
+          
         ) : (
           <>
             <Link to="/login" className="nav-link">Login</Link>
