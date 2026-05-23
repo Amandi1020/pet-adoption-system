@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import NotFound from './pages/NotFound'
 import MyApplications from './pages/MyApplications'
 import PetDetail from './pages/PetDetail'
 import Quiz from './pages/Quiz'
@@ -33,6 +34,7 @@ function App() {
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/pets/:id" element={<PetDetail />} />
         <Route path="/my-applications" element={<MyApplications />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>
