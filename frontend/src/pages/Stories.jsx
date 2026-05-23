@@ -107,7 +107,7 @@ function Stories() {
       ) : (
         <div style={{display:'grid',
           gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:'1rem'}}>
-          {stories.filter(s => s.isApproved).map(story => (
+             {stories.map(story => (
             <div key={story.id}
               style={{background:'white',borderRadius:'12px',
                 padding:'1.2rem',border:'1px solid #E1F5EE'}}>
