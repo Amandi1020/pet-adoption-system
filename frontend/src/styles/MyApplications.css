@@ -1,0 +1,123 @@
+.myapps-page {
+  padding: 2rem;
+  background: #FFF8E7;
+  min-height: 80vh;
+}
+
+.myapps-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #4E342E;
+  margin-bottom: 4px;
+}
+
+.myapps-sub {
+  font-size: 13px;
+  color: #8D6E63;
+  margin-bottom: 1.5rem;
+}
+
+.myapps-loading {
+  text-align: center;
+  color: #8D6E63;
+  padding: 2rem;
+}
+
+.myapps-empty {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: #8D6E63;
+  font-size: 14px;
+}
+
+.myapps-btn {
+  background: #8D6E63;
+  color: #FFF8E7;
+  padding: 10px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.myapps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 700px;
+}
+
+.myapp-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.2rem;
+  border: 1px solid #D7CCC8;
+}
+
+.myapp-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.myapp-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4E342E;
+  margin-bottom: 3px;
+}
+
+.myapp-pet {
+  font-size: 13px;
+  color: #8D6E63;
+}
+
+.myapp-status {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.myapp-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  font-size: 13px;
+  color: #6D4C41;
+  margin-bottom: 10px;
+}
+
+.myapp-notes {
+  grid-column: 1 / -1;
+  background: #EFEBE9;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #4E342E;
+}
+
+.myapp-approved-msg {
+  background: #EFEBE9;
+  border-left: 3px solid #6D4C41;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #4E342E;
+  font-weight: 500;
+}
+
+.myapp-rejected-msg {
+  background: #FBE9E7;
+  border-left: 3px solid #D84315;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #BF360C;
+}
