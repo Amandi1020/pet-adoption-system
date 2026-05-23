@@ -1,0 +1,254 @@
+.contact-page {
+  background: #FFF8E7;
+  min-height: 80vh;
+}
+
+.contact-hero {
+  background: #8D6E63;
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+
+.contact-hero h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #FFF8E7;
+  margin-bottom: 8px;
+}
+
+.contact-hero p {
+  font-size: 14px;
+  color: #D7CCC8;
+}
+
+.contact-body {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* INFO CARDS */
+.contact-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.contact-info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.2rem;
+  border: 1px solid #D7CCC8;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.contact-info-card:hover {
+  border-color: #8D6E63;
+}
+
+.contact-info-icon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.contact-info-card h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4E342E;
+  margin-bottom: 4px;
+}
+
+.contact-info-card p {
+  font-size: 13px;
+  color: #6D4C41;
+  font-weight: 500;
+}
+
+.contact-info-sub {
+  font-size: 11px !important;
+  color: #8D6E63 !important;
+  font-weight: 400 !important;
+  margin-top: 2px;
+}
+
+/* FORM SECTION */
+.contact-form-wrap {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .contact-form-wrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-form-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid #D7CCC8;
+}
+
+.contact-form-card h2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #4E342E;
+  margin-bottom: 4px;
+}
+
+.contact-form-sub {
+  font-size: 13px;
+  color: #8D6E63;
+  margin-bottom: 1.5rem;
+}
+
+.contact-success {
+  background: #EFEBE9;
+  border-left: 3px solid #6D4C41;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #4E342E;
+  margin-bottom: 1rem;
+}
+
+.contact-error {
+  background: #FBE9E7;
+  border-left: 3px solid #D84315;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #BF360C;
+  margin-bottom: 1rem;
+}
+
+.contact-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 500px) {
+  .contact-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-form-group {
+  margin-bottom: 1rem;
+}
+
+.contact-form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4E342E;
+  margin-bottom: 5px;
+}
+
+.contact-form-group input,
+.contact-form-group select,
+.contact-form-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #D7CCC8;
+  font-size: 14px;
+  outline: none;
+  background: #FFF8E7;
+  color: #4E342E;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.contact-form-group input:focus,
+.contact-form-group select:focus,
+.contact-form-group textarea:focus {
+  border-color: #8D6E63;
+}
+
+.contact-form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-submit-btn {
+  width: 100%;
+  background: #8D6E63;
+  color: #FFF8E7;
+  border: none;
+  padding: 13px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.contact-submit-btn:hover:not(:disabled) {
+  background: #6D4C41;
+}
+
+.contact-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* MAP */
+.contact-map {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.map-placeholder {
+  background: #EFEBE9;
+  border-radius: 16px;
+  border: 1px solid #D7CCC8;
+  padding: 2rem;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 200px;
+}
+
+.map-icon {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+}
+
+.map-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4E342E;
+}
+
+.map-addr {
+  font-size: 13px;
+  color: #6D4C41;
+}
+
+.map-link {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #8D6E63;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid #D7CCC8;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.map-link:hover {
+  background: #8D6E63;
+  color: #FFF8E7;
+}
