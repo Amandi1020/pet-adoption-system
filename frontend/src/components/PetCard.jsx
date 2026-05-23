@@ -1,27 +1,23 @@
+import { useNavigate } from 'react-router-dom'
 import '../styles/PetCard.css'
 
-const emojiMap = {
-  Dog: '🐶',
-  Cat: '🐱',
-  Bird: '🐦',
-  Rabbit: '🐰',
-}
-
-const colorMap = {
-  Dog: '#EEEDFE',
-  Cat: '#E1F5EE',
-  Bird: '#FAEEDA',
-  Rabbit: '#FAECE7',
+const petImages = {
+  Dog: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&q=80',
+  Cat: 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400&q=80',
+  Bird: 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=400&q=80',
+  Rabbit: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=400&q=80',
 }
 
 function PetCard({ pet }) {
+  const navigate = useNavigate()
+
   return (
-    <div className="pet-card">
-      <div
-        className="pet-img"
-        style={{ background: colorMap[pet.species] || '#f0f0f0' }}
-      >
-        <span>{emojiMap[pet.species] || '🐾'}</span>
+    <div className="pet-card" onClick={() => navigate(`/pets/${pet.id}`)}>
+      <div className="pet-img-wrap">
+        <img
+          src={petImages[pet.species] || petImages['Dog']}
+          alt={pet.name}
+        />
         {pet.status === 'ADOPTED' && (
           <span className="adopted-badge">Adopted</span>
         )}
@@ -31,7 +27,7 @@ function PetCard({ pet }) {
         <p className="pet-breed">{pet.breed} · {pet.age} yr{pet.age > 1 ? 's' : ''}</p>
         <p className="pet-gender">{pet.gender} · {pet.species}</p>
         {pet.status === 'AVAILABLE' ? (
-          <button className="adopt-btn">Adopt Me 🐾</button>
+          <button className="adopt-btn">View & Adopt 🐾</button>
         ) : (
           <button className="adopted-btn">✓ Adopted</button>
         )}
