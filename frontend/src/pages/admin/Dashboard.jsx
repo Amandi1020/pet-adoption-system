@@ -73,6 +73,9 @@ function Dashboard() {
             <Link to="/admin/pets" className="admin-link-btn">
               🐾 Manage Pets
             </Link>
+            <Link to="/admin/stories" className="admin-link-btn">
+             🌟 Manage Stories
+            </Link>
           </div>
         </>
       )}
