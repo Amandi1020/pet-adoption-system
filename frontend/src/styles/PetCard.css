@@ -4,21 +4,30 @@
   border: 1px solid #D7CCC8;
   overflow: hidden;
   transition: border-color 0.2s, transform 0.2s;
+  cursor: pointer;
 }
 
 .pet-card:hover {
   border-color: #8D6E63;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(141,110,99,0.15);
 }
 
-.pet-img {
-  height: 130px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3.5rem;
+.pet-img-wrap {
+  height: 140px;
+  overflow: hidden;
   position: relative;
-  background: #EFEBE9;
+}
+
+.pet-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.pet-card:hover .pet-img-wrap img {
+  transform: scale(1.05);
 }
 
 .adopted-badge {
