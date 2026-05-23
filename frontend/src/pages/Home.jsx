@@ -44,6 +44,12 @@ const petImages = {
 function Home() {
   const [current, setCurrent] = useState(0)
   const [pets, setPets] = useState([])
+  const [stats, setStats] = useState({
+    available: 0,
+    adopted: 0,
+    pending: 0,
+    species: 0,
+  })
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -53,7 +59,27 @@ function Home() {
   }, [])
 
   useEffect(() => {
-    getAllPets().then(data => setPets(data.slice(0, 6)))
+    getAllPets().then(data => {
+      setPets(data.slice(0, 6))
+      const available = data.filter(p => p.status === 'AVAILABLE').length
+      const adopted = data.filter(p => p.status === 'ADOPTED').length
+      const speciesSet = new Set(data.map(p => p.species).filter(Boolean))
+      setStats({
+        available,
+        adopted,
+        species: speciesSet.size,
+        pending: 0,
+      })
+    })
+
+    // fetch pending applications count
+    fetch('http://localhost:8080/api/applications')
+      .then(res => res.json())
+      .then(data => {
+        const pending = data.filter(a => a.status === 'PENDING').length
+        setStats(prev => ({...prev, pending}))
+      })
+      .catch(() => {})
   }, [])
 
   return (
@@ -71,7 +97,7 @@ function Home() {
               <p className="slide-sub">{slide.sub}</p>
               <div className="slide-btns">
                 <Link to="/pets" className="btn-cream">Browse pets</Link>
-                <Link to="/adopt" className="btn-outline">Apply now</Link>
+                <Link to="/quiz" className="btn-outline">Take the quiz</Link>
               </div>
             </div>
           </div>
@@ -86,12 +112,12 @@ function Home() {
         <div className="slide-counter">{current + 1} / {slides.length}</div>
       </div>
 
-      {/* STATS */}
+      {/* REAL STATS */}
       <div className="stats-row">
-        <div className="stat-item"><h2>124</h2><p>Pets available</p></div>
-        <div className="stat-item"><h2>87</h2><p>Successfully adopted</p></div>
-        <div className="stat-item"><h2>34</h2><p>Applications pending</p></div>
-        <div className="stat-item"><h2>12</h2><p>Species</p></div>
+        <div className="stat-item"><h2>{stats.available}</h2><p>Pets available</p></div>
+        <div className="stat-item"><h2>{stats.adopted}</h2><p>Successfully adopted</p></div>
+        <div className="stat-item"><h2>{stats.pending}</h2><p>Applications pending</p></div>
+        <div className="stat-item"><h2>{stats.species}</h2><p>Species</p></div>
       </div>
 
       {/* PET CARDS */}
@@ -163,7 +189,7 @@ function Home() {
           <h3>Not sure which pet suits you?</h3>
           <p>Answer 7 quick questions about your lifestyle and we'll find your match.</p>
         </div>
-        <Link to="/adopt" className="btn-cream">Take the quiz ↗</Link>
+        <Link to="/quiz" className="btn-cream">Take the quiz ↗</Link>
       </div>
 
       {/* SUCCESS STORIES */}
