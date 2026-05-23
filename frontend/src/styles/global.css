@@ -6,10 +6,19 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+  background-color: #FFF8E7;
+  color: #4E342E;
 }
 
 a {
   text-decoration: none;
+}
+
+:root {
+  --brown: #8D6E63;
+  --dark-brown: #6D4C41;
+  --darker-brown: #4E342E;
+  --cream: #FFF8E7;
+  --beige: #D7CCC8;
+  --light-beige: #EFEBE9;
 }
