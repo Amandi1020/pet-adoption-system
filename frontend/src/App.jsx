@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Quiz from './pages/Quiz'
 import AdminStories from './pages/admin/AdminStories'
 import Stories from './pages/Stories'
 import Navbar from './components/Navbar'
@@ -27,6 +28,7 @@ function App() {
         <Route path="/admin/applications" element={<Applications />} />
         <Route path="/stories" element={<Stories />} />
         <Route path="/admin/stories" element={<AdminStories />} />
+        <Route path="/quiz" element={<Quiz />} />
       </Routes>
       <Footer />
     </BrowserRouter>
