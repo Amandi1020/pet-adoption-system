@@ -1,61 +1,62 @@
 .navbar {
-  background-color: #7F77DD;
+  background-color: #8D6E63;
   padding: 0 2rem;
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(78,52,46,0.15);
 }
 
 .navbar-brand {
   font-size: 22px;
   font-weight: bold;
-  color: #EEEDFE;
+  color: #FFF8E7;
   letter-spacing: 1px;
 }
 
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .nav-link {
-  color: #CECBF6;
+  color: #D7CCC8;
   text-decoration: none;
   font-size: 14px;
-  padding: 6px 14px;
+  padding: 6px 12px;
   border-radius: 6px;
   transition: background 0.2s;
 }
 
 .nav-link:hover {
-  background-color: #534AB7;
-  color: #EEEDFE;
+  background-color: #6D4C41;
+  color: #FFF8E7;
 }
 
 .register-btn {
-  background-color: #EEEDFE;
-  color: #3C3489;
+  background-color: #FFF8E7;
+  color: #6D4C41;
   font-weight: 600;
 }
 
 .register-btn:hover {
-  background-color: #ffffff;
-  color: #3C3489;
+  background-color: #EFEBE9;
+  color: #4E342E;
 }
 
 .nav-user {
-  color: #EEEDFE;
+  color: #FFF8E7;
   font-size: 13px;
   padding: 6px 12px;
-  background: #534AB7;
+  background: #6D4C41;
   border-radius: 6px;
 }
 
 .logout-btn {
-  background: #D85A30;
-  color: white;
+  background: #4E342E;
+  color: #FFF8E7;
   border: none;
   padding: 6px 14px;
   border-radius: 6px;
@@ -66,5 +67,5 @@
 }
 
 .logout-btn:hover {
-  background: #B34A25;
+  background: #3E2723;
 }
