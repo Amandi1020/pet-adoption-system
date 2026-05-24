@@ -23,6 +23,7 @@ function Navbar() {
         <Link to="/quiz" className="nav-link">Match Quiz</Link>
         <Link to="/stories" className="nav-link">Stories</Link>
         <Link to="/contact" className="nav-link">Contact</Link>
+        <Link to="/about" className="nav-link">About</Link>
         {user ? (
           <>
             {user.role === 'ADMIN' && (
