@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import FAQ from './pages/FAQ'
 import CareGuide from './pages/CareGuide'
 import About from './pages/About'
 import Contact from './pages/Contact'
@@ -42,6 +43,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/care-guide" element={<CareGuide />} />
+        <Route path="/faq" element={<FAQ />} />
       </Routes>
       <Footer />
 
