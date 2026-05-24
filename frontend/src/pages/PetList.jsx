@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Spinner from '../components/Spinner'
 import PetCard from '../components/PetCard'
 import { getAllPets } from '../services/petService'
 import '../styles/PetList.css'
@@ -55,9 +56,7 @@ function PetList() {
         </div>
 
         {loading ? (
-          <p style={{textAlign:'center', padding:'2rem', color:'#7F77DD'}}>
-            Loading pets...
-          </p>
+          <Spinner message="Loading pets..." />
         ) : (
           <div className="pets-grid">
             {filtered.map(pet => (
