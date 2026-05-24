@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import CareGuide from './pages/CareGuide'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
@@ -40,6 +41,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/care-guide" element={<CareGuide />} />
       </Routes>
       <Footer />
 
