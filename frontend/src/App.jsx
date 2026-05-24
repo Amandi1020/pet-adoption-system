@@ -17,6 +17,7 @@ import AdoptForm from './pages/AdoptForm'
 import Dashboard from './pages/admin/Dashboard'
 import ManagePets from './pages/admin/ManagePets'
 import Applications from './pages/admin/Applications'
+import BackToTop from './components/BackToTop'
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
         <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
+
+      <BackToTop />
     </BrowserRouter>
   )
 }
