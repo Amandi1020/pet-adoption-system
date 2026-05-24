@@ -19,11 +19,13 @@ function Navbar() {
       </div>
       <div className="navbar-links">
         <Link to="/" className="nav-link">Home</Link>
+        <Link to="/about" className="nav-link">About</Link>
         <Link to="/pets" className="nav-link">Browse Pets</Link>
         <Link to="/quiz" className="nav-link">Match Quiz</Link>
         <Link to="/stories" className="nav-link">Stories</Link>
+        <Link to="/care-guide" className="nav-link">Care Guide</Link>
         <Link to="/contact" className="nav-link">Contact</Link>
-        <Link to="/about" className="nav-link">About</Link>
+        
         {user ? (
           <>
             {user.role === 'ADMIN' && (
