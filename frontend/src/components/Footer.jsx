@@ -21,6 +21,7 @@ function Footer() {
             <Link to="/care-guide">Care guide</Link>
             <Link to="/stories">Success stories</Link>
             <Link to="/about">About us</Link>
+            <Link to="/faq">FAQ</Link>
           </div>
           <div className="footer-col">
             <p className="footer-col-title">Contact</p>
