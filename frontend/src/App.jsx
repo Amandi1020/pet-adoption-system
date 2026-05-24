@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import About from './pages/About'
 import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
 import MyApplications from './pages/MyApplications'
@@ -37,6 +38,7 @@ function App() {
         <Route path="/my-applications" element={<MyApplications />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
     </BrowserRouter>
