@@ -58,7 +58,11 @@ function PetDetail() {
             <span className="detail-tag">{pet.species}</span>
             <span className="detail-tag">{pet.gender}</span>
             <span className="detail-tag">{pet.size}</span>
-            <span className="detail-tag">{pet.age} yr{pet.age > 1 ? 's' : ''} old</span>
+            <span className="detail-tag">
+            {pet.age >= 12
+              ? `${Math.floor(pet.age / 12)} yr${Math.floor(pet.age / 12) > 1 ? 's' : ''} old`
+              : `${pet.age} month${pet.age > 1 ? 's' : ''} old`}
+          </span>
           </div>
 
           <div className="detail-desc">
@@ -77,7 +81,11 @@ function PetDetail() {
             </div>
             <div className="fact-item">
               <span className="fact-label">Age</span>
-              <span className="fact-value">{pet.age} year{pet.age > 1 ? 's' : ''}</span>
+              <span className="fact-value">
+              {pet.age >= 12
+                ? `${Math.floor(pet.age / 12)} year${Math.floor(pet.age / 12) > 1 ? 's' : ''}`
+                : `${pet.age} month${pet.age > 1 ? 's' : ''}`}
+            </span>
             </div>
             <div className="fact-item">
               <span className="fact-label">Gender</span>

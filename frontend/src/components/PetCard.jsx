@@ -24,7 +24,11 @@ function PetCard({ pet }) {
       </div>
       <div className="pet-body">
         <h3>{pet.name}</h3>
-        <p className="pet-breed">{pet.breed} · {pet.age} yr{pet.age > 1 ? 's' : ''}</p>
+       <p className="pet-breed">
+        {pet.breed} · {pet.age >= 12
+          ? `${Math.floor(pet.age / 12)} yr${Math.floor(pet.age / 12) > 1 ? 's' : ''}`
+          : `${pet.age} month${pet.age > 1 ? 's' : ''}`}
+      </p>
         <p className="pet-gender">{pet.gender} · {pet.species}</p>
         {pet.status === 'AVAILABLE' ? (
           <button className="adopt-btn">View & Adopt 🐾</button>
