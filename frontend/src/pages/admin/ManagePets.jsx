@@ -7,10 +7,10 @@ function ManagePets() {
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [newPet, setNewPet] = useState({
-    name: '', species: '', breed: '',
-    age: '', gender: 'Male', size: 'Medium',
-    status: 'AVAILABLE', description: ''
-  })
+  name: '', species: '', breed: '',
+  age: 1, ageUnit: 'years', gender: 'Male', size: 'Medium',
+  status: 'AVAILABLE', description: ''
+})
   const [message, setMessage] = useState('')
 
   useEffect(() => {
@@ -27,28 +27,36 @@ function ManagePets() {
   }
 
   const handleAddPet = async (e) => {
-    e.preventDefault()
-    try {
-      const response = await fetch(`${BASE_URL}/pets`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({...newPet, age: parseInt(newPet.age)})
-      })
-      if (response.ok) {
-        setMessage('Pet added successfully!')
-        setShowForm(false)
-        setNewPet({
-          name: '', species: '', breed: '',
-          age: '', gender: 'Male', size: 'Medium',
-          status: 'AVAILABLE', description: ''
-        })
-        fetchPets()
-        setTimeout(() => setMessage(''), 2000)
-      }
-    } catch (err) {
-      setMessage('Error adding pet.')
+  e.preventDefault()
+  try {
+    const ageInMonths = newPet.ageUnit === 'months'
+      ? parseInt(newPet.age)
+      : parseInt(newPet.age) * 12
+    const petToSend = {
+      ...newPet,
+      age: ageInMonths,
+      description: newPet.description ||
+        `${newPet.name} is a lovely ${newPet.species?.toLowerCase()}`
     }
+    const response = await fetch(`${BASE_URL}/pets`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(petToSend)
+    })
+    if (response.ok) {
+      setToast({ message: 'Pet added successfully! 🐾', type: 'success' })
+      setShowForm(false)
+      setNewPet({
+        name: '', species: '', breed: '',
+        age: 1, ageUnit: 'years', gender: 'Male', size: 'Medium',
+        status: 'AVAILABLE', description: ''
+      })
+      fetchPets()
+    }
+  } catch (err) {
+    setToast({ message: 'Error adding pet.', type: 'error' })
   }
+}
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this pet?')) {
@@ -95,13 +103,42 @@ function ManagePets() {
                 value={newPet.breed}
                 onChange={e => setNewPet({...newPet, breed: e.target.value})}
               />
-              <input
-                placeholder="Age"
-                type="number"
-                value={newPet.age}
-                onChange={e => setNewPet({...newPet, age: e.target.value})}
-                required
-              />
+              <div style={{display:'flex', gap:'6px'}}>
+  <div style={{display:'flex', alignItems:'center', gap:'4px', flex:1,
+    border:'1.5px solid #D7CCC8', borderRadius:'8px', overflow:'hidden',
+    background:'#FFF8E7'}}>
+    <button
+      type="button"
+      onClick={() => setNewPet({...newPet, age: Math.max(0, (parseInt(newPet.age)||0) - 1)})}
+      style={{background:'#EFEBE9', border:'none', padding:'10px 12px',
+        cursor:'pointer', fontSize:'16px', color:'#4E342E', fontWeight:'bold'}}
+    >−</button>
+    <input
+      type="number"
+      value={newPet.age}
+      onChange={e => setNewPet({...newPet, age: e.target.value})}
+      required
+      min="0"
+      style={{width:'100%', border:'none', outline:'none', textAlign:'center',
+        fontSize:'14px', background:'transparent', color:'#4E342E'}}
+    />
+    <button
+      type="button"
+      onClick={() => setNewPet({...newPet, age: (parseInt(newPet.age)||0) + 1})}
+      style={{background:'#EFEBE9', border:'none', padding:'10px 12px',
+        cursor:'pointer', fontSize:'16px', color:'#4E342E', fontWeight:'bold'}}
+    >+</button>
+  </div>
+  <select
+    value={newPet.ageUnit || 'years'}
+    onChange={e => setNewPet({...newPet, ageUnit: e.target.value})}
+    style={{padding:'10px', borderRadius:'8px', border:'1.5px solid #D7CCC8',
+      fontSize:'13px', background:'#FFF8E7', color:'#4E342E', outline:'none'}}
+  >
+    <option value="months">Months</option>
+    <option value="years">Years</option>
+    </select>
+    </div>
             </div>
             <div className="form-row">
               <select
