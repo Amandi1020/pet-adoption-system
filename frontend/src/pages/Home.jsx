@@ -1,3 +1,7 @@
+import slide1 from '../assets/images/carousel/slide1.jpg'
+import slide2 from '../assets/images/carousel/slide2.jpg'
+import slide3 from '../assets/images/carousel/slide3.jpg'
+import slide4 from '../assets/images/carousel/slide4.jpg'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getAllPets } from '../services/petService'
@@ -5,29 +9,29 @@ import '../styles/Home.css'
 
 const slides = [
   {
-    img: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1200&q=80',
-    alt: 'Golden Retriever dog',
+    img: slide1,
+    alt: 'Happy dog looking for a home',
     tag: 'Featured this week',
     title: 'Find your perfect furry companion',
     sub: 'Over 120 loving pets waiting for a warm home. Browse dogs, cats, birds and more.',
   },
   {
-    img: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=1200&q=80',
-    alt: 'Cute cat',
+    img: slide2,
+    alt: 'Cute cat waiting for adoption',
     tag: 'New arrivals',
     title: 'Cats looking for cozy loving homes',
     sub: 'Gentle, playful and affectionate — our cats are ready to curl up with you.',
   },
   {
-    img: 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=1200&q=80',
-    alt: 'Colourful parrot',
+    img: slide3,
+    alt: 'Colourful bird at the shelter',
     tag: 'Special adoption',
     title: 'Birds that bring joy to every home',
     sub: 'Colourful, vocal and full of personality — adopt a feathered friend today.',
   },
   {
-    img: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=1200&q=80',
-    alt: 'Fluffy rabbit',
+    img: slide4,
+    alt: 'Fluffy rabbit ready for adoption',
     tag: 'Gentle companions',
     title: 'Rabbits — soft, calm and loving',
     sub: 'Perfect for families and apartment living. Easy to care for and full of character.',
