@@ -448,7 +448,7 @@ Password: admin123
 
 **Amandi**
 MIS Undergraduate — 2nd Year
-University Project 2025
+University Project 2026
 
 - GitHub: [@Amandi1020](https://github.com/Amandi1020)
 
