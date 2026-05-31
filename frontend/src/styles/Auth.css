@@ -97,3 +97,52 @@
   border-radius: 6px;
   margin-bottom: 1rem;
 }
+
+/* ADOPT PAGE WITH PAW WATERMARK */
+.adopt-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFF8E7;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.paw-watermark-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paw-watermark {
+  width: 500px;
+  opacity: 0.05;
+  filter: sepia(1) hue-rotate(330deg);
+}
+
+.adopt-card {
+  position: relative;
+  z-index: 1;
+  max-width: 500px !important;
+}
+
+.adopt-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.adopt-paw-icon {
+  width: 50px;
+  opacity: 0.4;
+  margin-bottom: 8px;
+  filter: sepia(1) hue-rotate(330deg);
+}

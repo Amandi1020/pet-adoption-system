@@ -1,3 +1,4 @@
+import pawWatermark from '../assets/images/ui/paw-watermark.jpg'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import BASE_URL from '../services/api'
@@ -49,65 +50,95 @@ function AdoptForm() {
     }
   }
 
-  return (
-    <div className="auth-page">
-      <div className="auth-card" style={{maxWidth:'500px'}}>
-        <h2>🐾 Adoption Application</h2>
-        <p className="auth-sub">Tell us about yourself</p>
-        {message && <p className="auth-msg">{message}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Home Type</label>
-            <select
-              value={homeType}
-              onChange={e => setHomeType(e.target.value)}
-              required
-              style={{width:'100%',padding:'10px',borderRadius:'8px',border:'1.5px solid #e0e0e0',fontSize:'14px'}}
-            >
-              <option value="">Select home type</option>
-              <option value="Apartment">Apartment</option>
-              <option value="House">House</option>
-              <option value="Villa">Villa</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Do you have children?</label>
-            <select
-              value={hasChildren}
-              onChange={e => setHasChildren(e.target.value === 'true')}
-              style={{width:'100%',padding:'10px',borderRadius:'8px',border:'1.5px solid #e0e0e0',fontSize:'14px'}}
-            >
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Previous pet experience</label>
-            <input
-              type="text"
-              placeholder="Describe your experience..."
-              value={experience}
-              onChange={e => setExperience(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Why do you want to adopt?</label>
-            <textarea
-              placeholder="Tell us why..."
-              value={reason}
-              onChange={e => setReason(e.target.value)}
-              required
-              style={{width:'100%',padding:'10px',borderRadius:'8px',border:'1.5px solid #e0e0e0',fontSize:'14px',minHeight:'100px'}}
-            />
-          </div>
-          <button type="submit" className="auth-btn">
-            Submit Application
-          </button>
-        </form>
-      </div>
+ return (
+  <div className="adopt-page">
+
+    {/* PAW WATERMARK BACKGROUND */}
+    <div className="paw-watermark-wrap">
+      <img src={pawWatermark} alt="" className="paw-watermark" />
     </div>
-  )
+
+    <div className="auth-card adopt-card">
+      <div className="adopt-header">
+        <img src={pawWatermark} alt="paw" className="adopt-paw-icon" />
+        <h2>🐾 Adoption Application</h2>
+        <p className="auth-sub">Tell us about yourself and your home</p>
+      </div>
+
+      {message && <p className="auth-msg">{message}</p>}
+
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Home Type</label>
+          <select
+            value={homeType}
+            onChange={e => setHomeType(e.target.value)}
+            required
+            style={{width:'100%',padding:'10px',borderRadius:'8px',
+              border:'1.5px solid #D7CCC8',fontSize:'14px',
+              background:'#FFF8E7',color:'#4E342E',outline:'none'}}
+          >
+            <option value="">Select your home type</option>
+            <option value="Apartment">Apartment</option>
+            <option value="House">House with garden</option>
+            <option value="Villa">Villa</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Do you have children at home?</label>
+          <select
+            value={hasChildren}
+            onChange={e => setHasChildren(e.target.value === 'true')}
+            style={{width:'100%',padding:'10px',borderRadius:'8px',
+              border:'1.5px solid #D7CCC8',fontSize:'14px',
+              background:'#FFF8E7',color:'#4E342E',outline:'none'}}
+          >
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Previous pet experience</label>
+          <input
+            type="text"
+            placeholder="Describe your experience with pets..."
+            value={experience}
+            onChange={e => setExperience(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Why do you want to adopt?</label>
+          <textarea
+            placeholder="Tell us why you want to adopt and what kind of home you can provide..."
+            value={reason}
+            onChange={e => setReason(e.target.value)}
+            required
+            style={{width:'100%',padding:'10px',borderRadius:'8px',
+              border:'1.5px solid #D7CCC8',fontSize:'14px',
+              background:'#FFF8E7',color:'#4E342E',
+              minHeight:'100px',fontFamily:'inherit',outline:'none'}}
+          />
+        </div>
+
+        <button type="submit" className="auth-btn">
+          Submit Application 🐾
+        </button>
+      </form>
+    </div>
+
+    {toast && (
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        onClose={closeToast}
+      />
+    )}
+  </div>
+)
 }
 
 export default AdoptForm
