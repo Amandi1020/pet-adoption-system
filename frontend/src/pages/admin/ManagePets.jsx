@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback} from 'react'
+import Toast from '../../components/Toast'
 import BASE_URL from '../../services/api'
 import '../../styles/Admin.css'
 
@@ -16,6 +17,8 @@ function ManagePets() {
   useEffect(() => {
     fetchPets()
   }, [])
+  const [toast, setToast] = useState(null)
+  const closeToast = useCallback(() => setToast(null), [])
 
   const fetchPets = () => {
     fetch(`${BASE_URL}/pets`)
@@ -32,29 +35,48 @@ function ManagePets() {
     const ageInMonths = newPet.ageUnit === 'months'
       ? parseInt(newPet.age)
       : parseInt(newPet.age) * 12
+
     const petToSend = {
-      ...newPet,
+      name: newPet.name,
+      species: newPet.species,
+      breed: newPet.breed,
       age: ageInMonths,
+      gender: newPet.gender,
+      size: newPet.size,
+      status: newPet.status,
       description: newPet.description ||
         `${newPet.name} is a lovely ${newPet.species?.toLowerCase()}`
     }
+
     const response = await fetch(`${BASE_URL}/pets`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(petToSend)
     })
+
     if (response.ok) {
-      setToast({ message: 'Pet added successfully! 🐾', type: 'success' })
+      setToast({
+        message: `🐾 ${newPet.name} was added successfully!`,
+        type: 'success'
+      })
       setShowForm(false)
       setNewPet({
         name: '', species: '', breed: '',
-        age: 1, ageUnit: 'years', gender: 'Male', size: 'Medium',
-        status: 'AVAILABLE', description: ''
+        age: 1, ageUnit: 'years', gender: 'Male',
+        size: 'Medium', status: 'AVAILABLE', description: ''
       })
       fetchPets()
+    } else {
+      setToast({
+        message: 'Failed to add pet. Please try again.',
+        type: 'error'
+      })
     }
   } catch (err) {
-    setToast({ message: 'Error adding pet.', type: 'error' })
+    setToast({
+      message: 'Error adding pet. Check your connection.',
+      type: 'error'
+    })
   }
 }
 
@@ -213,6 +235,14 @@ function ManagePets() {
             </tbody>
           </table>
         </div>
+      )}
+
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={closeToast}
+        />
       )}
     </div>
   )
