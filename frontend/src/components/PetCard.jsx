@@ -1,30 +1,35 @@
 import { useNavigate } from 'react-router-dom'
 import '../styles/PetCard.css'
 
-// Import default fallback images per species
-import dogDefault from '../assets/images/pets/dog-default.jpg'
-import catDefault from '../assets/images/pets/cat-default.jpg'
-import birdDefault from '../assets/images/pets/bird-default.jpg'
-import rabbitDefault from '../assets/images/pets/rabbit-default.jpg'
+const petImagesByName = {
+  // Add your pet names here with their photo URLs
+  // Format: 'petname in lowercase': 'image url'
+  'bruno': 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&q=80',
+  'luna': 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400&q=80',
+  'sunny': 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=400&q=80',
+  'coco': 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=400&q=80',
+  'max': 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=400&q=80',
+  'mimi': 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=400&q=80',
+}
 
 const speciesDefaults = {
-  Dog: dogDefault,
-  Cat: catDefault,
-  Bird: birdDefault,
-  Rabbit: rabbitDefault,
+  'Dog': 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&q=80',
+  'Cat': 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&q=80',
+  'Bird': 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=400&q=80',
+  'Rabbit': 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=400&q=80',
 }
 
 function PetCard({ pet }) {
   const navigate = useNavigate()
 
-  // Try to load individual pet photo
-  // Falls back to species default if not found
   const getImage = () => {
-    try {
-      return require(`../assets/images/pets/${pet.name.toLowerCase()}.jpg`)
-    } catch {
-      return speciesDefaults[pet.species] || dogDefault
+    // First check if pet has unique photo by name
+    const nameKey = pet.name?.toLowerCase()
+    if (petImagesByName[nameKey]) {
+      return petImagesByName[nameKey]
     }
+    // Fall back to species default
+    return speciesDefaults[pet.species] || speciesDefaults['Dog']
   }
 
   return (
@@ -34,7 +39,7 @@ function PetCard({ pet }) {
           src={getImage()}
           alt={pet.name}
           onError={e => {
-            e.target.src = speciesDefaults[pet.species] || dogDefault
+            e.target.src = speciesDefaults[pet.species] || speciesDefaults['Dog']
           }}
         />
         {pet.status === 'ADOPTED' && (
