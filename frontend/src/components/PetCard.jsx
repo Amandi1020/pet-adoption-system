@@ -1,15 +1,30 @@
 import { useNavigate } from 'react-router-dom'
 import '../styles/PetCard.css'
 
+import brunoImg from '../assets/images/pets/bruno.jpg'
+import lunaImg from '../assets/images/pets/luna.jpg'
+import cocoImg from '../assets/images/pets/coco.jpg'
+import maxImg from '../assets/images/pets/max.jpg'
+import mimiImg from '../assets/images/pets/mimi.jpg'
+import sunnyImg from '../assets/images/pets/sunny.jpg'
+import bellaImg from '../assets/images/pets/bella.jpg'
+import daisyImg from '../assets/images/pets/daisy.jpg'
+import kiwiImg from '../assets/images/pets/kiwi.jpg'
+import miloImg from '../assets/images/pets/milo.jpg'
+import rosiImg from '../assets/images/pets/rosi.jpg'
+
 const petImagesByName = {
-  // Add your pet names here with their photo URLs
-  // Format: 'petname in lowercase': 'image url'
-  'bruno': 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&q=80',
-  'luna': 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400&q=80',
-  'sunny': 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=400&q=80',
-  'coco': 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=400&q=80',
-  'max': 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=400&q=80',
-  'mimi': 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=400&q=80',
+  'bruno': brunoImg,
+  'luna': lunaImg,
+  'coco': cocoImg,
+  'max': maxImg,
+  'mimi': mimiImg,
+  'sunny': sunnyImg,
+  'bella': bellaImg,
+  'daisy': daisyImg,
+  'kiwi': kiwiImg,
+  'milo': miloImg,
+  'rosi': rosiImg,
 }
 
 const speciesDefaults = {
@@ -23,13 +38,8 @@ function PetCard({ pet }) {
   const navigate = useNavigate()
 
   const getImage = () => {
-    // First check if pet has unique photo by name
     const nameKey = pet.name?.toLowerCase()
-    if (petImagesByName[nameKey]) {
-      return petImagesByName[nameKey]
-    }
-    // Fall back to species default
-    return speciesDefaults[pet.species] || speciesDefaults['Dog']
+    return petImagesByName[nameKey] || speciesDefaults[pet.species] || speciesDefaults['Dog']
   }
 
   return (
