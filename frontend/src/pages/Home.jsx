@@ -2,6 +2,21 @@ import slide1 from '../assets/images/carousel/slide1.jpg'
 import slide2 from '../assets/images/carousel/slide2.jpg'
 import slide3 from '../assets/images/carousel/slide3.jpg'
 import slide4 from '../assets/images/carousel/slide4.jpg'
+import brunoImg from '../assets/images/pets/bruno.jpg'
+import lunaImg from '../assets/images/pets/luna.jpg'
+import cocoImg from '../assets/images/pets/coco.jpg'
+import maxImg from '../assets/images/pets/max.jpg'
+import mimiImg from '../assets/images/pets/mimi.jpg'
+import sunnyImg from '../assets/images/pets/sunny.jpg'
+import bellaImg from '../assets/images/pets/bella.jpg'
+import daisyImg from '../assets/images/pets/daisy.jpg'
+import kiwiImg from '../assets/images/pets/kiwi.jpg'
+import miloImg from '../assets/images/pets/milo.jpg'
+import rosiImg from '../assets/images/pets/rosi.jpg'
+import dogDefault from '../assets/images/pets/dog-default.jpg'
+import catDefault from '../assets/images/pets/cat-default.jpg'
+import birdDefault from '../assets/images/pets/bird-default.jpg'
+import rabbitDefault from '../assets/images/pets/rabbit-default.jpg'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getAllPets } from '../services/petService'
@@ -38,11 +53,25 @@ const slides = [
   },
 ]
 
-const petImages = {
-  Dog: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&q=80',
-  Cat: 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400&q=80',
-  Bird: 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=400&q=80',
-  Rabbit: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=400&q=80',
+const petImagesByName = {
+  'bruno': brunoImg,
+  'luna': lunaImg,
+  'coco': cocoImg,
+  'max': maxImg,
+  'mimi': mimiImg,
+  'sunny': sunnyImg,
+  'bella': bellaImg,
+  'daisy': daisyImg,
+  'kiwi': kiwiImg,
+  'milo': miloImg,
+  'rosi': rosiImg,
+}
+
+const speciesDefaults = {
+  'Dog': dogDefault,
+  'Cat': catDefault,
+  'Bird': birdDefault,
+  'Rabbit': rabbitDefault,
 }
 
 function Home() {
@@ -76,7 +105,6 @@ function Home() {
       })
     })
 
-    // fetch pending applications count
     fetch('http://localhost:8080/api/applications')
       .then(res => res.json())
       .then(data => {
@@ -85,6 +113,11 @@ function Home() {
       })
       .catch(() => {})
   }, [])
+
+  const getImage = (pet) => {
+    const nameKey = pet.name?.toLowerCase()
+    return petImagesByName[nameKey] || speciesDefaults[pet.species] || dogDefault
+  }
 
   return (
     <div className="home">
@@ -135,11 +168,19 @@ function Home() {
         </div>
         <div className="home-pets-grid">
           {pets.map(pet => (
-            <div className="home-pet-card" key={pet.id}>
+            <div
+              className="home-pet-card"
+              key={pet.id}
+              onClick={() => window.location.href = `/pets/${pet.id}`}
+              style={{cursor:'pointer'}}
+            >
               <div className="home-pet-img">
                 <img
-                  src={petImages[pet.species] || petImages['Dog']}
+                  src={getImage(pet)}
                   alt={pet.name}
+                  onError={e => {
+                    e.target.src = speciesDefaults[pet.species] || dogDefault
+                  }}
                 />
                 {pet.status === 'ADOPTED' && (
                   <span className="home-pet-badge badge-adopted">Adopted</span>
@@ -147,11 +188,15 @@ function Home() {
               </div>
               <div className="home-pet-body">
                 <p className="home-pet-name">{pet.name}</p>
-                <p className="home-pet-info">{pet.breed} · {pet.age} yr{pet.age > 1 ? 's' : ''}</p>
+                <p className="home-pet-info">
+                  {pet.breed} · {pet.age >= 12
+                    ? `${Math.floor(pet.age / 12)} yr${Math.floor(pet.age / 12) > 1 ? 's' : ''}`
+                    : `${pet.age} month${pet.age > 1 ? 's' : ''}`}
+                </p>
                 {pet.status === 'AVAILABLE' ? (
-                  <Link to="/adopt" className="home-adopt-btn">Adopt me</Link>
+                  <span className="home-adopt-btn">Adopt me</span>
                 ) : (
-                  <button className="home-adopted-btn">✓ Adopted</button>
+                  <span className="home-adopted-btn">✓ Adopted</span>
                 )}
               </div>
             </div>
@@ -223,32 +268,32 @@ function Home() {
       </div>
 
       {/* HOW IT WORKS */}
-<div className="how-it-works">
-  <h2 className="sec-title">How it works</h2>
-  <p className="sec-sub">Adopt your perfect pet in 4 simple steps</p>
-  <div className="steps-grid">
-    <div className="step-item">
-      <div className="step-num">1</div>
-      <h3>Browse pets</h3>
-      <p>Search and filter through all available pets by species, age, size and gender</p>
-    </div>
-    <div className="step-item">
-      <div className="step-num">2</div>
-      <h3>Take the quiz</h3>
-      <p>Answer 7 lifestyle questions and we match you with your perfect pet type</p>
-    </div>
-    <div className="step-item">
-      <div className="step-num">3</div>
-      <h3>Apply online</h3>
-      <p>Submit your adoption application online in minutes — no paperwork needed</p>
-    </div>
-    <div className="step-item">
-      <div className="step-num">4</div>
-      <h3>Bring them home</h3>
-      <p>Once approved, visit the shelter and bring your new companion home!</p>
-    </div>
-  </div>
-</div>
+      <div className="how-it-works">
+        <h2 className="sec-title">How it works</h2>
+        <p className="sec-sub">Adopt your perfect pet in 4 simple steps</p>
+        <div className="steps-grid">
+          <div className="step-item">
+            <div className="step-num">1</div>
+            <h3>Browse pets</h3>
+            <p>Search and filter through all available pets by species, age, size and gender</p>
+          </div>
+          <div className="step-item">
+            <div className="step-num">2</div>
+            <h3>Take the quiz</h3>
+            <p>Answer 7 lifestyle questions and we match you with your perfect pet type</p>
+          </div>
+          <div className="step-item">
+            <div className="step-num">3</div>
+            <h3>Apply online</h3>
+            <p>Submit your adoption application online in minutes — no paperwork needed</p>
+          </div>
+          <div className="step-item">
+            <div className="step-num">4</div>
+            <h3>Bring them home</h3>
+            <p>Once approved, visit the shelter and bring your new companion home!</p>
+          </div>
+        </div>
+      </div>
 
       {/* CTA */}
       <div className="home-cta">
