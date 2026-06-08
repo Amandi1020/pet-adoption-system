@@ -32,7 +32,7 @@ function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© 2025 PawFind — Pet Adoption & Care Info System</p>
+        <p>© 2026 PawFind — Pet Adoption & Care Info System</p>
         <p className="footer-sub">Built with React & Spring Boot · MIS Project</p>
       </div>
     </footer>
