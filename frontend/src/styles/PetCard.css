@@ -14,16 +14,20 @@
 }
 
 .pet-img-wrap {
-  height: 140px;
+  width: 100%;
+  height: 180px;
   overflow: hidden;
   position: relative;
+  background: #EFEBE9;
 }
 
 .pet-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.3s;
+  display: block;
 }
 
 .pet-card:hover .pet-img-wrap img {
