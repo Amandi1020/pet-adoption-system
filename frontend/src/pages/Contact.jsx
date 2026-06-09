@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react'
-import emailjs from '@emailjs/browser'
 import '../styles/Contact.css'
 
 function Contact() {
@@ -10,84 +9,61 @@ function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
-
-    // For now we simulate sending — replace with real EmailJS keys later
     setTimeout(() => {
       setStatus('success')
       setLoading(false)
       form.current.reset()
     }, 1500)
-
-    // When you have EmailJS account, replace setTimeout with:
-    // emailjs.sendForm(
-    //   'YOUR_SERVICE_ID',
-    //   'YOUR_TEMPLATE_ID',
-    //   form.current,
-    //   'YOUR_PUBLIC_KEY'
-    // ).then(() => {
-    //   setStatus('success')
-    //   setLoading(false)
-    //   form.current.reset()
-    // }).catch(() => {
-    //   setStatus('error')
-    //   setLoading(false)
-    // })
   }
 
   return (
     <div className="contact-page">
 
-      {/* HERO */}
       <div className="contact-hero">
-        <h1>Get in touch</h1>
-        <p>Have a question about adoption? We are here to help!</p>
+        <div className="contact-hero-content">
+          <h1>Get in touch 🐾</h1>
+          <p>Have a question about adoption? We would love to hear from you.</p>
+        </div>
       </div>
 
       <div className="contact-body">
 
-        {/* CONTACT INFO CARDS */}
         <div className="contact-info-grid">
           <div className="contact-info-card">
             <div className="contact-info-icon">📧</div>
             <h3>Email us</h3>
             <p>info@pawfind.com</p>
-            <p className="contact-info-sub">We reply within 24 hours</p>
+            <span className="contact-info-tag">Reply within 24 hours</span>
           </div>
           <div className="contact-info-card">
             <div className="contact-info-icon">📞</div>
             <h3>Call us</h3>
             <p>+94 11 234 5678</p>
-            <p className="contact-info-sub">Mon–Sat, 9am–5pm</p>
+            <span className="contact-info-tag">Mon–Sat 9am–5pm</span>
           </div>
           <div className="contact-info-card">
             <div className="contact-info-icon">📍</div>
             <h3>Visit us</h3>
             <p>123 Shelter Road</p>
-            <p className="contact-info-sub">Colombo 03, Sri Lanka</p>
+            <span className="contact-info-tag">Colombo 03, Sri Lanka</span>
           </div>
           <div className="contact-info-card">
             <div className="contact-info-icon">⏰</div>
             <h3>Working hours</h3>
             <p>Mon–Fri: 9am–6pm</p>
-            <p className="contact-info-sub">Sat–Sun: 10am–4pm</p>
+            <span className="contact-info-tag">Sat–Sun: 10am–4pm</span>
           </div>
         </div>
 
-        {/* CONTACT FORM */}
-        <div className="contact-form-wrap">
+        <div className="contact-main-grid">
+
           <div className="contact-form-card">
             <h2>Send us a message</h2>
-            <p className="contact-form-sub">Fill in the form and we will get back to you shortly</p>
+            <p className="contact-form-sub">Fill in the form below and we will get back to you shortly</p>
 
             {status === 'success' && (
               <div className="contact-success">
-                ✅ Message sent successfully! We will get back to you within 24 hours.
-              </div>
-            )}
-
-            {status === 'error' && (
-              <div className="contact-error">
-                ❌ Something went wrong. Please try again or email us directly.
+                ✅ Message sent! We will get back to you within 24 hours.
               </div>
             )}
 
@@ -95,33 +71,17 @@ function Contact() {
               <div className="contact-form-row">
                 <div className="contact-form-group">
                   <label>Full Name</label>
-                  <input
-                    type="text"
-                    name="user_name"
-                    placeholder="Your full name"
-                    required
-                  />
+                  <input type="text" name="user_name" placeholder="Your full name" required />
                 </div>
                 <div className="contact-form-group">
                   <label>Email Address</label>
-                  <input
-                    type="email"
-                    name="user_email"
-                    placeholder="Your email"
-                    required
-                  />
+                  <input type="email" name="user_email" placeholder="your@email.com" required />
                 </div>
               </div>
-
               <div className="contact-form-group">
                 <label>Phone Number (optional)</label>
-                <input
-                  type="tel"
-                  name="user_phone"
-                  placeholder="+94 XX XXX XXXX"
-                />
+                <input type="tel" name="user_phone" placeholder="+94 XX XXX XXXX" />
               </div>
-
               <div className="contact-form-group">
                 <label>Subject</label>
                 <select name="subject" required>
@@ -134,46 +94,48 @@ function Contact() {
                   <option value="other">Other</option>
                 </select>
               </div>
-
               <div className="contact-form-group">
                 <label>Message</label>
-                <textarea
-                  name="message"
-                  placeholder="Tell us how we can help you..."
-                  required
-                  rows="5"
-                />
+                <textarea name="message" placeholder="Tell us how we can help you..." required rows="5" />
               </div>
-
-              <button
-                type="submit"
-                className="contact-submit-btn"
-                disabled={loading}
-              >
+              <button type="submit" className="contact-submit-btn" disabled={loading}>
                 {loading ? 'Sending...' : 'Send Message 📨'}
               </button>
             </form>
           </div>
 
-          {/* MAP PLACEHOLDER */}
-          <div className="contact-map">
-            <div className="map-placeholder">
-              <p className="map-icon">📍</p>
-              <p className="map-title">PawFind Shelter</p>
-              <p className="map-addr">123 Shelter Road, Colombo 03</p>
-              <p className="map-addr">Sri Lanka</p>
-              <a
-                href="https://maps.google.com"
-                target="_blank"
-                rel="noreferrer"
-                className="map-link"
-              >
-                Open in Google Maps ↗
-              </a>
+          <div className="contact-side">
+            <div className="contact-map-card">
+              <div className="map-inner">
+                <p className="map-emoji">📍</p>
+                <h3>PawFind Shelter</h3>
+                <p>123 Shelter Road</p>
+                <p>Colombo 03, Sri Lanka</p>
+                <a href="https://maps.google.com" target="_blank" rel="noreferrer" className="map-btn">
+                  Open in Google Maps ↗
+                </a>
+              </div>
+            </div>
+            <div className="contact-faq-card">
+              <h3>Quick answers</h3>
+              <div className="contact-faq-list">
+                <div className="contact-faq-item">
+                  <p className="contact-faq-q">How long does adoption take?</p>
+                  <p className="contact-faq-a">Usually 3–5 working days after application.</p>
+                </div>
+                <div className="contact-faq-item">
+                  <p className="contact-faq-q">Are all pets vaccinated?</p>
+                  <p className="contact-faq-a">Yes — all pets have complete vaccination records.</p>
+                </div>
+                <div className="contact-faq-item">
+                  <p className="contact-faq-q">Can I visit before adopting?</p>
+                  <p className="contact-faq-a">Absolutely! Visit us during working hours.</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   )
