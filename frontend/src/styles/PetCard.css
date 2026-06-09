@@ -1,60 +1,67 @@
 .pet-card {
   background: white;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid #D7CCC8;
   overflow: hidden;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 
 .pet-card:hover {
   border-color: #8D6E63;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(141,110,99,0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(141,110,99,0.18);
 }
 
 .pet-img-wrap {
   width: 100%;
-  height: 180px;
+  height: 200px;
   overflow: hidden;
   position: relative;
   background: #EFEBE9;
+  flex-shrink: 0;
 }
 
 .pet-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  transition: transform 0.3s;
+  object-position: center top;
   display: block;
+  transition: transform 0.4s ease;
 }
 
 .pet-card:hover .pet-img-wrap img {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .adopted-badge {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #888;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.55);
   color: white;
   font-size: 10px;
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 10px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
 }
 
 .pet-body {
-  padding: 0.9rem;
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .pet-body h3 {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   color: #4E342E;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 .pet-breed {
@@ -65,8 +72,9 @@
 
 .pet-gender {
   font-size: 12px;
-  color: #8D6E63;
-  margin-bottom: 10px;
+  color: #A1887F;
+  margin-bottom: 12px;
+  flex: 1;
 }
 
 .adopt-btn {
@@ -74,12 +82,13 @@
   background: #8D6E63;
   color: #FFF8E7;
   border: none;
-  padding: 8px;
+  padding: 9px;
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
+  margin-top: auto;
 }
 
 .adopt-btn:hover {
@@ -90,8 +99,9 @@
   width: 100%;
   background: #EFEBE9;
   color: #8D6E63;
-  border: none;
-  padding: 8px;
+  border: 1px solid #D7CCC8;
+  padding: 9px;
   border-radius: 8px;
   font-size: 13px;
+  margin-top: auto;
 }
