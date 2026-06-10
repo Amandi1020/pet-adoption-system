@@ -34,11 +34,16 @@ function Contact() {
   return (
     <div className="contact-page">
 
-      <div className="contact-hero">
+     <div className="contact-hero">
         <div className="contact-hero-bg"></div>
+        <img
+          src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1200&q=80"
+          alt="Happy dog"
+          className="contact-hero-animal"
+        />
+        <div className="contact-hero-overlay"></div>
         <div className="contact-hero-content">
-          <span className="contact-hero-icon">💬</span>
-          <h1>Get in touch</h1>
+          <h1>Get in touch 🐾</h1>
           <p>Have a question about adoption? We would love to hear from you.</p>
         </div>
       </div>
@@ -189,12 +194,12 @@ function Contact() {
                 <p className="contact-map-name">PawFind Animal Shelter</p>
                 <p className="contact-map-addr">123 Shelter Road, Colombo 03</p>
                 <p className="contact-map-addr">Western Province, Sri Lanka</p>
-                
+                <a
                   href="https://maps.google.com"
                   target="_blank"
                   rel="noreferrer"
                   className="contact-map-btn"
-                <a>
+                >
                   Open in Google Maps ↗
                 </a>
               </div>
