@@ -87,7 +87,7 @@ function Home() {
     getAllPets().then(data => {
       // Only show available pets, max 4 to fill one complete row
       const available = data.filter(p => p.status === 'AVAILABLE')
-      setPets(available.slice(0, 4))
+      setPets(available.slice(0, 7))
       const adopted = data.filter(p => p.status === 'ADOPTED').length
       const speciesSet = new Set(data.map(p => p.species).filter(Boolean))
       setStats({
