@@ -25,7 +25,7 @@ import '../styles/Home.css'
 const slides = [
   {
     img: slide1,
-    alt: 'Happy dog looking for a home',
+    alt: 'Happy dog',
     tag: '🐶 Featured this week',
     title: 'Find your perfect furry companion',
     sub: 'Over 120 loving pets waiting for a warm home. Browse dogs, cats, birds and more.',
@@ -34,7 +34,7 @@ const slides = [
   },
   {
     img: slide2,
-    alt: 'Cute cat waiting for adoption',
+    alt: 'Cute cat',
     tag: '🐱 New arrivals',
     title: 'Cats looking for cozy loving homes',
     sub: 'Gentle, playful and affectionate — our cats are ready to curl up with you.',
@@ -43,21 +43,21 @@ const slides = [
   },
   {
     img: slide3,
-    alt: 'Colourful bird at the shelter',
+    alt: 'Colourful bird',
     tag: '🐦 Special adoption',
     title: 'Birds that bring joy to every home',
     sub: 'Colourful, vocal and full of personality — adopt a feathered friend today.',
     btn1: 'See birds', btn1Link: '/pets',
-    btn2: 'Learn more', btn2Link: '/care-guide',
+    btn2: 'Care guide', btn2Link: '/care-guide',
   },
   {
     img: slide4,
-    alt: 'Fluffy rabbit ready for adoption',
+    alt: 'Fluffy rabbit',
     tag: '🐰 Gentle companions',
     title: 'Rabbits — soft, calm and loving',
     sub: 'Perfect for families and apartment living. Easy to care for and full of character.',
     btn1: 'See rabbits', btn1Link: '/pets',
-    btn2: 'Care guide', btn2Link: '/care-guide',
+    btn2: 'Learn more', btn2Link: '/care-guide',
   },
 ]
 
@@ -85,11 +85,17 @@ function Home() {
 
   useEffect(() => {
     getAllPets().then(data => {
-      setPets(data.slice(0, 6))
-      const available = data.filter(p => p.status === 'AVAILABLE').length
+      // Only show available pets, max 4 to fill one complete row
+      const available = data.filter(p => p.status === 'AVAILABLE')
+      setPets(available.slice(0, 4))
       const adopted = data.filter(p => p.status === 'ADOPTED').length
       const speciesSet = new Set(data.map(p => p.species).filter(Boolean))
-      setStats({ available, adopted, species: speciesSet.size, pending: 0 })
+      setStats({
+        available: available.length,
+        adopted,
+        species: speciesSet.size,
+        pending: 0,
+      })
     })
     fetch('http://localhost:8080/api/applications')
       .then(res => res.json())
@@ -159,14 +165,14 @@ function Home() {
         </div>
       </div>
 
-      {/* FEATURED PETS */}
+      {/* FEATURED PETS — exactly 4 to fill row */}
       <div className="home-section">
         <div className="sec-header">
           <div>
-            <h2 className="sec-title">Available pets</h2>
-            <p className="sec-sub">Find your perfect companion from our shelter</p>
+            <h2 className="sec-title">Meet our available pets</h2>
+            <p className="sec-sub">Every one of them is waiting for a loving home just like yours</p>
           </div>
-          <Link to="/pets" className="view-all-btn">View all →</Link>
+          <Link to="/pets" className="view-all-btn">View all pets →</Link>
         </div>
         <div className="home-pets-grid">
           {pets.map(pet => (
@@ -181,12 +187,7 @@ function Home() {
                   alt={pet.name}
                   onError={e => { e.target.src = speciesDefaults[pet.species] || dogDefault }}
                 />
-                {pet.status === 'ADOPTED' && (
-                  <span className="home-pet-badge badge-adopted">Adopted</span>
-                )}
-                {pet.status === 'AVAILABLE' && (
-                  <span className="home-pet-badge badge-available">Available</span>
-                )}
+                <span className="home-pet-badge badge-available">Available</span>
               </div>
               <div className="home-pet-body">
                 <p className="home-pet-name">{pet.name}</p>
@@ -195,84 +196,101 @@ function Home() {
                     ? `${Math.floor(pet.age / 12)} yr${Math.floor(pet.age / 12) > 1 ? 's' : ''}`
                     : `${pet.age} month${pet.age > 1 ? 's' : ''}`}
                 </p>
-                <p className="home-pet-species">{pet.species} · {pet.gender}</p>
-                {pet.status === 'AVAILABLE'
-                  ? <span className="home-adopt-btn">View & Adopt 🐾</span>
-                  : <span className="home-adopted-btn">✓ Adopted</span>
-                }
+                <p className="home-pet-species">{pet.species} · {pet.gender} · {pet.size}</p>
+                <span className="home-adopt-btn">View & Adopt 🐾</span>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* WHY PAWFIND */}
+      {/* WHY PAWFIND — split layout */}
       <div className="home-why">
         <div className="home-why-inner">
+          <div className="home-why-img">
+            <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=600&q=80" alt="Happy pet family" />
+            <div className="home-why-img-badge">
+              <span>🏆</span>
+              <p>Trusted by 87+ families</p>
+            </div>
+          </div>
           <div className="home-why-text">
-            <span className="home-why-tag">Why PawFind?</span>
-            <h2>Making adoption simple, safe and joyful</h2>
-            <p>We built PawFind because every pet deserves a loving home, and every family deserves to find their perfect companion without the hassle of paperwork and phone queues.</p>
+            <span className="home-why-tag">Why choose PawFind?</span>
+            <h2>Making adoption simple, safe and joyful for everyone</h2>
+            <p>We built PawFind because every pet deserves a loving home, and every family deserves to find their perfect companion without hassle, paperwork, or long queues.</p>
             <div className="home-why-points">
               <div className="home-why-point">
-                <span>✅</span>
-                <p>All pets are vaccinated and vet-checked before listing</p>
+                <div className="home-why-point-icon">💉</div>
+                <div>
+                  <p className="home-why-point-title">Health verified</p>
+                  <p className="home-why-point-sub">All pets are vaccinated and vet-checked before listing</p>
+                </div>
               </div>
               <div className="home-why-point">
-                <span>✅</span>
-                <p>Online application — no paperwork, no queues</p>
+                <div className="home-why-point-icon">📋</div>
+                <div>
+                  <p className="home-why-point-title">Online application</p>
+                  <p className="home-why-point-sub">No paperwork — apply from your phone in minutes</p>
+                </div>
               </div>
               <div className="home-why-point">
-                <span>✅</span>
-                <p>Real-time application status tracking</p>
+                <div className="home-why-point-icon">📍</div>
+                <div>
+                  <p className="home-why-point-title">Real-time tracking</p>
+                  <p className="home-why-point-sub">Follow your application status from pending to approved</p>
+                </div>
               </div>
               <div className="home-why-point">
-                <span>✅</span>
-                <p>Personality quiz to find your perfect pet match</p>
+                <div className="home-why-point-icon">❤️</div>
+                <div>
+                  <p className="home-why-point-title">Perfect match quiz</p>
+                  <p className="home-why-point-sub">Answer 7 questions and find your ideal pet type</p>
+                </div>
               </div>
             </div>
             <Link to="/about" className="home-why-btn">Learn more about us →</Link>
           </div>
-          <div className="home-why-img">
-            <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=600&q=80" alt="Happy pet owner" />
-          </div>
         </div>
       </div>
 
-      {/* FEATURES */}
+      {/* FEATURES — balanced 3x2 grid */}
       <div className="home-features">
-        <h2 className="sec-title">Everything you need</h2>
-        <p className="sec-sub">All the tools to make your adoption journey smooth and enjoyable</p>
-        <div className="features-grid">
-          <div className="feat-card">
-            <div className="feat-icon">🔍</div>
-            <h3>Smart search</h3>
-            <p>Filter by species, age, size and gender to find your ideal match instantly</p>
+        <div className="home-features-inner">
+          <div className="home-features-header">
+            <h2 className="sec-title">Everything you need</h2>
+            <p className="sec-sub">All the tools to make your adoption journey smooth and enjoyable</p>
           </div>
-          <div className="feat-card">
-            <div className="feat-icon">❤️</div>
-            <h3>Match quiz</h3>
-            <p>7 lifestyle questions that suggest the perfect pet type for your home</p>
-          </div>
-          <div className="feat-card">
-            <div className="feat-icon">📋</div>
-            <h3>Online application</h3>
-            <p>Apply in minutes from your phone or laptop — no paperwork needed</p>
-          </div>
-          <div className="feat-card">
-            <div className="feat-icon">💉</div>
-            <h3>Health verified</h3>
-            <p>Complete vaccination records and vet history for every pet</p>
-          </div>
-          <div className="feat-card">
-            <div className="feat-icon">📍</div>
-            <h3>Status tracking</h3>
-            <p>Follow your application from pending to approved in real time</p>
-          </div>
-          <div className="feat-card">
-            <div className="feat-icon">🌟</div>
-            <h3>Success stories</h3>
-            <p>Read real stories from families who found their perfect companion</p>
+          <div className="features-grid">
+            <div className="feat-card">
+              <div className="feat-icon-wrap" style={{background:'#EFEBE9'}}>🔍</div>
+              <h3>Smart search</h3>
+              <p>Filter by species, age, size and gender to find your ideal match instantly</p>
+            </div>
+            <div className="feat-card">
+              <div className="feat-icon-wrap" style={{background:'#FFF3E0'}}>❤️</div>
+              <h3>Match quiz</h3>
+              <p>7 lifestyle questions that suggest the perfect pet type for your home and family</p>
+            </div>
+            <div className="feat-card">
+              <div className="feat-icon-wrap" style={{background:'#E8F5E9'}}>📋</div>
+              <h3>Online application</h3>
+              <p>Apply to adopt in minutes from your phone — no paperwork or queues needed</p>
+            </div>
+            <div className="feat-card">
+              <div className="feat-icon-wrap" style={{background:'#E3F2FD'}}>💉</div>
+              <h3>Health verified</h3>
+              <p>Complete vaccination records and full vet history for every single pet</p>
+            </div>
+            <div className="feat-card">
+              <div className="feat-icon-wrap" style={{background:'#F3E5F5'}}>📍</div>
+              <h3>Status tracking</h3>
+              <p>Follow your application from pending to approved in real time on your dashboard</p>
+            </div>
+            <div className="feat-card">
+              <div className="feat-icon-wrap" style={{background:'#FFF8E1'}}>🌟</div>
+              <h3>Success stories</h3>
+              <p>Read real stories from hundreds of families who found their perfect companion</p>
+            </div>
           </div>
         </div>
       </div>
@@ -290,12 +308,12 @@ function Home() {
           <div className="step-item">
             <div className="step-num">2</div>
             <h3>Take the quiz</h3>
-            <p>Answer 7 lifestyle questions and get matched with your perfect pet</p>
+            <p>Answer 7 lifestyle questions and get matched with your perfect pet type</p>
           </div>
           <div className="step-item">
             <div className="step-num">3</div>
             <h3>Apply online</h3>
-            <p>Submit your adoption application online in minutes — no paperwork</p>
+            <p>Submit your adoption application online in minutes — completely paperless</p>
           </div>
           <div className="step-item">
             <div className="step-num">4</div>
@@ -305,29 +323,63 @@ function Home() {
         </div>
       </div>
 
+      {/* SPECIES SECTION */}
+      <div className="home-species">
+        <h2 className="sec-title">Browse by species</h2>
+        <p className="sec-sub">We have a wide variety of loving animals looking for homes</p>
+        <div className="species-grid">
+          <Link to="/pets" className="species-card">
+            <div className="species-img" style={{background:'#EFEBE9'}}>🐶</div>
+            <p className="species-name">Dogs</p>
+            <p className="species-sub">Loyal & energetic</p>
+          </Link>
+          <Link to="/pets" className="species-card">
+            <div className="species-img" style={{background:'#FFF3E0'}}>🐱</div>
+            <p className="species-name">Cats</p>
+            <p className="species-sub">Independent & loving</p>
+          </Link>
+          <Link to="/pets" className="species-card">
+            <div className="species-img" style={{background:'#E8F5E9'}}>🐦</div>
+            <p className="species-name">Birds</p>
+            <p className="species-sub">Colourful & vocal</p>
+          </Link>
+          <Link to="/pets" className="species-card">
+            <div className="species-img" style={{background:'#F3E5F5'}}>🐰</div>
+            <p className="species-name">Rabbits</p>
+            <p className="species-sub">Gentle & calm</p>
+          </Link>
+        </div>
+      </div>
+
       {/* QUIZ BANNER */}
       <div className="quiz-banner">
-        <div className="quiz-banner-text">
-          <span className="quiz-banner-emoji">🤔</span>
-          <h3>Not sure which pet suits you?</h3>
-          <p>Answer 7 quick questions about your lifestyle and we'll find your perfect match.</p>
+        <div className="quiz-banner-left">
+          <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=300&q=80" alt="Dog" className="quiz-banner-img" />
         </div>
-        <Link to="/quiz" className="btn-cream">Take the quiz ↗</Link>
+        <div className="quiz-banner-text">
+          <span className="quiz-banner-tag">Free · Takes 2 minutes</span>
+          <h3>Not sure which pet suits you?</h3>
+          <p>Answer 7 quick questions about your lifestyle, home, and experience — and we will match you with your perfect pet type.</p>
+          <Link to="/quiz" className="quiz-banner-btn">Take the quiz →</Link>
+        </div>
+        <div className="quiz-banner-right">
+          <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300&q=80" alt="Cat" className="quiz-banner-img" />
+        </div>
       </div>
 
       {/* SUCCESS STORIES */}
-      <div className="home-section">
+      <div className="home-section" style={{background:'#EFEBE9'}}>
         <div className="sec-header">
           <div>
             <h2 className="sec-title">Success stories</h2>
-            <p className="sec-sub">Families who found their perfect companion through PawFind</p>
+            <p className="sec-sub">Real families, real companions, real joy</p>
           </div>
           <Link to="/stories" className="view-all-btn">View all →</Link>
         </div>
         <div className="stories-grid">
           <div className="story-card">
             <div className="story-quote">❝</div>
-            <p className="story-text">Max changed our family completely. He is the best thing that happened to us this year!</p>
+            <p className="story-text">Max changed our family completely. He is the best thing that happened to us this year. We could not imagine life without him now!</p>
             <div className="story-footer">
               <span className="story-pet-icon">🐶</span>
               <div>
@@ -338,7 +390,7 @@ function Home() {
           </div>
           <div className="story-card">
             <div className="story-quote">❝</div>
-            <p className="story-text">Mimi settled in within a day. She is so gentle with our kids. Thank you PawFind!</p>
+            <p className="story-text">Mimi settled in within a day. She is so gentle with our kids and fills our home with warmth. Thank you PawFind for making this so easy!</p>
             <div className="story-footer">
               <span className="story-pet-icon">🐱</span>
               <div>
@@ -349,7 +401,7 @@ function Home() {
           </div>
           <div className="story-card">
             <div className="story-quote">❝</div>
-            <p className="story-text">Rio already knows our names. Smartest pet I have ever had. Couldn't be happier!</p>
+            <p className="story-text">Rio already knows our names and greets us every morning. The smartest and most joyful pet I have ever had. Couldn't be happier!</p>
             <div className="story-footer">
               <span className="story-pet-icon">🐦</span>
               <div>
@@ -369,7 +421,8 @@ function Home() {
           <p>Join hundreds of happy families who found their perfect pet through PawFind</p>
           <div className="cta-btns">
             <Link to="/pets" className="btn-cream">Browse all pets</Link>
-            <Link to="/adopt" className="btn-outline-dark">Apply to adopt</Link>
+            <Link to="/quiz" className="btn-outline-dark">Take match quiz</Link>
+            <Link to="/contact" className="btn-outline-dark">Contact us</Link>
           </div>
         </div>
       </div>
