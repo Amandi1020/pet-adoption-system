@@ -7,7 +7,7 @@ function About() {
 
       <div className="about-hero">
         <div className="about-hero-content">
-          <span className="about-hero-tag">Est. 2025 · Colombo, Sri Lanka</span>
+          <span className="about-hero-tag">Est. 2026 · Colombo, Sri Lanka</span>
           <h1>About PawFind 🐾</h1>
           <p>We connect loving families with pets who need a home</p>
         </div>
