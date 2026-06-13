@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import loginAnimal from '../assets/images/Other/login-animal.jpg'
 import { Link, useNavigate } from 'react-router-dom'
 import { loginUser } from '../services/authService'
 import Toast from '../components/Toast'
@@ -23,8 +24,12 @@ function Login() {
         setToast({ message: 'Invalid email or password.', type: 'error' })
       }
     } catch (err) {
-      setToast({ message: 'Something went wrong. Try again.', type: 'error' })
-    }
+  console.error(err)
+  setToast({
+    message: err.message,
+    type: 'error'
+  })
+}
   }
 
   return (
@@ -39,7 +44,7 @@ function Login() {
         </div>
         <div className="login-animal-wrap">
           <img
-            src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&q=80"
+            src={loginAnimal}
             alt="Happy dog"
             className="login-animal-img"
             onError={e => { e.target.style.display = 'none' }}
