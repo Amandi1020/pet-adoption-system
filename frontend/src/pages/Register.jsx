@@ -1,73 +1,106 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { registerUser } from '../services/authService'
-import '../styles/Auth.css'
+import Toast from '../components/Toast'
+import '../styles/Login.css'
 
 function Register() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [message, setMessage] = useState('')
+  const [toast, setToast] = useState(null)
   const navigate = useNavigate()
+  const closeToast = useCallback(() => setToast(null), [])
 
   const handleRegister = async (e) => {
     e.preventDefault()
     try {
       const result = await registerUser({ name, email, password, role: 'ADOPTER' })
       if (result.id) {
-        setMessage('Account created successfully!')
-        setTimeout(() => navigate('/login'), 1500)
+        setToast({ message: 'Account created successfully! 🐾', type: 'success' })
+        setTimeout(() => navigate('/login'), 2000)
       } else {
-        setMessage('Registration failed. Try again.')
+        setToast({ message: 'Registration failed. Try again.', type: 'error' })
       }
     } catch (err) {
-      setMessage('Something went wrong.')
-    }
+    console.error(err)
+    setToast({
+      message: err.message,
+      type: 'error'
+    })
+}
   }
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
-        <h2>🐾 Create Account</h2>
-        <p className="auth-sub">Join PawFind and find your pet</p>
-        {message && <p className="auth-msg">{message}</p>}
-        <form onSubmit={handleRegister}>
-          <div className="form-group">
-            <label>Full Name</label>
-            <input
-              type="text"
-              placeholder="Enter your name"
-              value={name}
-              onChange={e => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="Create a password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="auth-btn">Create Account</button>
-        </form>
-        <p className="auth-switch">
-          Already have an account? <Link to="/login">Login here</Link>
-        </p>
+    <div className="login-page">
+
+      {/* LEFT SIDE */}
+      <div className="login-left">
+        <div className="login-left-top">
+          <div className="login-paw login-paw-1">🐾</div>
+          <div className="login-paw login-paw-2">🐾</div>
+          <div className="login-paw login-paw-3">🐾</div>
+        </div>
+        <div className="login-animal-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&q=80"
+            alt="Happy cat"
+            className="login-animal-img"
+          />
+        </div>
+        <div className="login-left-brand">
+          <p className="login-brand-name">🐾 PawFind</p>
+          <p className="login-brand-sub">Join our community today</p>
+        </div>
       </div>
+
+      {/* RIGHT SIDE */}
+      <div className="login-right">
+        <div className="login-form-wrap">
+          <h2 className="login-title">Get started</h2>
+          <p className="login-sub">Create your PawFind account</p>
+
+          <form onSubmit={handleRegister}>
+            <div className="login-form-group">
+              <label>Full Name</label>
+              <input
+                type="text"
+                placeholder="Your full name"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="login-form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                placeholder="your@email.com"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="login-form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                placeholder="Create a password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="login-btn">Create Account</button>
+          </form>
+
+          <p className="login-switch">
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
+        </div>
+      </div>
+
+      {toast && <Toast message={toast.message} type={toast.type} onClose={closeToast} />}
     </div>
   )
 }
