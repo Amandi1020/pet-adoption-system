@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import aboutImg from '../assets/images/Other/about.jpg'
 import '../styles/About.css'
 
 const timeline = [
@@ -30,11 +31,7 @@ function About() {
 
       {/* HERO */}
       <div className="about-hero">
-        <img
-          src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=1400&q=80"
-          alt="Happy family with dog"
-          className="about-hero-img"
-        />
+        <img src={aboutImg} alt="Our mission" />
         <div className="about-hero-overlay"></div>
         <div className="about-hero-content">
           <span className="about-hero-tag">Est. 2025 · Colombo, Sri Lanka</span>
