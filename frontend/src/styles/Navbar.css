@@ -87,3 +87,8 @@
 .logout-btn:hover {
   background: #3E2723;
 }
+
+.nav-active {
+  background-color: #4E342E !important;
+  color: #FFF8E7 !important;
+}
