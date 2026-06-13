@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import contactBanner from '../assets/images/Other/contactbanner.jpg'
 import '../styles/Contact.css'
 
 function Contact() {
@@ -37,7 +38,7 @@ function Contact() {
      <div className="contact-hero">
         <div className="contact-hero-bg"></div>
         <img
-          src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1200&q=80"
+          src={contactBanner}
           alt="Happy dog"
           className="contact-hero-animal"
         />
