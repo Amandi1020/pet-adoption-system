@@ -1,125 +1,131 @@
 .login-page {
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: #FFF8E7;
-}
-
-@media (max-width: 700px) {
-  .login-page { grid-template-columns: 1fr; }
-  .login-left { display: none; }
-}
-
-/* LEFT SIDE */
-.login-left {
-  background: #EFEBE9;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.login-left-top {
-  position: relative;
-  width: 100%;
-  height: 80px;
-}
-
-.login-paw {
-  position: absolute;
-  font-size: 2rem;
-  opacity: 0.2;
-  color: #8D6E63;
-}
-
-.login-paw-1 { top: 10px; left: 20px; font-size: 3rem; opacity: 0.15; transform: rotate(-20deg); }
-.login-paw-2 { top: 0; right: 30px; font-size: 1.5rem; opacity: 0.2; transform: rotate(15deg); }
-.login-paw-3 { top: 40px; left: 60%; font-size: 2rem; opacity: 0.12; transform: rotate(30deg); }
-
-.login-animal-wrap {
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
 }
 
-.login-animal-img {
-  width: 260px;
-  height: 260px;
+/* BACKGROUND */
+.login-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+}
+
+.login-bg-img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 50%;
-  border: 6px solid white;
-  box-shadow: 0 10px 30px rgba(141,110,99,0.2);
+  object-position: center;
 }
 
-.login-left-brand {
-  text-align: center;
-  padding-bottom: 1rem;
+.login-bg-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(78, 52, 46, 0.55);
 }
 
-.login-brand-name {
-  font-size: 1.4rem;
+/* PAW DECORATIONS */
+.login-paw {
+  position: absolute;
+  font-size: 2.5rem;
+  opacity: 0.15;
+  color: #FFF8E7;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.login-paw-1 { top: 8%; left: 5%; font-size: 4rem; transform: rotate(-20deg); }
+.login-paw-2 { top: 15%; right: 8%; font-size: 3rem; transform: rotate(25deg); }
+.login-paw-3 { bottom: 15%; left: 8%; font-size: 3.5rem; transform: rotate(10deg); }
+.login-paw-4 { bottom: 10%; right: 6%; font-size: 2.5rem; transform: rotate(-15deg); }
+.login-paw-5 { top: 50%; left: 3%; font-size: 2rem; transform: rotate(30deg); }
+
+/* CARD */
+.login-card {
+  position: relative;
+  z-index: 2;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+/* ANIMAL IMAGE INSIDE CARD */
+.login-card-img-wrap {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.login-card-animal {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+}
+
+.login-card-img-overlay {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(78,52,46,0.85), transparent);
+}
+
+.login-card-brand {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #FFF8E7;
+  margin: 0;
+}
+
+/* FORM BODY */
+.login-card-body {
+  padding: 1.8rem;
+}
+
+.login-title {
+  font-size: 1.5rem;
   font-weight: bold;
   color: #4E342E;
   margin-bottom: 4px;
 }
 
-.login-brand-sub {
-  font-size: 13px;
-  color: #8D6E63;
-}
-
-/* RIGHT SIDE */
-.login-right {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background: #FFF8E7;
-}
-
-.login-form-wrap {
-  width: 100%;
-  max-width: 360px;
-}
-
-.login-title {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #4E342E;
-  margin-bottom: 6px;
-}
-
 .login-sub {
   font-size: 13px;
   color: #8D6E63;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .login-form-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .login-form-group label {
   display: block;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
   color: #4E342E;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 .login-form-group input {
   width: 100%;
-  padding: 12px 16px;
+  padding: 11px 14px;
   border-radius: 10px;
   border: 1.5px solid #D7CCC8;
   font-size: 14px;
   outline: none;
-  background: white;
+  background: #FFF8E7;
   color: #4E342E;
   transition: border-color 0.2s, box-shadow 0.2s;
 }

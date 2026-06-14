@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react'
-import loginAnimal from '../assets/images/Other/login-animal.jpg'
 import { Link, useNavigate } from 'react-router-dom'
 import { loginUser } from '../services/authService'
 import Toast from '../components/Toast'
@@ -24,41 +23,48 @@ function Login() {
         setToast({ message: 'Invalid email or password.', type: 'error' })
       }
     } catch (err) {
-  console.error(err)
-  setToast({
-    message: err.message,
-    type: 'error'
-  })
-}
+      console.error('Login error:', err)
+      setToast({ message: err?.message || 'Something went wrong. Try again.', type: 'error' })
+    }
   }
 
   return (
     <div className="login-page">
 
-      {/* LEFT SIDE — decorative */}
-      <div className="login-left">
-        <div className="login-left-top">
-          <div className="login-paw login-paw-1">🐾</div>
-          <div className="login-paw login-paw-2">🐾</div>
-          <div className="login-paw login-paw-3">🐾</div>
-        </div>
-        <div className="login-animal-wrap">
-          <img
-            src={loginAnimal}
-            alt="Happy dog"
-            className="login-animal-img"
-            onError={e => { e.target.style.display = 'none' }}
-          />
-        </div>
-        <div className="login-left-brand">
-          <p className="login-brand-name">🐾 PawFind</p>
-          <p className="login-brand-sub">Find your perfect companion</p>
-        </div>
+      {/* FULL BACKGROUND IMAGE */}
+      <div className="login-bg">
+        <img
+          src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=1400&q=80"
+          alt="background"
+          className="login-bg-img"
+        />
+        <div className="login-bg-overlay"></div>
       </div>
 
-      {/* RIGHT SIDE — form */}
-      <div className="login-right">
-        <div className="login-form-wrap">
+      {/* PAW DECORATIONS */}
+      <div className="login-paw login-paw-1">🐾</div>
+      <div className="login-paw login-paw-2">🐾</div>
+      <div className="login-paw login-paw-3">🐾</div>
+      <div className="login-paw login-paw-4">🐾</div>
+      <div className="login-paw login-paw-5">🐾</div>
+
+      {/* FORM CARD — centered over image */}
+      <div className="login-card">
+
+        {/* ANIMAL IMAGE INSIDE CARD */}
+        <div className="login-card-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&q=80"
+            alt="Happy dog"
+            className="login-card-animal"
+          />
+          <div className="login-card-img-overlay">
+            <p className="login-card-brand">🐾 PawFind</p>
+          </div>
+        </div>
+
+        {/* FORM */}
+        <div className="login-card-body">
           <h2 className="login-title">Welcome back</h2>
           <p className="login-sub">Login to your PawFind account</p>
 
@@ -90,6 +96,7 @@ function Login() {
             Don't have an account? <Link to="/register">Sign Up</Link>
           </p>
         </div>
+
       </div>
 
       {toast && <Toast message={toast.message} type={toast.type} onClose={closeToast} />}
