@@ -118,11 +118,11 @@ function Dashboard() {
               <p className="dash-quick-title">Stories</p>
               <p className="dash-quick-sub">Approve success stories</p>
             </Link>
-            <Link to="/pets" className="dash-quick-card">
-              <span className="dash-quick-icon">🌐</span>
-              <p className="dash-quick-title">View Site</p>
-              <p className="dash-quick-sub">See the public website</p>
-            </Link>
+                <Link to="/" className="dash-quick-card">
+                <span className="dash-quick-icon">🌐</span>
+                <p className="dash-quick-title">View Site</p>
+                <p className="dash-quick-sub">See the public home page</p>
+              </Link>
           </div>
 
           {/* RECENT APPLICATIONS */}
