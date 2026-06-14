@@ -9,7 +9,9 @@ function PetList() {
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('All')
   const [loading, setLoading] = useState(true)
+  
 
+  
   useEffect(() => {
     getAllPets()
       .then(data => {
@@ -22,11 +24,13 @@ function PetList() {
       })
   }, [])
 
+  
   const filtered = pets.filter(pet => {
     const matchSearch = pet.name.toLowerCase().includes(search.toLowerCase())
     const matchFilter = filter === 'All' || pet.species === filter
     return matchSearch && matchFilter
   })
+
 
   return (
     <div className="petlist-page">

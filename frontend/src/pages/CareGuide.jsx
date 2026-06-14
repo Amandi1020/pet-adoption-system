@@ -188,6 +188,7 @@ const guides = [
 function CareGuide() {
   const [selected, setSelected] = useState('Dog')
   const guide = guides.find(g => g.species === selected)
+  
 
   return (
     <div className="care-page">

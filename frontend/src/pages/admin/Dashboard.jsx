@@ -18,23 +18,25 @@ function Dashboard() {
   const [recentApps, setRecentApps] = useState([])
 
   useEffect(() => {
-    Promise.all([
-      fetch(`${BASE_URL}/pets`).then(res => res.json()),
-      fetch(`${BASE_URL}/applications`).then(res => res.json())
-    ]).then(([pets, applications]) => {
-      setStats({
-        totalPets: pets.length,
-        availablePets: pets.filter(p => p.status === 'AVAILABLE').length,
-        adoptedPets: pets.filter(p => p.status === 'ADOPTED').length,
-        totalApplications: applications.length,
-        pendingApplications: applications.filter(a => a.status === 'PENDING').length,
-        approvedApplications: applications.filter(a => a.status === 'APPROVED').length,
-        rejectedApplications: applications.filter(a => a.status === 'REJECTED').length,
-      })
-      setRecentApps(applications.slice(-5).reverse())
-      setLoading(false)
+  Promise.all([
+    fetch(`${BASE_URL}/pets`).then(res => res.json()),
+    fetch(`${BASE_URL}/applications`).then(res => res.json())
+  ]).then(([pets, applications]) => {
+    const availablePets = pets.filter(p => p.status === 'AVAILABLE')
+    const adoptedPets = pets.filter(p => p.status === 'ADOPTED')
+    setStats({
+      totalPets: pets.length,
+      availablePets: availablePets.length,
+      adoptedPets: adoptedPets.length,
+      totalApplications: applications.length,
+      pendingApplications: applications.filter(a => a.status === 'PENDING').length,
+      approvedApplications: applications.filter(a => a.status === 'APPROVED').length,
+      rejectedApplications: applications.filter(a => a.status === 'REJECTED').length,
     })
-  }, [])
+    setRecentApps(applications.slice(-5).reverse())
+    setLoading(false)
+  }).catch(() => setLoading(false))
+}, [])
 
   const statCards = [
     { label: 'Total Pets', value: stats.totalPets, icon: '🐾', bg: '#EFEBE9', border: '#D7CCC8' },
