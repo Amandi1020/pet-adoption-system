@@ -30,34 +30,37 @@ public class ApplicationService {
         return applicationRepository.findByAdopterId(adopterId);
     }
 
-    public AdoptionApplication updateStatus(Integer id, AdoptionApplication.Status status, String notes) {
+    public AdoptionApplication updateStatus(
+            Integer id,
+            AdoptionApplication.Status status,
+            String notes) {
+
         AdoptionApplication app = applicationRepository.findById(id).orElse(null);
-        if (app != null) {
-            app.setStatus(status);
-            app.setNotes(notes);
-            app.setReviewedAt(LocalDateTime.now());
-            applicationRepository.save(app);
+        if (app == null) return null;
 
-            // ← Auto update pet status when approved
-            if (status == AdoptionApplication.Status.APPROVED) {
-                Pet pet = app.getPet();
-                if (pet != null) {
-                    pet.setStatus(Pet.Status.ADOPTED);
-                    petRepository.save(pet);
-                }
+        app.setStatus(status);
+        app.setNotes(notes);
+        app.setReviewedAt(LocalDateTime.now());
+        applicationRepository.save(app);
+
+        // Auto update pet status when APPROVED
+        if (status == AdoptionApplication.Status.APPROVED) {
+            Pet pet = app.getPet();
+            if (pet != null) {
+                pet.setStatus(Pet.Status.ADOPTED);
+                petRepository.save(pet);
             }
-
-            // ← Auto set pet back to AVAILABLE when rejected
-            if (status == AdoptionApplication.Status.REJECTED) {
-                Pet pet = app.getPet();
-                if (pet != null) {
-                    pet.setStatus(Pet.Status.AVAILABLE);
-                    petRepository.save(pet);
-                }
-            }
-
-            return app;
         }
-        return null;
+
+        // Auto set pet back to AVAILABLE when REJECTED
+        if (status == AdoptionApplication.Status.REJECTED) {
+            Pet pet = app.getPet();
+            if (pet != null) {
+                pet.setStatus(Pet.Status.AVAILABLE);
+                petRepository.save(pet);
+            }
+        }
+
+        return app;
     }
 }

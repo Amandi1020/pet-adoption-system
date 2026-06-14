@@ -34,7 +34,10 @@ public class ApplicationController {
             @PathVariable Integer id,
             @RequestParam String status,
             @RequestParam(required = false) String notes) {
-        return applicationService.updateStatus(id,
-                AdoptionApplication.Status.valueOf(status), notes);
+        return applicationService.updateStatus(
+                id,
+                AdoptionApplication.Status.valueOf(status),
+                notes
+        );
     }
 }
