@@ -9,15 +9,17 @@ function MyApplications() {
   const user = JSON.parse(localStorage.getItem('user'))
 
   useEffect(() => {
-    if (!user) return
-    fetch(`${BASE_URL}/applications/adopter/${user.id}`)
-      .then(res => res.json())
-      .then(data => {
-        setApplications(data)
-        setLoading(false)
-      })
-      .catch(() => setLoading(false))
-  }, [])
+  if (!user) return
+  fetch(`${BASE_URL}/applications`)
+    .then(res => res.json())
+    .then(data => {
+      // Filter by logged in user's ID
+      const myApps = data.filter(app => app.adopter?.id === user.id)
+      setApplications(myApps)
+      setLoading(false)
+    })
+    .catch(() => setLoading(false))
+}, [])
 
   const getStatusColor = (status) => {
     switch(status) {
