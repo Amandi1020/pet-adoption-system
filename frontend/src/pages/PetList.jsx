@@ -12,7 +12,6 @@ function PetList() {
   const [loading, setLoading] = useState(true)
   const location = useLocation()
 
-  // Read species filter from navigation state (from CareGuide)
   useEffect(() => {
     if (location.state?.species) {
       setFilter(location.state.species)
