@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { registerUser } from '../services/authService'
 import Toast from '../components/Toast'
+import loginAnimal from '../assets/images/Other/login-animal.png'
 import '../styles/Login.css'
 
 function Register() {
@@ -23,11 +24,7 @@ function Register() {
         setToast({ message: 'Registration failed. Try again.', type: 'error' })
       }
     } catch (err) {
-    console.error(err)
-    setToast({
-      message: err.message,
-      type: 'error'
-    })
+      setToast({ message: 'Something went wrong.', type: 'error' })
     }
   }
 
@@ -35,11 +32,7 @@ function Register() {
     <div className="login-page">
 
       <div className="login-bg">
-        <img
-          src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=1400&q=80"
-          alt="background"
-          className="login-bg-img"
-        />
+        <img src={loginAnimal} alt="background" className="login-bg-img" />
         <div className="login-bg-overlay"></div>
       </div>
 
@@ -51,15 +44,10 @@ function Register() {
 
       <div className="login-card">
 
-        <div className="login-card-img-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&q=80"
-            alt="Happy dog"
-            className="login-card-animal"
-          />
-          <div className="login-card-img-overlay">
-            <p className="login-card-brand">🐾 PawFind</p>
-          </div>
+        <div className="login-card-header">
+          <span className="login-card-paw">🐾</span>
+          <p className="login-card-brand">PawFind</p>
+          <p className="login-card-tagline">Join our community today</p>
         </div>
 
         <div className="login-card-body">
