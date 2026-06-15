@@ -8,7 +8,7 @@
   padding: 2rem;
 }
 
-/* BACKGROUND */
+/* BACKGROUND — full page animal image */
 .login-bg {
   position: absolute;
   top: 0; left: 0;
@@ -27,64 +27,65 @@
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(78, 52, 46, 0.55);
+  background: rgba(78, 52, 46, 0.45);
+  backdrop-filter: blur(2px);
 }
 
 /* PAW DECORATIONS */
 .login-paw {
   position: absolute;
-  font-size: 2.5rem;
-  opacity: 0.15;
+  opacity: 0.18;
   color: #FFF8E7;
   z-index: 1;
   pointer-events: none;
 }
 
-.login-paw-1 { top: 8%; left: 5%; font-size: 4rem; transform: rotate(-20deg); }
-.login-paw-2 { top: 15%; right: 8%; font-size: 3rem; transform: rotate(25deg); }
-.login-paw-3 { bottom: 15%; left: 8%; font-size: 3.5rem; transform: rotate(10deg); }
-.login-paw-4 { bottom: 10%; right: 6%; font-size: 2.5rem; transform: rotate(-15deg); }
-.login-paw-5 { top: 50%; left: 3%; font-size: 2rem; transform: rotate(30deg); }
+.login-paw-1 { top: 6%; left: 4%; font-size: 4rem; transform: rotate(-20deg); }
+.login-paw-2 { top: 12%; right: 6%; font-size: 3rem; transform: rotate(25deg); }
+.login-paw-3 { bottom: 14%; left: 6%; font-size: 3.5rem; transform: rotate(10deg); }
+.login-paw-4 { bottom: 8%; right: 5%; font-size: 2.5rem; transform: rotate(-15deg); }
+.login-paw-5 { top: 48%; left: 2%; font-size: 2rem; transform: rotate(30deg); }
 
-/* CARD */
+/* GLASS CARD */
 .login-card {
   position: relative;
   z-index: 2;
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
+  background: rgba(255, 248, 231, 0.18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 24px;
+  border: 1.5px solid rgba(255, 248, 231, 0.3);
   width: 100%;
-  max-width: 420px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-}
-
-/* ANIMAL IMAGE INSIDE CARD */
-.login-card-img-wrap {
-  position: relative;
-  height: 200px;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   overflow: hidden;
 }
 
-.login-card-animal {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
+/* CARD HEADER */
+.login-card-header {
+  background: rgba(141, 110, 99, 0.35);
+  padding: 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 248, 231, 0.2);
+}
+
+.login-card-paw {
+  font-size: 2rem;
   display: block;
-}
-
-.login-card-img-overlay {
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 100%;
-  padding: 1rem;
-  background: linear-gradient(to top, rgba(78,52,46,0.85), transparent);
+  margin-bottom: 4px;
 }
 
 .login-card-brand {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: bold;
   color: #FFF8E7;
+  margin: 0 0 3px 0;
+  letter-spacing: 1px;
+}
+
+.login-card-tagline {
+  font-size: 12px;
+  color: rgba(255, 248, 231, 0.75);
   margin: 0;
 }
 
@@ -94,15 +95,15 @@
 }
 
 .login-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  color: #4E342E;
+  color: #FFF8E7;
   margin-bottom: 4px;
 }
 
 .login-sub {
-  font-size: 13px;
-  color: #8D6E63;
+  font-size: 12.5px;
+  color: rgba(255, 248, 231, 0.75);
   margin-bottom: 1.5rem;
 }
 
@@ -114,7 +115,7 @@
   display: block;
   font-size: 12.5px;
   font-weight: 600;
-  color: #4E342E;
+  color: rgba(255, 248, 231, 0.9);
   margin-bottom: 5px;
 }
 
@@ -122,17 +123,21 @@
   width: 100%;
   padding: 11px 14px;
   border-radius: 10px;
-  border: 1.5px solid #D7CCC8;
+  border: 1.5px solid rgba(255, 248, 231, 0.25);
   font-size: 14px;
   outline: none;
-  background: #FFF8E7;
-  color: #4E342E;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  background: rgba(255, 248, 231, 0.15);
+  color: #FFF8E7;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.login-form-group input::placeholder {
+  color: rgba(255, 248, 231, 0.45);
 }
 
 .login-form-group input:focus {
-  border-color: #8D6E63;
-  box-shadow: 0 0 0 3px rgba(141,110,99,0.1);
+  border-color: rgba(255, 248, 231, 0.6);
+  background: rgba(255, 248, 231, 0.22);
 }
 
 .login-btn {
@@ -157,12 +162,12 @@
 .login-switch {
   text-align: center;
   font-size: 13px;
-  color: #8D6E63;
+  color: rgba(255, 248, 231, 0.75);
   margin-top: 1.2rem;
 }
 
 .login-switch a {
-  color: #6D4C41;
+  color: #FFF8E7;
   font-weight: 600;
   text-decoration: none;
 }

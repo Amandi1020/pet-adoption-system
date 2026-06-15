@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { loginUser } from '../services/authService'
 import Toast from '../components/Toast'
+import loginAnimal from '../assets/images/Other/login-animal.png'
 import '../styles/Login.css'
 
 function Login() {
@@ -23,21 +24,16 @@ function Login() {
         setToast({ message: 'Invalid email or password.', type: 'error' })
       }
     } catch (err) {
-      console.error('Login error:', err)
-      setToast({ message: err?.message || 'Something went wrong. Try again.', type: 'error' })
+      setToast({ message: 'Something went wrong. Try again.', type: 'error' })
     }
   }
 
   return (
     <div className="login-page">
 
-      {/* FULL BACKGROUND IMAGE */}
+      {/* FULL BACKGROUND — own animal image */}
       <div className="login-bg">
-        <img
-          src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=1400&q=80"
-          alt="background"
-          className="login-bg-img"
-        />
+        <img src={loginAnimal} alt="background" className="login-bg-img" />
         <div className="login-bg-overlay"></div>
       </div>
 
@@ -48,19 +44,14 @@ function Login() {
       <div className="login-paw login-paw-4">🐾</div>
       <div className="login-paw login-paw-5">🐾</div>
 
-      {/* FORM CARD — centered over image */}
+      {/* GLASS CARD — centered over image */}
       <div className="login-card">
 
-        {/* ANIMAL IMAGE INSIDE CARD */}
-        <div className="login-card-img-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&q=80"
-            alt="Happy dog"
-            className="login-card-animal"
-          />
-          <div className="login-card-img-overlay">
-            <p className="login-card-brand">🐾 PawFind</p>
-          </div>
+        {/* BRAND */}
+        <div className="login-card-header">
+          <span className="login-card-paw">🐾</span>
+          <p className="login-card-brand">PawFind</p>
+          <p className="login-card-tagline">Find your perfect companion</p>
         </div>
 
         {/* FORM */}
