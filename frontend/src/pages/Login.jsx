@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react'
+import loginAnimal from '../assets/images/Other/login-animal.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
 import { loginUser } from '../services/authService'
 import Toast from '../components/Toast'
-import loginAnimal from '../assets/images/Other/login-animal.png'
 import '../styles/Login.css'
 
 function Login() {

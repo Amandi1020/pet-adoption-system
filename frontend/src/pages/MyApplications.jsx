@@ -7,14 +7,13 @@ import '../styles/MyApplications.css'
 
 function MyApplications() {
   const [applications, setApplications] = useState([])
-  const [loading, setLoading] = useState(true)
+  const user = JSON.parse(localStorage.getItem('user'))
+  const [loading, setLoading] = useState(Boolean(user))
   const [toast, setToast] = useState(null)
   const closeToast = useCallback(() => setToast(null), [])
-  const user = JSON.parse(localStorage.getItem('user'))
 
   useEffect(() => {
     if (!user) {
-      setLoading(false)
       return
     }
     fetch(`${BASE_URL}/applications`)
@@ -94,7 +93,7 @@ function MyApplications() {
                 )}
                 {app.status === 'REJECTED' && (
                   <div className="myapp-rejected-msg">
-                    We are sorry your application was not successful this time. Please try again.
+                    We are sorry your application was not successful this time.
                   </div>
                 )}
               </div>
