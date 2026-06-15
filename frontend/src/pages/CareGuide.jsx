@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import '../styles/CareGuide.css'
 
 const guides = [
@@ -188,7 +188,7 @@ const guides = [
 function CareGuide() {
   const [selected, setSelected] = useState('Dog')
   const guide = guides.find(g => g.species === selected)
-  
+  const navigate = useNavigate()
 
   return (
     <div className="care-page">
@@ -295,9 +295,13 @@ function CareGuide() {
             <p>Browse our available {guide.species.toLowerCase()}s and find your perfect companion today.</p>
           </div>
           <div className="care-cta-btns">
-            <Link to="/pets" className="care-cta-btn-primary" style={{background: guide.color}}>
-              Browse {guide.species.toLowerCase()}s →
-            </Link>
+            <button
+            className="care-cta-btn-primary"
+            style={{background: guide.color, border: 'none', cursor: 'pointer'}}
+            onClick={() => navigate('/pets', { state: { species: guide.species } })}
+          >
+            Browse {guide.species.toLowerCase()}s →
+          </button>
             <Link to="/quiz" className="care-cta-btn-outline">
               Take match quiz
             </Link>
