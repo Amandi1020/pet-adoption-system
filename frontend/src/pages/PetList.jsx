@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import Spinner from '../components/Spinner'
 import PetCard from '../components/PetCard'
 import { getAllPets } from '../services/petService'
@@ -9,9 +10,15 @@ function PetList() {
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('All')
   const [loading, setLoading] = useState(true)
-  
+  const location = useLocation()
 
-  
+  // Read species filter from navigation state (from CareGuide)
+  useEffect(() => {
+    if (location.state?.species) {
+      setFilter(location.state.species)
+    }
+  }, [location.state])
+
   useEffect(() => {
     getAllPets()
       .then(data => {
@@ -24,13 +31,11 @@ function PetList() {
       })
   }, [])
 
-  
   const filtered = pets.filter(pet => {
     const matchSearch = pet.name.toLowerCase().includes(search.toLowerCase())
     const matchFilter = filter === 'All' || pet.species === filter
     return matchSearch && matchFilter
   })
-
 
   return (
     <div className="petlist-page">
@@ -63,9 +68,15 @@ function PetList() {
           <Spinner message="Loading pets..." />
         ) : (
           <div className="pets-grid">
-            {filtered.map(pet => (
-              <PetCard key={pet.id} pet={pet} />
-            ))}
+            {filtered.length === 0 ? (
+              <p style={{color:'#8D6E63', fontSize:'14px', padding:'1rem'}}>
+                No pets found.
+              </p>
+            ) : (
+              filtered.map(pet => (
+                <PetCard key={pet.id} pet={pet} />
+              ))
+            )}
           </div>
         )}
       </div>
