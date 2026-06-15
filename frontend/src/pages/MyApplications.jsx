@@ -1,25 +1,34 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import BASE_URL from '../services/api'
+import Spinner from '../components/Spinner'
+import Toast from '../components/Toast'
 import '../styles/MyApplications.css'
 
 function MyApplications() {
   const [applications, setApplications] = useState([])
   const [loading, setLoading] = useState(true)
+  const [toast, setToast] = useState(null)
+  const closeToast = useCallback(() => setToast(null), [])
   const user = JSON.parse(localStorage.getItem('user'))
 
   useEffect(() => {
-  if (!user) return
-  fetch(`${BASE_URL}/applications`)
-    .then(res => res.json())
-    .then(data => {
-      // Filter by logged in user's ID
-      const myApps = data.filter(app => app.adopter?.id === user.id)
-      setApplications(myApps)
+    if (!user) {
       setLoading(false)
-    })
-    .catch(() => setLoading(false))
-}, [])
+      return
+    }
+    fetch(`${BASE_URL}/applications`)
+      .then(res => res.json())
+      .then(data => {
+        const myApps = data.filter(app => app.adopter?.id === user.id)
+        setApplications(myApps)
+        setLoading(false)
+      })
+      .catch(() => {
+        setToast({ message: 'Failed to load applications.', type: 'error' })
+        setLoading(false)
+      })
+  }, [])
 
   const getStatusColor = (status) => {
     switch(status) {
@@ -43,7 +52,7 @@ function MyApplications() {
       <p className="myapps-sub">Track the status of your adoption applications</p>
 
       {loading ? (
-        <p className="myapps-loading">Loading your applications...</p>
+        <Spinner message="Loading your applications..." />
       ) : applications.length === 0 ? (
         <div className="myapps-empty">
           <p>You have not submitted any applications yet.</p>
@@ -93,6 +102,8 @@ function MyApplications() {
           })}
         </div>
       )}
+
+      {toast && <Toast message={toast.message} type={toast.type} onClose={closeToast} />}
     </div>
   )
 }
