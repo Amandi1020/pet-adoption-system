@@ -14,16 +14,35 @@ function Contact() {
     setFormData({...formData, [e.target.name]: e.target.value})
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setLoading(true)
+  const handleSubmit = async (e) => {
+  e.preventDefault()
+  setLoading(true)
 
-    // Simulate sending — replace with EmailJS when ready
-    setTimeout(() => {
+  try {
+    const response = await fetch('http://localhost:8080/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: formData.user_name,
+        email: formData.user_email,
+        phone: formData.user_phone,
+        subject: formData.subject,
+        message: formData.message
+      })
+    })
+
+    if (response.ok) {
       setStatus('success')
-      setLoading(false)
       setFormData({ user_name: '', user_email: '', user_phone: '', subject: '', message: '' })
-    }, 1500)
+    } else {
+      setStatus('error')
+    }
+  } catch (err) {
+    setStatus('error')
+  } finally {
+    setLoading(false)
+  }
+}
 
     // To enable real email sending uncomment below and add your EmailJS keys:
     // import emailjs from '@emailjs/browser'
