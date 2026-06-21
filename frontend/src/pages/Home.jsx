@@ -197,7 +197,6 @@ function Home() {
                     : `${pet.age} month${pet.age > 1 ? 's' : ''}`}
                 </p>
                 <p className="home-pet-species">{pet.species} · {pet.gender} · {pet.size}</p>
-                onClick={() => window.location.href = `/pets/${pet.id}`}
               </div>
             </div>
           ))}

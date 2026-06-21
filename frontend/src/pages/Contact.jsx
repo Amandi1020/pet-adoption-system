@@ -15,47 +15,39 @@ function Contact() {
   }
 
   const handleSubmit = async (e) => {
-  e.preventDefault()
-  setLoading(true)
+    e.preventDefault()
+    setLoading(true)
 
-  try {
-    const response = await fetch('http://localhost:8080/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: formData.user_name,
-        email: formData.user_email,
-        phone: formData.user_phone,
-        subject: formData.subject,
-        message: formData.message
+    try {
+      const response = await fetch('http://localhost:8080/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.user_name,
+          email: formData.user_email,
+          phone: formData.user_phone,
+          subject: formData.subject,
+          message: formData.message
+        })
       })
-    })
 
-    if (response.ok) {
-      setStatus('success')
-      setFormData({ user_name: '', user_email: '', user_phone: '', subject: '', message: '' })
-    } else {
+      if (response.ok) {
+        setStatus('success')
+        setFormData({ user_name: '', user_email: '', user_phone: '', subject: '', message: '' })
+      } else {
+        setStatus('error')
+      }
+    } catch (err) {
       setStatus('error')
+    } finally {
+      setLoading(false)
     }
-  } catch (err) {
-    setStatus('error')
-  } finally {
-    setLoading(false)
-  }
-}
-
-    // To enable real email sending uncomment below and add your EmailJS keys:
-    // import emailjs from '@emailjs/browser'
-    // emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_PUBLIC_KEY')
-    //   .then(() => { setStatus('success'); setLoading(false) })
-    //   .catch(() => { setStatus('error'); setLoading(false) })
   }
 
   return (
     <div className="contact-page">
 
-     <div className="contact-hero">
-        <div className="contact-hero-bg"></div>
+      <div className="contact-hero">
         <img
           src={contactBanner}
           alt="Happy dog"

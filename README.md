@@ -2,9 +2,7 @@
 
 <div align="center">
 
-![PawFind Banner](https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1200&q=80)
-
-**A full-stack web application that digitizes the pet adoption process for animal shelters.**
+**A full-stack web application that digitizes the pet adoption process for animal shelters in Sri Lanka.**
 
 Built with React · Spring Boot · MySQL
 
@@ -17,79 +15,61 @@ Built with React · Spring Boot · MySQL
 
 ---
 
-## 📋 Table of Contents
-
-- [About the Project](#about-the-project)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Database Schema](#database-schema)
-- [API Endpoints](#api-endpoints)
-- [Pages & Routes](#pages--routes)
-- [User Roles](#user-roles)
-- [Getting Started](#getting-started)
-- [Screenshots](#screenshots)
-- [Developer](#developer)
-
----
-
-## 📖 About the Project
+## 📖 About
 
 PawFind was built to solve a real problem — animal shelters in Sri Lanka manage hundreds of pets using paper registers and WhatsApp groups. This system digitizes the entire adoption process, making it easier, faster, and more transparent for shelters, staff, and adopters.
 
-### 🎯 The problem it solves
+### The problem it solves
 
 | Before PawFind | After PawFind |
 |---|---|
 | Pet records on paper | Digital pet profiles with photos |
-| WhatsApp application process | Online adoption application form |
-| No status tracking | Real-time application status tracking |
-| Manual vaccination records | Digital vaccination & care logs |
+| WhatsApp application chaos | Structured online adoption forms |
+| No status visibility | Real-time application tracking |
+| Manual vaccination records | Digital health & vaccination logs |
 | No analytics | Admin dashboard with live stats |
 | Word of mouth only | Public success stories feed |
+| No record of enquiries | Contact messages saved and viewable by admin |
 
 ---
 
 ## ✨ Features
 
-### 🐾 For Adopters
+### For Adopters
 - Browse and search pets by species, age, size and gender
 - View full pet profiles with photos and health records
-- Take the personality match quiz to find the right pet
-- Submit adoption applications online
-- Track application status in real time
+- Personality match quiz — 7 questions to find the right pet
+- Submit adoption applications tied to the specific pet viewed
+- Track application status in real time on a personal dashboard
 - Share success stories after adoption
-- Contact the shelter via contact form
+- Contact the shelter via a working contact form
 
-### ⚙️ For Admin
-- Dashboard with real-time statistics
-- Manage pet listings — add, edit, delete
+### For Admin
+- Real-time dashboard with stats and adoption rate
+- Manage pet listings — add (with month/year age stepper), edit, delete
 - Review and approve or reject applications
-- Auto-updates pet status to Adopted when approved
-- Moderate and approve success stories
-- View all registered users
+- Pet status automatically updates to Adopted when an application is approved (and reverts to Available if rejected)
+- Moderate success stories before they go public
+- View and mark contact messages as read
 
-### 🏥 For Shelter Staff
+### For Shelter Staff
 - Add and update pet profiles
 - Log vaccination records per pet
 - Record vet visits and care notes
-- View assigned applications
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology | Purpose |
-|---|---|---|
-| Frontend | React.js 18 | UI components and pages |
-| Styling | Pure CSS | Custom brown/cream theme |
-| Routing | React Router DOM | Page navigation |
-| Backend | Spring Boot 4 (Java 21) | REST API server |
-| ORM | Spring Data JPA + Hibernate | Database access |
-| Database | MySQL 8 | Data storage |
-| Email | EmailJS | Contact form emails |
-| Images | Unsplash API | Free animal photos |
-| Version Control | Git + GitHub | Code management |
+| Layer | Technology |
+|---|---|
+| Frontend | React.js 18 + Pure CSS |
+| Routing | React Router DOM |
+| Backend | Spring Boot 4 + Java 21 |
+| ORM | Spring Data JPA + Hibernate |
+| Database | MySQL 8 |
+| Email | EmailJS (form wiring in place) |
+| Version Control | Git + GitHub |
 
 ---
 
@@ -97,147 +77,42 @@ PawFind was built to solve a real problem — animal shelters in Sri Lanka manag
 
 ```
 pet-adoption-system/
-│
-├── frontend/                     ← React app (VS Code)
+├── frontend/                     ← React app
 │   └── src/
-│       ├── components/
-│       │   ├── Navbar.jsx
-│       │   ├── PetCard.jsx
-│       │   ├── Footer.jsx
-│       │   ├── Spinner.jsx
-│       │   ├── Toast.jsx
-│       │   └── BackToTop.jsx
-│       ├── pages/
-│       │   ├── Home.jsx
-│       │   ├── PetList.jsx
-│       │   ├── PetDetail.jsx
-│       │   ├── AdoptForm.jsx
-│       │   ├── Login.jsx
-│       │   ├── Register.jsx
-│       │   ├── Quiz.jsx
-│       │   ├── Stories.jsx
-│       │   ├── MyApplications.jsx
-│       │   ├── Contact.jsx
-│       │   ├── About.jsx
-│       │   ├── CareGuide.jsx
-│       │   ├── FAQ.jsx
-│       │   ├── NotFound.jsx
-│       │   └── admin/
-│       │       ├── Dashboard.jsx
-│       │       ├── ManagePets.jsx
-│       │       ├── Applications.jsx
-│       │       └── AdminStories.jsx
-│       ├── services/
-│       │   ├── api.js
-│       │   ├── petService.js
-│       │   └── authService.js
-│       ├── styles/
-│       │   └── *.css
-│       └── context/
-│           └── AuthContext.jsx
-│
-├── backend/                      ← Spring Boot (IntelliJ)
+│       ├── assets/images/        ← pet photos, carousel, UI, login/contact banners
+│       ├── components/           ← Navbar, PetCard, Footer, Toast, Spinner, BackToTop
+│       ├── pages/                ← Home, PetList, PetDetail, Quiz, Login, Register, etc.
+│       │   └── admin/            ← Dashboard, ManagePets, Applications, Stories, Messages
+│       ├── services/             ← API calls (api.js, petService.js, authService.js)
+│       └── styles/                ← CSS files
+├── backend/                      ← Spring Boot
 │   └── src/main/java/com/petadoption/
 │       ├── controller/
-│       │   ├── AuthController.java
-│       │   ├── PetController.java
-│       │   ├── ApplicationController.java
-│       │   ├── VaccinationController.java
-│       │   └── StoryController.java
 │       ├── service/
-│       │   ├── PetService.java
-│       │   ├── UserService.java
-│       │   └── ApplicationService.java
 │       ├── repository/
-│       │   ├── PetRepository.java
-│       │   ├── UserRepository.java
-│       │   ├── ApplicationRepository.java
-│       │   ├── VaccinationRepository.java
-│       │   └── StoryRepository.java
-│       ├── model/
-│       │   ├── Pet.java
-│       │   ├── User.java
-│       │   ├── AdoptionApplication.java
-│       │   ├── Vaccination.java
-│       │   ├── CareRecord.java
-│       │   └── SuccessStory.java
-│       └── PetAdoptionApplication.java
-│
+│       └── model/
 └── database/
-    └── schema.sql                ← Run once in MySQL Workbench
+    └── schema.sql
 ```
 
 ---
 
-## 🗄️ Database Schema
+## 🗄️ Database Tables
 
-```
-users
-├── id (PK)
-├── name
-├── email (UNIQUE)
-├── password
-├── role (ADMIN / STAFF / ADOPTER)
-└── created_at
-
-pets
-├── id (PK)
-├── name
-├── species
-├── breed
-├── age (stored in months)
-├── gender (Male / Female)
-├── size (Small / Medium / Large)
-├── status (AVAILABLE / ADOPTED)
-├── description
-├── added_by (FK → users)
-└── created_at
-
-applications
-├── id (PK)
-├── pet_id (FK → pets)
-├── adopter_id (FK → users)
-├── status (PENDING / REVIEWING / APPROVED / REJECTED)
-├── home_type
-├── has_children
-├── experience
-├── reason
-├── notes
-├── reviewed_by
-├── reviewed_at
-└── created_at
-
-vaccinations
-├── id (PK)
-├── pet_id (FK → pets)
-├── vaccine_name
-├── date_given
-├── next_due_date
-└── given_by
-
-care_records
-├── id (PK)
-├── pet_id (FK → pets)
-├── type (VET / FEEDING / GROOMING)
-├── description
-├── recorded_by (FK → users)
-└── recorded_at
-
-success_stories
-├── id (PK)
-├── pet_id (FK → pets)
-├── adopter_id (FK → users)
-├── story_text
-├── photo_url
-├── is_approved
-└── created_at
-```
+| Table | Description |
+|---|---|
+| users | Admins, staff and adopters |
+| pets | All pet listings with status (AVAILABLE / ADOPTED) |
+| applications | Adoption applications, tied to a specific pet + adopter, with approval workflow |
+| vaccinations | Pet vaccination records |
+| care_records | Vet visits and care logs |
+| success_stories | Post-adoption stories pending/approved |
+| contact_messages | Messages submitted through the Contact page |
 
 ---
 
 ## 🔌 API Endpoints
 
-### Pets
 | Method | Endpoint | Description |
 |---|---|---|
 | GET | /api/pets | Get all pets |
@@ -246,142 +121,77 @@ success_stories
 | POST | /api/pets | Add new pet |
 | PUT | /api/pets/:id | Update pet |
 | DELETE | /api/pets/:id | Delete pet |
-
-### Auth & Users
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | /api/auth/login | Login user |
-| POST | /api/users/register | Register user |
-| GET | /api/users/:id | Get user by ID |
-
-### Applications
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | /api/applications | Submit application |
+| POST | /api/auth/login | Login |
+| POST | /api/users/register | Register |
+| POST | /api/applications | Submit application (pet ID + adopter ID required) |
 | GET | /api/applications | Get all applications |
-| GET | /api/applications/adopter/:id | Get by adopter |
-| PUT | /api/applications/:id/status | Update status |
-
-### Vaccinations
-| Method | Endpoint | Description |
-|---|---|---|
+| GET | /api/applications/adopter/:id | Get applications for one adopter |
+| PUT | /api/applications/:id/status | Update status — auto-updates pet status |
 | GET | /api/vaccinations/pet/:id | Get pet vaccinations |
-| POST | /api/vaccinations | Add vaccination |
-| DELETE | /api/vaccinations/:id | Delete vaccination |
-
-### Stories
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | /api/stories | Get all stories |
 | POST | /api/stories | Submit story |
 | PUT | /api/stories/:id/approve | Approve story |
+| POST | /api/contact | Submit a contact message |
+| GET | /api/contact | Get all contact messages (admin) |
+| PUT | /api/contact/:id/read | Mark a message as read |
 
 ---
 
-## 📱 Pages & Routes
+## 📱 Pages
 
-| Route | Page | Access |
-|---|---|---|
-| / | Home — carousel, stats, features | Public |
-| /pets | Pet listings with search and filter | Public |
-| /pets/:id | Full pet profile page | Public |
-| /quiz | Adopter personality match quiz | Public |
-| /adopt | Adoption application form | Logged in |
-| /my-applications | Track application status | Logged in |
-| /stories | Success stories feed | Public |
-| /care-guide | Pet care guide by species | Public |
-| /about | About PawFind | Public |
-| /contact | Contact form | Public |
-| /faq | Frequently asked questions | Public |
-| /login | Login page | Public |
-| /register | Register page | Public |
-| /admin | Admin dashboard with stats | Admin only |
-| /admin/pets | Manage pet listings | Admin only |
-| /admin/applications | Review applications | Admin only |
-| /admin/stories | Approve stories | Admin only |
+| Route | Page |
+|---|---|
+| / | Home — carousel, real-time stats, featured pets, species browse |
+| /pets | Pet listings with search and species filter |
+| /pets/:id | Full pet profile with adopt button |
+| /quiz | Adopter match quiz |
+| /adopt/:petId | Adoption application form for a specific pet |
+| /my-applications | Track status of your own applications |
+| /stories | Success stories |
+| /care-guide | Pet care by species, with direct browse links |
+| /about | About PawFind |
+| /contact | Contact form |
+| /faq | FAQ |
+| /login, /register | Auth pages with glassmorphism design |
+| /admin | Admin dashboard |
+| /admin/pets | Manage pets |
+| /admin/applications | Review applications |
+| /admin/stories | Approve stories |
+| /admin/messages | View contact submissions |
 
 ---
 
 ## 👥 User Roles
 
-### Admin
-- Full system access
-- Approve or reject adoption applications
-- When approved → pet status auto-changes to Adopted
-- Add, edit and delete pet listings
-- View analytics dashboard
-- Moderate success stories
-
-### Shelter Staff
-- Add and update pet profiles
-- Log vaccination and care records
-- View assigned applications
-
-### Adopter
-- Browse and search all available pets
-- Submit adoption applications
-- Track own application status
-- Share success stories
-- Take the match quiz
+| Role | Access |
+|---|---|
+| Admin | Full system, approve applications, manage all data |
+| Staff | Add pets, log care records |
+| Adopter | Browse, apply, track, share stories |
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
-
-Make sure you have these installed:
-
-```
-Java 21+
-Node.js 18+
-MySQL 8+
-Git
-```
-
-### 1 — Clone the repository
+### 1 — Clone
 
 ```bash
 git clone https://github.com/Amandi1020/pet-adoption-system.git
 cd pet-adoption-system
 ```
 
-### 2 — Set up the database
+### 2 — Database
 
-Open MySQL Workbench and run:
+Open MySQL Workbench and run `database/schema.sql`
 
-```bash
-database/schema.sql
+### 3 — Backend
+
+Update `backend/src/main/resources/application.properties` with your MySQL password, then run in IntelliJ IDEA.
+
+```
+Runs on: http://localhost:8080
 ```
 
-This creates the `pet_adoption_db` database with all 6 tables and sample data.
-
-### 3 — Configure the backend
-
-Open `backend/src/main/resources/application.properties` and update:
-
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/pet_adoption_db
-spring.datasource.username=root
-spring.datasource.password=YOUR_MYSQL_PASSWORD
-```
-
-### 4 — Run the backend
-
-Open the `backend/` folder in IntelliJ IDEA and click the green ▶ Run button.
-
-Or from terminal:
-```bash
-cd backend
-./mvnw spring-boot:run
-```
-
-Spring Boot starts on:
-```
-http://localhost:8080
-```
-
-### 5 — Run the frontend
+### 4 — Frontend
 
 ```bash
 cd frontend
@@ -389,45 +199,17 @@ npm install
 npm run dev
 ```
 
-React starts on:
 ```
-http://localhost:5173
-```
-
-### 6 — Test the app
-
-Open Chrome and go to:
-```
-http://localhost:5173
+Runs on: http://localhost:5173
 ```
 
-**Default admin login:**
+### 5 — Default login
+
 ```
-Email:    admin@pawfind.com
-Password: admin123
+Admin:   admin@pawfind.com  /  admin123
+Staff:   staff@pawfind.com  /  staff123
+Adopter: adopter@pawfind.com / adopter123
 ```
-
----
-
-## 📸 Screenshots
-
-### Home Page
-> Beautiful carousel hero with real animal photos, live stats, and how-it-works section
-
-### Pet Listings
-> Search and filter pets by species, age, size and gender
-
-### Pet Detail
-> Full pet profile with photos, health info, and adoption button
-
-### Match Quiz
-> 7-question personality quiz that suggests the perfect pet
-
-### Admin Dashboard
-> Real-time stats, manage pets, review applications
-
-### Contact Page
-> Contact form with EmailJS integration
 
 ---
 
@@ -435,28 +217,45 @@ Password: admin123
 
 | Color | Hex | Usage |
 |---|---|---|
-| Brown | #8D6E63 | Primary buttons, navbar, headers |
-| Dark Brown | #6D4C41 | Hover states, accents |
+| Brown | #8D6E63 | Primary, buttons, navbar |
+| Dark Brown | #6D4C41 | Hover, accents |
 | Darker Brown | #4E342E | Text, footer |
 | Cream | #FFF8E7 | Page backgrounds |
-| Beige | #D7CCC8 | Borders, secondary elements |
-| Light Beige | #EFEBE9 | Card backgrounds, sections |
+| Beige | #D7CCC8 | Borders, secondary |
+| Light Beige | #EFEBE9 | Card backgrounds |
+
+---
+
+## 🔭 Future Development
+
+These are planned next steps to take PawFind further:
+
+### Near term
+- **Adoption certificate generation** — auto-generate a downloadable PDF certificate (pet name & photo, adopter name, adoption date, shelter signature/stamp) the moment an application is approved
+- **Real email delivery** — connect the Contact form and application status changes to EmailJS / a real SMTP service so adopters and admins get actual email notifications, not just in-app messages
+- **JWT-based authentication** — replace the current localStorage-only session with proper JWT tokens and Spring Security, including password hashing (BCrypt)
+- **Pagination & lazy loading** — for pet listings and admin tables as the dataset grows beyond a few dozen records
+
+### Mid term
+- **Image upload for pets** — let admin/staff upload pet photos directly through the UI instead of editing code, storing files (e.g. via S3 or local disk) and saving the URL in the database
+- **SMS notifications** — integrate a service like Twilio so adopters get a text when their application status changes
+- **Advanced search** — filters for age range, multiple species at once, and full-text search across descriptions
+- **Vaccination & care record UI** — a dedicated admin screen to log and view a pet's full medical history (the backend API already exists)
+
+### Long term
+- **Deployment** — host the frontend on Vercel and the backend on Render/Railway with a managed MySQL instance, giving the project a public live URL
+- **Multi-shelter support** — extend the data model so multiple shelters can each manage their own pets and staff within one platform
+- **Donation module** — allow the public to make donations toward shelter operations, with receipts and a donor leaderboard
+- **Mobile app** — a React Native version sharing the same Spring Boot backend
+- **Analytics dashboard v2** — adoption trends over time, average time-to-adoption per species, and staff performance metrics
 
 ---
 
 ## 👩‍💻 Developer
 
-**Amandi**
-MIS Undergraduate — 2nd Year
-University Project 2026
-
-- GitHub: [@Amandi1020](https://github.com/Amandi1020)
-
----
-
-## 📄 License
-
-This project is built for academic and portfolio purposes.
+**Amandi** — MIS Undergraduate, 2nd Year
+University Project 2025
+GitHub: [@Amandi1020](https://github.com/Amandi1020)
 
 ---
 
