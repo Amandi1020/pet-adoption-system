@@ -26,19 +26,22 @@ function AdoptForm() {
   const user = JSON.parse(localStorage.getItem('user'))
 
   useEffect(() => {
-    if (user) setFullName(user.name || '')
-  }, [])
+  const storedUser = JSON.parse(localStorage.getItem('user'))
+  if (storedUser) setFullName(storedUser.name || '')
+}, [])
 
-  useEffect(() => {
-    if (petId) {
-      getPetById(petId).then(data => {
+useEffect(() => {
+  if (petId) {
+    getPetById(petId)
+      .then(data => {
         setPet(data)
         setLoadingPet(false)
-      }).catch(() => setLoadingPet(false))
-    } else {
-      setLoadingPet(false)
-    }
-  }, [petId])
+      })
+      .catch(() => setLoadingPet(false))
+  } else {
+    setLoadingPet(false)
+  }
+}, [petId])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
