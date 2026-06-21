@@ -20,6 +20,9 @@ import Dashboard from './pages/admin/Dashboard'
 import ManagePets from './pages/admin/ManagePets'
 import Applications from './pages/admin/Applications'
 import BackToTop from './components/BackToTop'
+import Messages from './pages/admin/Messages'
+
+
 
 function App() {
   return (
@@ -45,6 +48,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/care-guide" element={<CareGuide />} />
         <Route path="/faq" element={<FAQ />} />
+        <Route path="/admin/messages" element={<Messages />} />
       </Routes>
       <Footer />
 
