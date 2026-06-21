@@ -19,6 +19,7 @@ function PetList() {
     }
   }, [location.state])
 
+  
   useEffect(() => {
     getAllPets()
       .then(data => {

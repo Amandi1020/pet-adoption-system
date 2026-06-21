@@ -136,9 +136,9 @@ function PetDetail() {
           </div>
 
           {pet.status === 'AVAILABLE' ? (
-            <Link to="/adopt" className="detail-adopt-btn">
-              🐾 Apply to Adopt {pet.name}
-            </Link>
+            <Link to={`/adopt/${pet.id}`} className="detail-adopt-btn">
+                🐾 Apply to Adopt {pet.name}
+              </Link>
           ) : (
             <button className="detail-adopted-btn" disabled>
               ✓ This pet has been adopted

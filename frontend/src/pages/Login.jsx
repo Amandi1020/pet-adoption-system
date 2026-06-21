@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react'
-import loginAnimal from '../assets/images/Other/login-animal.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
 import { loginUser } from '../services/authService'
 import Toast from '../components/Toast'
+import loginAnimal from '../assets/images/Other/login-animal.jpeg'
 import '../styles/Login.css'
 
 function Login() {
@@ -24,37 +24,33 @@ function Login() {
         setToast({ message: 'Invalid email or password.', type: 'error' })
       }
     } catch (err) {
-      setToast({ message: 'Something went wrong. Try again.', type: 'error' })
+      const msg = err?.response?.data?.message || 'Something went wrong. Try again.'
+      setToast({ message: msg, type: 'error' })
     }
   }
 
   return (
     <div className="login-page">
 
-      {/* FULL BACKGROUND — own animal image */}
       <div className="login-bg">
         <img src={loginAnimal} alt="background" className="login-bg-img" />
         <div className="login-bg-overlay"></div>
       </div>
 
-      {/* PAW DECORATIONS */}
       <div className="login-paw login-paw-1">🐾</div>
       <div className="login-paw login-paw-2">🐾</div>
       <div className="login-paw login-paw-3">🐾</div>
       <div className="login-paw login-paw-4">🐾</div>
       <div className="login-paw login-paw-5">🐾</div>
 
-      {/* GLASS CARD — centered over image */}
       <div className="login-card">
 
-        {/* BRAND */}
         <div className="login-card-header">
           <span className="login-card-paw">🐾</span>
           <p className="login-card-brand">PawFind</p>
           <p className="login-card-tagline">Find your perfect companion</p>
         </div>
 
-        {/* FORM */}
         <div className="login-card-body">
           <h2 className="login-title">Welcome back</h2>
           <p className="login-sub">Login to your PawFind account</p>

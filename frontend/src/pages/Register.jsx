@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { registerUser } from '../services/authService'
 import Toast from '../components/Toast'
-import loginAnimal from '../assets/images/Other/login-animal.png'
+import loginAnimal from '../assets/images/Other/login-animal.jpeg'
 import '../styles/Login.css'
 
 function Register() {
@@ -15,16 +15,22 @@ function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault()
+    if (password.length < 6) {
+      setToast({ message: 'Password must be at least 6 characters.', type: 'error' })
+      return
+    }
     try {
       const result = await registerUser({ name, email, password, role: 'ADOPTER' })
       if (result.id) {
+        localStorage.setItem('user', JSON.stringify(result))
         setToast({ message: 'Account created! Welcome to PawFind 🐾', type: 'success' })
-        setTimeout(() => navigate('/login'), 2000)
+        setTimeout(() => navigate('/'), 2000)
       } else {
         setToast({ message: 'Registration failed. Try again.', type: 'error' })
       }
     } catch (err) {
-      setToast({ message: 'Something went wrong.', type: 'error' })
+      const msg = err?.response?.data?.message || 'Something went wrong.'
+      setToast({ message: msg, type: 'error' })
     }
   }
 
@@ -79,7 +85,7 @@ function Register() {
               <label>Password</label>
               <input
                 type="password"
-                placeholder="Create a password"
+                placeholder="Create a password (min. 6 characters)"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
