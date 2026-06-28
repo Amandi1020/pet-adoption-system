@@ -13,6 +13,12 @@
 
 PawFind was built to solve a real problem — animal shelters in Sri Lanka manage hundreds of pets using paper registers and WhatsApp groups. This system digitizes the entire adoption process, making it easier, faster, and more transparent for shelters, staff, and adopters.
 
+## 📸 Screenshots
+
+![PawFind Home](docs/screenshots/home.png)
+
+---
+
 ### The problem it solves
 
 | Before PawFind | After PawFind |
