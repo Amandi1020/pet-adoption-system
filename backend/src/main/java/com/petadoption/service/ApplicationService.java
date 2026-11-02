@@ -141,12 +141,18 @@ public class ApplicationService {
             applicationRepository.saveAll(otherOpenApplications);
         }
 
-        // Auto set pet back to AVAILABLE when REJECTED
+        // Only release the pet if no other approved application exists.
         if (status == AdoptionApplication.Status.REJECTED) {
-            Pet pet = app.getPet();
             if (pet != null) {
-                pet.setStatus(Pet.Status.AVAILABLE);
-                petRepository.save(pet);
+                boolean hasApprovedApplication = applicationRepository
+                        .existsByPetIdAndStatus(
+                                pet.getId(),
+                                AdoptionApplication.Status.APPROVED
+                        );
+                if (!hasApprovedApplication) {
+                    pet.setStatus(Pet.Status.AVAILABLE);
+                    petRepository.save(pet);
+                }
             }
         }
 

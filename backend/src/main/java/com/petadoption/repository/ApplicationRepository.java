@@ -26,4 +26,9 @@ public interface ApplicationRepository extends JpaRepository<AdoptionApplication
             Integer petId,
             Collection<AdoptionApplication.Status> statuses
     );
+
+    boolean existsByPetIdAndStatus(
+            Integer petId,
+            AdoptionApplication.Status status
+    );
 }
