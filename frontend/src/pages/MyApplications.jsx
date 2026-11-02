@@ -17,11 +17,10 @@ function MyApplications() {
     if (!userId) {
       return
     }
-    fetch(`${BASE_URL}/applications`)
+    fetch(`${BASE_URL}/applications/adopter/${userId}`)
       .then(res => res.json())
       .then(data => {
-        const myApps = data.filter(app => app.adopter?.id === userId)
-        setApplications(myApps)
+        setApplications(data)
         setLoading(false)
       })
       .catch(() => {
