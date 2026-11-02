@@ -1,7 +1,9 @@
 package com.petadoption.service;
 
+import com.petadoption.exception.ConflictException;
 import com.petadoption.exception.NotFoundException;
 import com.petadoption.model.Pet;
+import com.petadoption.repository.ApplicationRepository;
 import com.petadoption.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ public class PetService {
 
     @Autowired
     private PetRepository petRepository;
+
+    @Autowired
+    private ApplicationRepository applicationRepository;
 
     public List<Pet> getAllPets() {
         return petRepository.findAll();
@@ -36,6 +41,14 @@ public class PetService {
     }
 
     public void deletePet(Integer id) {
+        if (!petRepository.existsById(id)) {
+            throw new NotFoundException("Pet not found");
+        }
+        if (applicationRepository.existsByPetId(id)) {
+            throw new ConflictException(
+                    "This pet cannot be deleted because it has adoption applications"
+            );
+        }
         petRepository.deleteById(id);
     }
 }
