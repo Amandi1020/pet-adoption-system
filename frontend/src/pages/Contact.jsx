@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import contactBanner from '../assets/images/Other/contactbanner.jpg'
+import contactBanner from '../assets/images/other/contactbanner.jpg'
 import '../styles/Contact.css'
 
 function Contact() {

@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { loginUser } from '../services/authService'
 import Toast from '../components/Toast'
-import loginAnimal from '../assets/images/Other/login-animal.jpeg'
+import loginAnimal from '../assets/images/other/login-animal.jpeg'
 import '../styles/Login.css'
 
 function Login() {

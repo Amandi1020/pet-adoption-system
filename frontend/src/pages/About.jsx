@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import aboutImg from '../assets/images/Other/about.jpg'
+import aboutImg from '../assets/images/other/about.jpg'
 import '../styles/About.css'
 
 const timeline = [
