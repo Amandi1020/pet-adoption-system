@@ -1,5 +1,6 @@
 package com.petadoption.service;
 
+import com.petadoption.dto.ApplicationRequest;
 import com.petadoption.exception.BadRequestException;
 import com.petadoption.exception.ConflictException;
 import com.petadoption.exception.NotFoundException;
@@ -28,21 +29,21 @@ public class ApplicationService {
     private UserRepository userRepository;
 
     @Transactional
-    public AdoptionApplication submitApplication(AdoptionApplication application) {
-        if (application == null) {
+    public AdoptionApplication submitApplication(
+            ApplicationRequest request,
+            Integer adopterId) {
+
+        if (request == null) {
             throw new BadRequestException("Application details are required");
         }
-        if (application.getPet() == null || application.getPet().getId() == null) {
+        if (request.petId() == null) {
             throw new BadRequestException("A pet must be selected");
         }
-        if (application.getAdopter() == null || application.getAdopter().getId() == null) {
+        if (adopterId == null) {
             throw new BadRequestException("An adopter must be selected");
         }
 
-        Integer petId = application.getPet().getId();
-        Integer adopterId = application.getAdopter().getId();
-
-        Pet pet = petRepository.findById(petId)
+        Pet pet = petRepository.findById(request.petId())
                 .orElseThrow(() -> new NotFoundException("Pet not found"));
         User adopter = userRepository.findById(adopterId)
                 .orElseThrow(() -> new NotFoundException("Adopter not found"));
@@ -53,7 +54,7 @@ public class ApplicationService {
 
         boolean hasActiveApplication = applicationRepository
                 .existsByPetIdAndAdopterIdAndStatusIn(
-                        petId,
+                        pet.getId(),
                         adopterId,
                         List.of(
                                 AdoptionApplication.Status.PENDING,
@@ -65,10 +66,14 @@ public class ApplicationService {
             throw new ConflictException("You already have an active application for this pet");
         }
 
-        application.setId(null);
+        AdoptionApplication application = new AdoptionApplication();
         application.setPet(pet);
         application.setAdopter(adopter);
         application.setStatus(AdoptionApplication.Status.PENDING);
+        application.setHomeType(request.homeType());
+        application.setHasChildren(request.hasChildren());
+        application.setExperience(request.experience());
+        application.setReason(request.reason());
         application.setNotes(null);
         application.setReviewedAt(null);
         application.setCreatedAt(LocalDateTime.now());

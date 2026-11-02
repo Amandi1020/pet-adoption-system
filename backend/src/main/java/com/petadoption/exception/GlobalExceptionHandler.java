@@ -30,6 +30,11 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ApiError> handleForbidden(ForbiddenException ex) {
+        return build(HttpStatus.FORBIDDEN, ex.getMessage());
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ApiError> handleDataIntegrity(DataIntegrityViolationException ex) {
         return build(HttpStatus.CONFLICT, "The request conflicts with existing data");

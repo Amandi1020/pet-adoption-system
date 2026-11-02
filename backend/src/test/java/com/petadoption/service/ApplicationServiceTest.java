@@ -1,5 +1,6 @@
 package com.petadoption.service;
 
+import com.petadoption.dto.ApplicationRequest;
 import com.petadoption.exception.BadRequestException;
 import com.petadoption.exception.ConflictException;
 import com.petadoption.exception.NotFoundException;
@@ -15,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,28 +47,30 @@ class ApplicationServiceTest {
     private ApplicationService applicationService;
 
     @Test
-    void submitForcesPendingAndClearsReviewFields() {
+    void submitCreatesPendingApplicationForAuthenticatedAdopter() {
         Pet pet = pet(10, Pet.Status.AVAILABLE);
         User adopter = user(20);
-        AdoptionApplication request = new AdoptionApplication();
-        request.setId(99);
-        request.setPet(pet);
-        request.setAdopter(adopter);
-        request.setStatus(AdoptionApplication.Status.APPROVED);
-        request.setNotes("old notes");
-        request.setReviewedAt(LocalDateTime.now().minusDays(1));
+        ApplicationRequest request = new ApplicationRequest(
+                10, "Apartment", true, "experienced", "because"
+        );
 
         when(petRepository.findById(10)).thenReturn(Optional.of(pet));
         when(userRepository.findById(20)).thenReturn(Optional.of(adopter));
         when(applicationRepository.existsByPetIdAndAdopterIdAndStatusIn(
                 anyInt(), anyInt(), anyCollection()
         )).thenReturn(false);
-        when(applicationRepository.save(request)).thenReturn(request);
+        when(applicationRepository.save(any(AdoptionApplication.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
 
-        AdoptionApplication saved = applicationService.submitApplication(request);
+        AdoptionApplication saved = applicationService.submitApplication(request, 20);
 
         assertEquals(AdoptionApplication.Status.PENDING, saved.getStatus());
-        assertNull(saved.getId());
+        assertEquals(pet, saved.getPet());
+        assertEquals(adopter, saved.getAdopter());
+        assertEquals("Apartment", saved.getHomeType());
+        assertEquals(true, saved.getHasChildren());
+        assertEquals("experienced", saved.getExperience());
+        assertEquals("because", saved.getReason());
         assertNull(saved.getNotes());
         assertNull(saved.getReviewedAt());
         assertNotNull(saved.getCreatedAt());
@@ -77,20 +79,20 @@ class ApplicationServiceTest {
     @Test
     void submitRejectsUnavailablePet() {
         Pet pet = pet(10, Pet.Status.ADOPTED);
-        AdoptionApplication request = application(pet, user(20));
+        ApplicationRequest request = request(10);
 
         when(petRepository.findById(10)).thenReturn(Optional.of(pet));
         when(userRepository.findById(20)).thenReturn(Optional.of(user(20)));
 
         assertThrows(ConflictException.class,
-                () -> applicationService.submitApplication(request));
+                () -> applicationService.submitApplication(request, 20));
         verifyNoInteractions(applicationRepository);
     }
 
     @Test
     void submitRejectsDuplicateActiveApplication() {
         Pet pet = pet(10, Pet.Status.AVAILABLE);
-        AdoptionApplication request = application(pet, user(20));
+        ApplicationRequest request = request(10);
 
         when(petRepository.findById(10)).thenReturn(Optional.of(pet));
         when(userRepository.findById(20)).thenReturn(Optional.of(user(20)));
@@ -99,18 +101,18 @@ class ApplicationServiceTest {
         )).thenReturn(true);
 
         assertThrows(ConflictException.class,
-                () -> applicationService.submitApplication(request));
+                () -> applicationService.submitApplication(request, 20));
         verify(applicationRepository, never()).save(any());
     }
 
     @Test
     void submitRejectsMissingPet() {
-        AdoptionApplication request = application(pet(10, Pet.Status.AVAILABLE), user(20));
+        ApplicationRequest request = request(10);
 
         when(petRepository.findById(10)).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class,
-                () -> applicationService.submitApplication(request));
+                () -> applicationService.submitApplication(request, 20));
         verifyNoInteractions(applicationRepository);
     }
 
@@ -278,5 +280,9 @@ class ApplicationServiceTest {
         application.setPet(pet);
         application.setAdopter(adopter);
         return application;
+    }
+
+    private ApplicationRequest request(Integer petId) {
+        return new ApplicationRequest(petId, "House", false, "none", "reason");
     }
 }

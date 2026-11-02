@@ -1,9 +1,14 @@
 package com.petadoption.controller;
 
+import com.petadoption.dto.ApplicationRequest;
 import com.petadoption.exception.BadRequestException;
+import com.petadoption.exception.ForbiddenException;
 import com.petadoption.model.AdoptionApplication;
+import com.petadoption.model.User;
+import com.petadoption.security.AuthenticatedUser;
 import com.petadoption.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -15,8 +20,10 @@ public class ApplicationController {
     private ApplicationService applicationService;
 
     @PostMapping
-    public AdoptionApplication submitApplication(@RequestBody AdoptionApplication application) {
-        return applicationService.submitApplication(application);
+    public AdoptionApplication submitApplication(
+            @RequestBody ApplicationRequest request,
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
+        return applicationService.submitApplication(request, currentUser.id());
     }
 
     @GetMapping
@@ -25,7 +32,15 @@ public class ApplicationController {
     }
 
     @GetMapping("/adopter/{adopterId}")
-    public List<AdoptionApplication> getByAdopter(@PathVariable Integer adopterId) {
+    public List<AdoptionApplication> getByAdopter(
+            @PathVariable Integer adopterId,
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
+
+        if (currentUser.role() == User.Role.ADOPTER
+                && !currentUser.id().equals(adopterId)) {
+            throw new ForbiddenException("You can only view your own applications");
+        }
+
         return applicationService.getApplicationsByAdopter(adopterId);
     }
 

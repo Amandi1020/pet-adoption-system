@@ -1,9 +1,12 @@
 package com.petadoption.controller;
 
-import com.petadoption.exception.NotFoundException;
+import com.petadoption.dto.StoryRequest;
 import com.petadoption.model.SuccessStory;
 import com.petadoption.repository.StoryRepository;
+import com.petadoption.security.AuthenticatedUser;
+import com.petadoption.service.StoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -13,6 +16,9 @@ public class StoryController {
 
     @Autowired
     private StoryRepository storyRepository;
+
+    @Autowired
+    private StoryService storyService;
 
     @GetMapping
     public List<SuccessStory> getApprovedStories() {
@@ -25,16 +31,14 @@ public class StoryController {
     }
 
     @PostMapping
-    public SuccessStory addStory(@RequestBody SuccessStory story) {
-        return storyRepository.save(story);
+    public SuccessStory addStory(
+            @RequestBody StoryRequest request,
+            @AuthenticationPrincipal AuthenticatedUser currentUser) {
+        return storyService.submitStory(request, currentUser.id());
     }
 
     @PutMapping("/{id}/approve")
     public SuccessStory approveStory(@PathVariable Integer id) {
-        SuccessStory story = storyRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Story not found"));
-
-        story.setIsApproved(true);
-        return storyRepository.save(story);
+        return storyService.approveStory(id);
     }
 }
