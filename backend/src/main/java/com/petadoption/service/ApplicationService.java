@@ -11,6 +11,7 @@ import com.petadoption.repository.PetRepository;
 import com.petadoption.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class ApplicationService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public AdoptionApplication submitApplication(AdoptionApplication application) {
         if (application == null) {
             throw new BadRequestException("Application details are required");
@@ -82,6 +84,7 @@ public class ApplicationService {
         return applicationRepository.findByAdopterId(adopterId);
     }
 
+    @Transactional
     public AdoptionApplication updateStatus(
             Integer id,
             AdoptionApplication.Status status,
