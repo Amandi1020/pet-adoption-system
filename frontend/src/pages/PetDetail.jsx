@@ -42,10 +42,23 @@ function PetDetail() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getPetById(id).then(data => {
-      setPet(data)
-      setLoading(false)
-    })
+    let cancelled = false
+
+    getPetById(id)
+      .then(data => {
+        if (cancelled) return
+        setPet(data || null)
+        setLoading(false)
+      })
+      .catch(() => {
+        if (cancelled) return
+        setPet(null)
+        setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
   }, [id])
 
   if (loading) return (
