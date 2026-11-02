@@ -78,6 +78,7 @@ function Home() {
   const navigate = useNavigate()
   const [current, setCurrent] = useState(0)
   const [pets, setPets] = useState([])
+  const [stories, setStories] = useState([])
   const [stats, setStats] = useState({ available: 0, adopted: 0, pending: 0, species: 0 })
 
   useEffect(() => {
@@ -105,6 +106,13 @@ function Home() {
         const pending = data.filter(a => a.status === 'PENDING').length
         setStats(prev => ({...prev, pending}))
       })
+      .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/stories`)
+      .then(res => res.json())
+      .then(data => setStories(data.slice(0, 3)))
       .catch(() => {})
   }, [])
 
@@ -378,39 +386,32 @@ function Home() {
           <Link to="/stories" className="view-all-btn">View all →</Link>
         </div>
         <div className="stories-grid">
-          <div className="story-card">
-            <div className="story-quote">❝</div>
-            <p className="story-text">Max changed our family completely. He is the best thing that happened to us this year. We could not imagine life without him now!</p>
-            <div className="story-footer">
-              <span className="story-pet-icon">🐶</span>
-              <div>
-                <p className="story-pet">Max the Labrador</p>
-                <p className="story-author">Nimal & family, Colombo</p>
+          {stories.length === 0 ? (
+            <p className="sec-sub">No success stories yet. Be the first to share one!</p>
+          ) : (
+            stories.map(story => (
+              <div className="story-card" key={story.id}>
+                <div className="story-quote">❝</div>
+                <p className="story-text">{story.storyText}</p>
+                <div className="story-footer">
+                  <span className="story-pet-icon">
+                    {story.pet?.species === 'Cat' ? '🐱'
+                      : story.pet?.species === 'Bird' ? '🐦'
+                        : story.pet?.species === 'Rabbit' ? '🐰'
+                          : '🐶'}
+                  </span>
+                  <div>
+                    <p className="story-pet">
+                      {story.pet
+                        ? `${story.pet.name} the ${story.pet.breed || story.pet.species}`
+                        : 'Adopted pet'}
+                    </p>
+                    <p className="story-author">{story.adopter?.name || 'PawFind adopter'}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="story-card">
-            <div className="story-quote">❝</div>
-            <p className="story-text">Mimi settled in within a day. She is so gentle with our kids and fills our home with warmth. Thank you PawFind for making this so easy!</p>
-            <div className="story-footer">
-              <span className="story-pet-icon">🐱</span>
-              <div>
-                <p className="story-pet">Mimi the Persian</p>
-                <p className="story-author">Ayesha, Kandy</p>
-              </div>
-            </div>
-          </div>
-          <div className="story-card">
-            <div className="story-quote">❝</div>
-            <p className="story-text">Rio already knows our names and greets us every morning. The smartest and most joyful pet I have ever had. Couldn't be happier!</p>
-            <div className="story-footer">
-              <span className="story-pet-icon">🐦</span>
-              <div>
-                <p className="story-pet">Rio the Parrot</p>
-                <p className="story-author">Kasun, Galle</p>
-              </div>
-            </div>
-          </div>
+            ))
+          )}
         </div>
       </div>
 
