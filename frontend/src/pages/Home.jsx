@@ -17,7 +17,7 @@ import dogDefault from '../assets/images/pets/dog-default.jpg'
 import catDefault from '../assets/images/pets/cat-default.jpg'
 import birdDefault from '../assets/images/pets/bird-default.jpg'
 import rabbitDefault from '../assets/images/pets/rabbit-default.jpg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getAllPets } from '../services/petService'
 import BASE_URL from '../services/api'
@@ -75,6 +75,7 @@ const speciesDefaults = {
 }
 
 function Home() {
+  const navigate = useNavigate()
   const [current, setCurrent] = useState(0)
   const [pets, setPets] = useState([])
   const [stats, setStats] = useState({ available: 0, adopted: 0, pending: 0, species: 0 })
@@ -180,7 +181,7 @@ function Home() {
             <div
               className="home-pet-card"
               key={pet.id}
-              onClick={() => window.location.href = `/pets/${pet.id}`}
+              onClick={() => navigate(`/pets/${pet.id}`)}
             >
               <div className="home-pet-img">
                 <img
