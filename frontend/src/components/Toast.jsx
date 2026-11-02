@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import '../styles/Toast.css'
 
 function Toast({ message, type, onClose }) {

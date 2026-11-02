@@ -12,22 +12,21 @@ function ManagePets() {
   age: 1, ageUnit: 'years', gender: 'Male', size: 'Medium',
   status: 'AVAILABLE', description: ''
 })
-  const [message, setMessage] = useState('')
-
-  useEffect(() => {
-    fetchPets()
-  }, [])
   const [toast, setToast] = useState(null)
   const closeToast = useCallback(() => setToast(null), [])
 
-  const fetchPets = () => {
+  const fetchPets = useCallback(() => {
     fetch(`${BASE_URL}/pets`)
       .then(res => res.json())
       .then(data => {
         setPets(data)
         setLoading(false)
       })
-  }
+  }, [])
+
+  useEffect(() => {
+    fetchPets()
+  }, [fetchPets])
 
   const handleAddPet = async (e) => {
   e.preventDefault()
@@ -72,7 +71,7 @@ function ManagePets() {
         type: 'error'
       })
     }
-  } catch (err) {
+  } catch {
     setToast({
       message: 'Error adding pet. Check your connection.',
       type: 'error'
@@ -98,8 +97,6 @@ function ManagePets() {
           {showForm ? '✕ Cancel' : '+ Add New Pet'}
         </button>
       </div>
-
-      {message && <p className="success-msg">{message}</p>}
 
       {showForm && (
         <div className="pet-form-card">

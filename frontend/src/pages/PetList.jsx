@@ -8,18 +8,10 @@ import '../styles/PetList.css'
 function PetList() {
   const [pets, setPets] = useState([])
   const [search, setSearch] = useState('')
-  const [filter, setFilter] = useState('All')
-  const [loading, setLoading] = useState(true)
   const location = useLocation()
+  const [filter, setFilter] = useState(location.state?.species || 'All')
+  const [loading, setLoading] = useState(true)
 
-  // Read species filter from navigation state (from CareGuide)
-  useEffect(() => {
-    if (location.state?.species) {
-      setFilter(location.state.species)
-    }
-  }, [location.state])
-
-  
   useEffect(() => {
     getAllPets()
       .then(data => {

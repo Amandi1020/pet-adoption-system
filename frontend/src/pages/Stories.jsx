@@ -43,7 +43,7 @@ function Stories() {
         setStoryText('')
         setShowForm(false)
       }
-    } catch (err) {
+    } catch {
       setMessage('Error submitting story.')
     }
   }

@@ -8,18 +8,19 @@ import '../styles/MyApplications.css'
 function MyApplications() {
   const [applications, setApplications] = useState([])
   const user = JSON.parse(localStorage.getItem('user'))
-  const [loading, setLoading] = useState(Boolean(user))
+  const userId = user?.id
+  const [loading, setLoading] = useState(Boolean(userId))
   const [toast, setToast] = useState(null)
   const closeToast = useCallback(() => setToast(null), [])
 
   useEffect(() => {
-    if (!user) {
+    if (!userId) {
       return
     }
     fetch(`${BASE_URL}/applications`)
       .then(res => res.json())
       .then(data => {
-        const myApps = data.filter(app => app.adopter?.id === user.id)
+        const myApps = data.filter(app => app.adopter?.id === userId)
         setApplications(myApps)
         setLoading(false)
       })
@@ -27,7 +28,7 @@ function MyApplications() {
         setToast({ message: 'Failed to load applications.', type: 'error' })
         setLoading(false)
       })
-  }, [])
+  }, [userId])
 
   const getStatusColor = (status) => {
     switch(status) {

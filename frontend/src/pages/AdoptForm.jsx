@@ -10,9 +10,11 @@ function AdoptForm() {
   const navigate = useNavigate()
 
   const [pet, setPet] = useState(null)
-  const [loadingPet, setLoadingPet] = useState(true)
+  const [loadingPet, setLoadingPet] = useState(Boolean(petId))
 
-  const [fullName, setFullName] = useState('')
+  const [fullName, setFullName] = useState(
+    () => JSON.parse(localStorage.getItem('user'))?.name || ''
+  )
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [homeType, setHomeType] = useState('')
@@ -26,22 +28,25 @@ function AdoptForm() {
   const user = JSON.parse(localStorage.getItem('user'))
 
   useEffect(() => {
-  const storedUser = JSON.parse(localStorage.getItem('user'))
-  if (storedUser) setFullName(storedUser.name || '')
-}, [])
+    if (!petId) return
 
-useEffect(() => {
-  if (petId) {
+    let cancelled = false
     getPetById(petId)
       .then(data => {
+        if (cancelled) return
         setPet(data)
         setLoadingPet(false)
       })
-      .catch(() => setLoadingPet(false))
-  } else {
-    setLoadingPet(false)
-  }
-}, [petId])
+      .catch(() => {
+        if (cancelled) return
+        setPet(null)
+        setLoadingPet(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [petId])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -81,7 +86,7 @@ useEffect(() => {
       } else {
         setToast({ message: 'Something went wrong. Try again.', type: 'error' })
       }
-    } catch (err) {
+    } catch {
       setToast({ message: 'Error submitting application.', type: 'error' })
     } finally {
       setSubmitting(false)
