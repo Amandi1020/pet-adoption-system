@@ -36,8 +36,20 @@ public class PetService {
     }
 
     public Pet updatePet(Integer id, Pet updatedPet) {
-        updatedPet.setId(id);
-        return petRepository.save(updatedPet);
+        Pet existing = getPetById(id);
+
+        if (updatedPet.getName() != null) existing.setName(updatedPet.getName());
+        if (updatedPet.getSpecies() != null) existing.setSpecies(updatedPet.getSpecies());
+        if (updatedPet.getBreed() != null) existing.setBreed(updatedPet.getBreed());
+        if (updatedPet.getAge() != null) existing.setAge(updatedPet.getAge());
+        if (updatedPet.getGender() != null) existing.setGender(updatedPet.getGender());
+        if (updatedPet.getSize() != null) existing.setSize(updatedPet.getSize());
+        if (updatedPet.getStatus() != null) existing.setStatus(updatedPet.getStatus());
+        if (updatedPet.getDescription() != null) {
+            existing.setDescription(updatedPet.getDescription());
+        }
+
+        return petRepository.save(existing);
     }
 
     public void deletePet(Integer id) {
