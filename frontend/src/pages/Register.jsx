@@ -29,8 +29,7 @@ function Register() {
         setToast({ message: 'Registration failed. Try again.', type: 'error' })
       }
     } catch (err) {
-      const msg = err?.response?.data?.message || 'Something went wrong.'
-      setToast({ message: msg, type: 'error' })
+      setToast({ message: err.message || 'Something went wrong.', type: 'error' })
     }
   }
 

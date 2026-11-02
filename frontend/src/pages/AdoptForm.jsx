@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import BASE_URL from '../services/api'
+import BASE_URL, { getApiErrorMessage } from '../services/api'
 import { getPetById } from '../services/petService'
 import Toast from '../components/Toast'
 import '../styles/Auth.css'
@@ -84,7 +84,11 @@ function AdoptForm() {
         setToast({ message: `Application for ${pet?.name || 'this pet'} submitted successfully! 🐾`, type: 'success' })
         setTimeout(() => navigate('/my-applications'), 2000)
       } else {
-        setToast({ message: 'Something went wrong. Try again.', type: 'error' })
+        const message = await getApiErrorMessage(
+          response,
+          'Something went wrong. Try again.'
+        )
+        setToast({ message, type: 'error' })
       }
     } catch {
       setToast({ message: 'Error submitting application.', type: 'error' })

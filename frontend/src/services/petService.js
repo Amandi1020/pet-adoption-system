@@ -14,6 +14,9 @@ export const getAvailablePets = async () => {
 
 export const getPetById = async (id) => {
   const response = await fetch(`${BASE_URL}/pets/${id}`)
+  if (!response.ok) {
+    throw new Error('Pet not found')
+  }
   const data = await response.json()
   return data
 }

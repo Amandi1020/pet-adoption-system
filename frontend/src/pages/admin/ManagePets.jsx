@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback} from 'react'
 import Toast from '../../components/Toast'
-import BASE_URL from '../../services/api'
+import BASE_URL, { getApiErrorMessage } from '../../services/api'
 import '../../styles/Admin.css'
 
 function ManagePets() {
@@ -80,9 +80,21 @@ function ManagePets() {
 }
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this pet?')) {
-      await fetch(`${BASE_URL}/pets/${id}`, { method: 'DELETE' })
-      setPets(pets.filter(p => p.id !== id))
+    if (!window.confirm('Are you sure you want to delete this pet?')) return
+
+    try {
+      const response = await fetch(`${BASE_URL}/pets/${id}`, { method: 'DELETE' })
+      if (!response.ok) {
+        const message = await getApiErrorMessage(
+          response,
+          'Failed to delete pet.'
+        )
+        setToast({ message, type: 'error' })
+        return
+      }
+      setPets(current => current.filter(p => p.id !== id))
+    } catch {
+      setToast({ message: 'Failed to delete pet.', type: 'error' })
     }
   }
 

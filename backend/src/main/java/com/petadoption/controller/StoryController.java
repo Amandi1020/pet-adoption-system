@@ -1,5 +1,6 @@
 package com.petadoption.controller;
 
+import com.petadoption.exception.NotFoundException;
 import com.petadoption.model.SuccessStory;
 import com.petadoption.repository.StoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,10 @@ public class StoryController {
 
     @PutMapping("/{id}/approve")
     public SuccessStory approveStory(@PathVariable Integer id) {
-        SuccessStory story = storyRepository.findById(id).orElse(null);
-        if (story != null) {
-            story.setIsApproved(true);
-            return storyRepository.save(story);
-        }
-        return null;
+        SuccessStory story = storyRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Story not found"));
+
+        story.setIsApproved(true);
+        return storyRepository.save(story);
     }
 }

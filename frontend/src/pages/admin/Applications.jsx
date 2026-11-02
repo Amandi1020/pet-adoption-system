@@ -1,23 +1,49 @@
-import { useState, useEffect } from 'react'
-import BASE_URL from '../../services/api'
+import { useState, useEffect, useCallback } from 'react'
+import BASE_URL, { getApiErrorMessage } from '../../services/api'
+import Toast from '../../components/Toast'
 import '../../styles/Admin.css'
 
 function Applications() {
   const [applications, setApplications] = useState([])
   const [loading, setLoading] = useState(true)
+  const [toast, setToast] = useState(null)
+  const closeToast = useCallback(() => setToast(null), [])
+
+  const loadApplications = useCallback(async () => {
+    const response = await fetch(`${BASE_URL}/applications`)
+    if (!response.ok) {
+      throw new Error(await getApiErrorMessage(
+        response,
+        'Failed to load applications.'
+      ))
+    }
+    return response.json()
+  }, [])
 
   useEffect(() => {
-    fetch(`${BASE_URL}/applications`)
-      .then(res => res.json())
+    let cancelled = false
+
+    loadApplications()
       .then(data => {
-        setApplications(data)
-        setLoading(false)
+        if (!cancelled) {
+          setApplications(data)
+        }
       })
       .catch(err => {
-        console.error('Error:', err)
-        setLoading(false)
+        if (!cancelled) {
+          setToast({ message: err.message, type: 'error' })
+        }
       })
-  }, [])
+      .finally(() => {
+        if (!cancelled) {
+          setLoading(false)
+        }
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [loadApplications])
 
   const updateStatus = async (id, status) => {
     try {
@@ -25,13 +51,17 @@ function Applications() {
         `${BASE_URL}/applications/${id}/status?status=${status}`,
         { method: 'PUT' }
       )
-      if (response.ok) {
-        setApplications(applications.map(app =>
-          app.id === id ? { ...app, status } : app
-        ))
+      if (!response.ok) {
+        const message = await getApiErrorMessage(
+          response,
+          'Failed to update application.'
+        )
+        setToast({ message, type: 'error' })
+        return
       }
-    } catch (err) {
-      console.error('Error updating status:', err)
+      setApplications(await loadApplications())
+    } catch {
+      setToast({ message: 'Failed to update application.', type: 'error' })
     }
   }
 
@@ -100,6 +130,7 @@ function Applications() {
           ))}
         </div>
       )}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={closeToast} />}
     </div>
   )
 }

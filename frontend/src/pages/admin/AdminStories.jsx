@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react'
-import BASE_URL from '../../services/api'
+import { useState, useEffect, useCallback } from 'react'
+import BASE_URL, { getApiErrorMessage } from '../../services/api'
+import Toast from '../../components/Toast'
 import '../../styles/Admin.css'
 
 function AdminStories() {
   const [stories, setStories] = useState([])
   const [loading, setLoading] = useState(true)
+  const [toast, setToast] = useState(null)
+  const closeToast = useCallback(() => setToast(null), [])
 
   useEffect(() => {
     fetch(`${BASE_URL}/stories/all`)
@@ -16,8 +19,25 @@ function AdminStories() {
   }, [])
 
   const approveStory = async (id) => {
-    await fetch(`${BASE_URL}/stories/${id}/approve`, { method: 'PUT' })
-    setStories(stories.map(s => s.id === id ? {...s, isApproved: true} : s))
+    try {
+      const response = await fetch(
+        `${BASE_URL}/stories/${id}/approve`,
+        { method: 'PUT' }
+      )
+      if (!response.ok) {
+        const message = await getApiErrorMessage(
+          response,
+          'Failed to approve story.'
+        )
+        setToast({ message, type: 'error' })
+        return
+      }
+      setStories(current => current.map(s =>
+        s.id === id ? { ...s, isApproved: true } : s
+      ))
+    } catch {
+      setToast({ message: 'Failed to approve story.', type: 'error' })
+    }
   }
 
   return (
@@ -51,6 +71,7 @@ function AdminStories() {
           ))}
         </div>
       )}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={closeToast} />}
     </div>
   )
 }

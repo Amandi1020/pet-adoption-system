@@ -24,8 +24,7 @@ function Login() {
         setToast({ message: 'Invalid email or password.', type: 'error' })
       }
     } catch (err) {
-      const msg = err?.response?.data?.message || 'Something went wrong. Try again.'
-      setToast({ message: msg, type: 'error' })
+      setToast({ message: err.message || 'Something went wrong. Try again.', type: 'error' })
     }
   }
 

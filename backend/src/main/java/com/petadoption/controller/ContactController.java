@@ -1,5 +1,6 @@
 package com.petadoption.controller;
 
+import com.petadoption.exception.NotFoundException;
 import com.petadoption.model.ContactMessage;
 import com.petadoption.repository.ContactMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,10 @@ public class ContactController {
 
     @PutMapping("/{id}/read")
     public ContactMessage markAsRead(@PathVariable Integer id) {
-        ContactMessage msg = contactMessageRepository.findById(id).orElse(null);
-        if (msg != null) {
-            msg.setIsRead(true);
-            return contactMessageRepository.save(msg);
-        }
-        return null;
+        ContactMessage msg = contactMessageRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Message not found"));
+
+        msg.setIsRead(true);
+        return contactMessageRepository.save(msg);
     }
 }

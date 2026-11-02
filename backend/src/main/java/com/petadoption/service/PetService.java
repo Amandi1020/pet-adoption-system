@@ -1,5 +1,6 @@
 package com.petadoption.service;
 
+import com.petadoption.exception.NotFoundException;
 import com.petadoption.model.Pet;
 import com.petadoption.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ public class PetService {
     }
 
     public Pet getPetById(Integer id) {
-        return petRepository.findById(id).orElse(null);
+        return petRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Pet not found"));
     }
 
     public Pet addPet(Pet pet) {

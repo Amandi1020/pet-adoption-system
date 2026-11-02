@@ -1,4 +1,11 @@
-import BASE_URL from './api'
+import BASE_URL, { getApiErrorMessage } from './api'
+
+const readResponse = async (response, fallback) => {
+  if (!response.ok) {
+    throw new Error(await getApiErrorMessage(response, fallback))
+  }
+  return response.json()
+}
 
 export const registerUser = async (userData) => {
   const response = await fetch(`${BASE_URL}/users/register`, {
@@ -6,7 +13,7 @@ export const registerUser = async (userData) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData)
   })
-  return response.json()
+  return readResponse(response, 'Registration failed. Try again.')
 }
 
 export const loginUser = async (credentials) => {
@@ -15,5 +22,5 @@ export const loginUser = async (credentials) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials)
   })
-  return response.json()
+  return readResponse(response, 'Login failed. Try again.')
 }
