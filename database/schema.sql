@@ -74,6 +74,17 @@ CREATE TABLE IF NOT EXISTS success_stories (
   FOREIGN KEY (adopter_id) REFERENCES users(id)
 );
 
+CREATE TABLE IF NOT EXISTS contact_messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  phone VARCHAR(30),
+  subject VARCHAR(150),
+  message TEXT,
+  is_read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Sample Data
 INSERT INTO users (name, email, password, role) VALUES
 ('Admin User', 'admin@pawfind.com', 'admin123', 'ADMIN'),
