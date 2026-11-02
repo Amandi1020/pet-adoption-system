@@ -1,9 +1,14 @@
 package com.petadoption.service;
 
+import com.petadoption.exception.BadRequestException;
+import com.petadoption.exception.ConflictException;
+import com.petadoption.exception.NotFoundException;
 import com.petadoption.model.AdoptionApplication;
 import com.petadoption.model.Pet;
+import com.petadoption.model.User;
 import com.petadoption.repository.ApplicationRepository;
 import com.petadoption.repository.PetRepository;
+import com.petadoption.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -18,7 +23,54 @@ public class ApplicationService {
     @Autowired
     private PetRepository petRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public AdoptionApplication submitApplication(AdoptionApplication application) {
+        if (application == null) {
+            throw new BadRequestException("Application details are required");
+        }
+        if (application.getPet() == null || application.getPet().getId() == null) {
+            throw new BadRequestException("A pet must be selected");
+        }
+        if (application.getAdopter() == null || application.getAdopter().getId() == null) {
+            throw new BadRequestException("An adopter must be selected");
+        }
+
+        Integer petId = application.getPet().getId();
+        Integer adopterId = application.getAdopter().getId();
+
+        Pet pet = petRepository.findById(petId)
+                .orElseThrow(() -> new NotFoundException("Pet not found"));
+        User adopter = userRepository.findById(adopterId)
+                .orElseThrow(() -> new NotFoundException("Adopter not found"));
+
+        if (pet.getStatus() != Pet.Status.AVAILABLE) {
+            throw new ConflictException("This pet is not available for adoption");
+        }
+
+        boolean hasActiveApplication = applicationRepository
+                .existsByPetIdAndAdopterIdAndStatusIn(
+                        petId,
+                        adopterId,
+                        List.of(
+                                AdoptionApplication.Status.PENDING,
+                                AdoptionApplication.Status.REVIEWING,
+                                AdoptionApplication.Status.APPROVED
+                        )
+                );
+        if (hasActiveApplication) {
+            throw new ConflictException("You already have an active application for this pet");
+        }
+
+        application.setId(null);
+        application.setPet(pet);
+        application.setAdopter(adopter);
+        application.setStatus(AdoptionApplication.Status.PENDING);
+        application.setNotes(null);
+        application.setReviewedAt(null);
+        application.setCreatedAt(LocalDateTime.now());
+
         return applicationRepository.save(application);
     }
 
