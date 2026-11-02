@@ -15,6 +15,11 @@ public class StoryController {
     private StoryRepository storyRepository;
 
     @GetMapping
+    public List<SuccessStory> getApprovedStories() {
+        return storyRepository.findByIsApproved(true);
+    }
+
+    @GetMapping("/all")
     public List<SuccessStory> getAllStories() {
         return storyRepository.findAll();
     }

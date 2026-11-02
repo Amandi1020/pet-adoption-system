@@ -7,7 +7,7 @@ function AdminStories() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch(`${BASE_URL}/stories`)
+    fetch(`${BASE_URL}/stories/all`)
       .then(res => res.json())
       .then(data => {
         setStories(data)
