@@ -8,7 +8,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/vaccinations")
-@CrossOrigin(origins = "http://localhost:5173")
 public class VaccinationController {
 
     @Autowired

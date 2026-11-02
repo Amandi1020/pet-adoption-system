@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/stories")
-@CrossOrigin(origins = "http://localhost:5173")
 public class StoryController {
 
     @Autowired
