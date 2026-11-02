@@ -87,9 +87,9 @@ CREATE TABLE IF NOT EXISTS contact_messages (
 
 -- Sample Data
 INSERT INTO users (name, email, password, role) VALUES
-('Admin User', 'admin@pawfind.com', 'admin123', 'ADMIN'),
-('Staff Member', 'staff@pawfind.com', 'staff123', 'STAFF'),
-('Test Adopter', 'adopter@pawfind.com', 'adopter123', 'ADOPTER');
+('Admin User', 'admin@pawfind.com', '$2a$10$efI3neGxjwemy02hZya1aeY5zjTFtPbT.t8BRTN9XqL5fPVz3PJnC', 'ADMIN'),
+('Staff Member', 'staff@pawfind.com', '$2a$10$BxqfgVhrXWXN0C5Hd34uYuibJBcBbZbm42l9Nr2XnxsdaZdUWcSOa', 'STAFF'),
+('Test Adopter', 'adopter@pawfind.com', '$2a$10$8oDWik1kIezyqT3Kkwx88OP4lmSCDoW7qjDpv23bR.WWNEjT9emyq', 'ADOPTER');
 
 INSERT INTO pets (name, species, breed, age, gender, size, status, description, added_by) VALUES
 ('Bruno', 'Dog', 'Golden Retriever', 2, 'Male', 'Large', 'AVAILABLE', 'Friendly and energetic dog', 2),

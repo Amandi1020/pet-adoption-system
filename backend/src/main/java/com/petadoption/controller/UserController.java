@@ -1,25 +1,25 @@
 package com.petadoption.controller;
 
-import com.petadoption.model.User;
+import com.petadoption.dto.RegisterRequest;
+import com.petadoption.dto.UserResponse;
 import com.petadoption.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userService.registerUser(user);
+    public UserResponse register(@RequestBody RegisterRequest request) {
+        return UserResponse.from(userService.registerUser(request));
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Integer id) {
-        return userService.getUserById(id);
+    public UserResponse getUserById(@PathVariable Integer id) {
+        return UserResponse.from(userService.getUserById(id));
     }
 }
