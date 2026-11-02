@@ -15,4 +15,15 @@ public interface ApplicationRepository extends JpaRepository<AdoptionApplication
             Integer adopterId,
             Collection<AdoptionApplication.Status> statuses
     );
+
+    boolean existsByPetIdAndStatusAndIdNot(
+            Integer petId,
+            AdoptionApplication.Status status,
+            Integer id
+    );
+
+    List<AdoptionApplication> findByPetIdAndStatusIn(
+            Integer petId,
+            Collection<AdoptionApplication.Status> statuses
+    );
 }

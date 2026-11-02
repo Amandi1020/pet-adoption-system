@@ -96,18 +96,49 @@ public class ApplicationService {
 
         validateTransition(app.getStatus(), status);
 
+        Pet pet = app.getPet();
+        if (status == AdoptionApplication.Status.APPROVED) {
+            if (pet == null) {
+                throw new BadRequestException("Application is not linked to a pet");
+            }
+            boolean anotherApproved = applicationRepository
+                    .existsByPetIdAndStatusAndIdNot(
+                            pet.getId(),
+                            AdoptionApplication.Status.APPROVED,
+                            app.getId()
+                    );
+            if (anotherApproved) {
+                throw new ConflictException("This pet already has an approved application");
+            }
+        }
+
         app.setStatus(status);
         app.setNotes(notes);
         app.setReviewedAt(LocalDateTime.now());
         applicationRepository.save(app);
 
-        // Auto update pet status when APPROVED
+        // On approval, adopt the pet and reject every other open application.
         if (status == AdoptionApplication.Status.APPROVED) {
-            Pet pet = app.getPet();
-            if (pet != null) {
-                pet.setStatus(Pet.Status.ADOPTED);
-                petRepository.save(pet);
+            pet.setStatus(Pet.Status.ADOPTED);
+            petRepository.save(pet);
+
+            List<AdoptionApplication> otherOpenApplications = applicationRepository
+                    .findByPetIdAndStatusIn(
+                            pet.getId(),
+                            List.of(
+                                    AdoptionApplication.Status.PENDING,
+                                    AdoptionApplication.Status.REVIEWING
+                            )
+                    );
+
+            LocalDateTime reviewedAt = LocalDateTime.now();
+            for (AdoptionApplication other : otherOpenApplications) {
+                if (other.getId() != null && !other.getId().equals(app.getId())) {
+                    other.setStatus(AdoptionApplication.Status.REJECTED);
+                    other.setReviewedAt(reviewedAt);
+                }
             }
+            applicationRepository.saveAll(otherOpenApplications);
         }
 
         // Auto set pet back to AVAILABLE when REJECTED
