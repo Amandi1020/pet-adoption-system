@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import BASE_URL from '../../services/api'
 import Spinner from '../../components/Spinner'
 import '../../styles/Admin.css'
 
@@ -7,7 +8,7 @@ function Messages() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/contact')
+    fetch(`${BASE_URL}/contact`)
       .then(res => res.json())
       .then(data => {
         setMessages(data.reverse())
@@ -17,7 +18,7 @@ function Messages() {
   }, [])
 
   const markRead = async (id) => {
-    await fetch(`http://localhost:8080/api/contact/${id}/read`, { method: 'PUT' })
+    await fetch(`${BASE_URL}/contact/${id}/read`, { method: 'PUT' })
     setMessages(messages.map(m => m.id === id ? {...m, isRead: true} : m))
   }
 

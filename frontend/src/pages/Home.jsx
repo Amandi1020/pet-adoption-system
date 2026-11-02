@@ -20,6 +20,7 @@ import rabbitDefault from '../assets/images/pets/rabbit-default.jpg'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getAllPets } from '../services/petService'
+import BASE_URL from '../services/api'
 import '../styles/Home.css'
 
 const slides = [
@@ -97,7 +98,7 @@ function Home() {
         pending: 0,
       })
     })
-    fetch('http://localhost:8080/api/applications')
+    fetch(`${BASE_URL}/applications`)
       .then(res => res.json())
       .then(data => {
         const pending = data.filter(a => a.status === 'PENDING').length

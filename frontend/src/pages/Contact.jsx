@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import BASE_URL from '../services/api'
 import contactBanner from '../assets/images/other/contactbanner.jpg'
 import '../styles/Contact.css'
 
@@ -19,7 +20,7 @@ function Contact() {
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:8080/api/contact', {
+      const response = await fetch(`${BASE_URL}/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
