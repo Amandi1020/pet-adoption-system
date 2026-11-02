@@ -1,5 +1,6 @@
 package com.petadoption.controller;
 
+import com.petadoption.exception.BadRequestException;
 import com.petadoption.model.AdoptionApplication;
 import com.petadoption.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,14 @@ public class ApplicationController {
             @PathVariable Integer id,
             @RequestParam String status,
             @RequestParam(required = false) String notes) {
-        return applicationService.updateStatus(
-                id,
-                AdoptionApplication.Status.valueOf(status),
-                notes
-        );
+
+        AdoptionApplication.Status parsedStatus;
+        try {
+            parsedStatus = AdoptionApplication.Status.valueOf(status);
+        } catch (IllegalArgumentException ex) {
+            throw new BadRequestException("Invalid application status: " + status);
+        }
+
+        return applicationService.updateStatus(id, parsedStatus, notes);
     }
 }

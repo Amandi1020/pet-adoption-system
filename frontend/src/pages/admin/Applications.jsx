@@ -72,7 +72,7 @@ function Applications() {
                 <p><strong>Experience:</strong> {app.experience}</p>
                 <p><strong>Reason:</strong> {app.reason}</p>
               </div>
-              {app.status === 'PENDING' && (
+              {(app.status === 'PENDING' || app.status === 'REVIEWING') && (
                 <div className="app-actions">
                   <button
                     className="approve-btn"
@@ -86,12 +86,14 @@ function Applications() {
                   >
                     ✗ Reject
                   </button>
-                  <button
-                    className="review-btn"
-                    onClick={() => updateStatus(app.id, 'REVIEWING')}
-                  >
-                    👁 Mark Reviewing
-                  </button>
+                  {app.status === 'PENDING' && (
+                    <button
+                      className="review-btn"
+                      onClick={() => updateStatus(app.id, 'REVIEWING')}
+                    >
+                      👁 Mark Reviewing
+                    </button>
+                  )}
                 </div>
               )}
             </div>

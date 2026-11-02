@@ -87,8 +87,14 @@ public class ApplicationService {
             AdoptionApplication.Status status,
             String notes) {
 
-        AdoptionApplication app = applicationRepository.findById(id).orElse(null);
-        if (app == null) return null;
+        if (status == null) {
+            throw new BadRequestException("A status is required");
+        }
+
+        AdoptionApplication app = applicationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Application not found"));
+
+        validateTransition(app.getStatus(), status);
 
         app.setStatus(status);
         app.setNotes(notes);
@@ -114,5 +120,30 @@ public class ApplicationService {
         }
 
         return app;
+    }
+
+    private void validateTransition(
+            AdoptionApplication.Status current,
+            AdoptionApplication.Status next) {
+
+        if (current == AdoptionApplication.Status.APPROVED
+                || current == AdoptionApplication.Status.REJECTED) {
+            throw new ConflictException("This application has already been finalized");
+        }
+
+        boolean allowed = switch (current) {
+            case PENDING -> next == AdoptionApplication.Status.REVIEWING
+                    || next == AdoptionApplication.Status.APPROVED
+                    || next == AdoptionApplication.Status.REJECTED;
+            case REVIEWING -> next == AdoptionApplication.Status.APPROVED
+                    || next == AdoptionApplication.Status.REJECTED;
+            default -> false;
+        };
+
+        if (!allowed) {
+            throw new BadRequestException(
+                    "Invalid status transition from " + current + " to " + next
+            );
+        }
     }
 }
