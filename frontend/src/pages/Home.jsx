@@ -29,7 +29,7 @@ const slides = [
     alt: 'Happy dog',
     tag: '🐶 Featured this week',
     title: 'Find your perfect furry companion',
-    sub: 'Over 120 loving pets waiting for a warm home. Browse dogs, cats, birds and more.',
+    sub: 'Loving pets waiting for a warm home. Browse dogs, cats, birds and more.',
     btn1: 'Browse pets', btn1Link: '/pets',
     btn2: 'Take the quiz', btn2Link: '/quiz',
   },
@@ -243,7 +243,7 @@ function Home() {
             />
             <div className="home-why-img-badge">
               <span>🏆</span>
-              <p>Trusted by 87+ families</p>
+              <p>{stats.adopted > 0 ? `${stats.adopted} pets adopted` : 'Trusted by local families'}</p>
             </div>
           </div>
           <div className="home-why-text">
@@ -321,7 +321,7 @@ function Home() {
             <div className="feat-card">
               <div className="feat-icon-wrap" style={{background:'#FFF8E1'}}>🌟</div>
               <h3>Success stories</h3>
-              <p>Read real stories from hundreds of families who found their perfect companion</p>
+              <p>Read real stories from families who found their companion through PawFind</p>
             </div>
           </div>
         </div>
@@ -455,7 +455,7 @@ function Home() {
         <div className="home-cta-inner">
           <span className="home-cta-emoji">🐾</span>
           <h2>Ready to find your companion?</h2>
-          <p>Join hundreds of happy families who found their perfect pet through PawFind</p>
+          <p>Join families who found their perfect pet through PawFind</p>
           <div className="cta-btns">
             <Link to="/pets" className="btn-cream">Browse all pets</Link>
             <Link to="/quiz" className="btn-outline-dark">Take match quiz</Link>

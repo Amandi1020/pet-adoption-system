@@ -1,12 +1,14 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { getAllPets } from '../services/petService'
 import aboutImg from '../assets/images/other/about.jpg'
 import '../styles/About.css'
 
 const timeline = [
   { year: '2024', title: 'The idea', desc: 'We noticed shelters in Sri Lanka struggling with paper records and WhatsApp chaos. We decided to fix it.' },
   { year: 'Jan 2025', title: 'Development begins', desc: 'Built with React, Spring Boot and MySQL — a complete digital system for pet shelters.' },
-  { year: 'Apr 2025', title: 'First shelter onboarded', desc: 'Our first shelter partner joined PawFind and digitized 80+ pet records within a week.' },
-  { year: 'Today', title: 'Growing community', desc: '87+ families have found their perfect companion. 124+ pets currently available for adoption.' },
+  { year: 'Apr 2025', title: 'First shelter onboarded', desc: 'Our first shelter partner joined PawFind and began digitizing its pet records.' },
+  { year: 'Today', title: 'Growing community', desc: '' },
 ]
 
 const team = [
@@ -26,6 +28,44 @@ const values = [
 ]
 
 function About() {
+  const [stats, setStats] = useState({ total: 0, available: 0, adopted: 0, species: 0 })
+  const [statsLoading, setStatsLoading] = useState(true)
+
+  useEffect(() => {
+    let cancelled = false
+
+    getAllPets()
+      .then(data => {
+        if (cancelled) return
+        const species = new Set(data.map(pet => pet.species).filter(Boolean))
+        setStats({
+          total: data.length,
+          available: data.filter(pet => pet.status === 'AVAILABLE').length,
+          adopted: data.filter(pet => pet.status === 'ADOPTED').length,
+          species: species.size,
+        })
+        setStatsLoading(false)
+      })
+      .catch(() => {
+        if (!cancelled) setStatsLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const timelineWithLiveStats = timeline.map((item, i) => (
+    i === timeline.length - 1
+      ? {
+          ...item,
+          desc: statsLoading
+            ? 'Loading current adoption numbers...'
+            : `${stats.adopted} pets adopted and ${stats.available} currently available for adoption.`,
+        }
+      : item
+  ))
+
   return (
     <div className="about-page">
 
@@ -47,24 +87,20 @@ function About() {
       {/* STATS STRIP */}
       <div className="about-stats-strip">
         <div className="about-stats-item">
-          <h2>124+</h2>
+          <h2>{statsLoading ? '—' : stats.total}</h2>
           <p>Pets listed</p>
         </div>
         <div className="about-stats-item">
-          <h2>87+</h2>
-          <p>Happy families</p>
+          <h2>{statsLoading ? '—' : stats.available}</h2>
+          <p>Available now</p>
         </div>
         <div className="about-stats-item">
-          <h2>12</h2>
+          <h2>{statsLoading ? '—' : stats.adopted}</h2>
+          <p>Adopted pets</p>
+        </div>
+        <div className="about-stats-item">
+          <h2>{statsLoading ? '—' : stats.species}</h2>
           <p>Species</p>
-        </div>
-        <div className="about-stats-item">
-          <h2>100%</h2>
-          <p>Vaccinated</p>
-        </div>
-        <div className="about-stats-item">
-          <h2>24h</h2>
-          <p>Response time</p>
         </div>
       </div>
 
@@ -114,7 +150,7 @@ function About() {
           <span className="about-label">Our journey</span>
           <h2>How we got here</h2>
           <div className="about-timeline">
-            {timeline.map((item, i) => (
+            {timelineWithLiveStats.map((item, i) => (
               <div key={i} className="about-timeline-item">
                 <div className="about-timeline-dot"></div>
                 <div className="about-timeline-content">
