@@ -7,7 +7,7 @@ import '../../styles/Admin.css'
 const emptyPet = {
   name: '', species: '', breed: '',
   age: 1, ageUnit: 'years', gender: 'Male',
-  size: 'Medium', status: 'AVAILABLE', description: ''
+  size: 'Medium', status: 'AVAILABLE', description: '', imageUrl: ''
 }
 
 function ManagePets() {
@@ -68,7 +68,8 @@ function ManagePets() {
       gender: pet.gender || 'Male',
       size: pet.size || 'Medium',
       status: pet.status || 'AVAILABLE',
-      description: pet.description || ''
+      description: pet.description || '',
+      imageUrl: pet.imageUrl || ''
     })
     setShowForm(true)
   }
@@ -90,7 +91,8 @@ function ManagePets() {
         size: formPet.size,
         status: formPet.status,
         description: formPet.description ||
-          `${formPet.name} is a lovely ${formPet.species?.toLowerCase()}`
+          `${formPet.name} is a lovely ${formPet.species?.toLowerCase()}`,
+        imageUrl: formPet.imageUrl.trim()
       }
 
       if (editingId) {
@@ -245,6 +247,16 @@ function ManagePets() {
                 <option value="AVAILABLE">Available</option>
                 <option value="ADOPTED">Adopted</option>
               </select>
+            </div>
+            <div className="form-row">
+              <input
+                type="url"
+                aria-label="Image URL"
+                placeholder="Image URL (optional)"
+                value={formPet.imageUrl}
+                onChange={e => updateForm('imageUrl', e.target.value)}
+                style={{gridColumn:'1 / -1'}}
+              />
             </div>
             <textarea
               aria-label="Description"

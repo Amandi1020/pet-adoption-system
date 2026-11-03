@@ -2,25 +2,11 @@ import slide1 from '../assets/images/carousel/slide1.jpg'
 import slide2 from '../assets/images/carousel/slide2.jpg'
 import slide3 from '../assets/images/carousel/slide3.jpg'
 import slide4 from '../assets/images/carousel/slide4.jpg'
-import brunoImg from '../assets/images/pets/bruno.jpg'
-import lunaImg from '../assets/images/pets/luna.jpg'
-import cocoImg from '../assets/images/pets/coco.jpg'
-import maxImg from '../assets/images/pets/max.jpg'
-import mimiImg from '../assets/images/pets/mimi.jpg'
-import sunnyImg from '../assets/images/pets/sunny.jpg'
-import bellaImg from '../assets/images/pets/bella.jpg'
-import daisyImg from '../assets/images/pets/daisy.jpg'
-import kiwiImg from '../assets/images/pets/kiwi.jpg'
-import miloImg from '../assets/images/pets/milo.jpg'
-import rosiImg from '../assets/images/pets/rosi.jpg'
-import dogDefault from '../assets/images/pets/dog-default.jpg'
-import catDefault from '../assets/images/pets/cat-default.jpg'
-import birdDefault from '../assets/images/pets/bird-default.jpg'
-import rabbitDefault from '../assets/images/pets/rabbit-default.jpg'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getAllPets } from '../services/petService'
 import { apiFetch } from '../services/api'
+import { getPetImage, getSpeciesFallbackImage } from '../utils/petImage'
 import '../styles/Home.css'
 
 const slides = [
@@ -62,18 +48,6 @@ const slides = [
   },
 ]
 
-const petImagesByName = {
-  'bruno': brunoImg, 'luna': lunaImg, 'coco': cocoImg,
-  'max': maxImg, 'mimi': mimiImg, 'sunny': sunnyImg,
-  'bella': bellaImg, 'daisy': daisyImg, 'kiwi': kiwiImg,
-  'milo': miloImg, 'rosi': rosiImg,
-}
-
-const speciesDefaults = {
-  'Dog': dogDefault, 'Cat': catDefault,
-  'Bird': birdDefault, 'Rabbit': rabbitDefault,
-}
-
 function Home() {
   const [current, setCurrent] = useState(0)
   const [pets, setPets] = useState([])
@@ -105,11 +79,6 @@ function Home() {
       .then(data => setStories(data))
       .catch(() => {})
   }, [])
-
-  const getImage = (pet) => {
-    const nameKey = pet.name?.toLowerCase()
-    return petImagesByName[nameKey] || speciesDefaults[pet.species] || dogDefault
-  }
 
   return (
     <div className="home">
@@ -209,11 +178,11 @@ function Home() {
             >
               <div className="home-pet-img">
                 <img
-                  src={getImage(pet)}
+                  src={getPetImage(pet)}
                   alt={`${pet.name}, ${pet.breed || pet.species}`}
                   loading="lazy"
                   decoding="async"
-                  onError={e => { e.target.src = speciesDefaults[pet.species] || dogDefault }}
+                  onError={e => { e.target.src = getSpeciesFallbackImage(pet.species) }}
                 />
                 <span className="home-pet-badge badge-available">Available</span>
               </div>

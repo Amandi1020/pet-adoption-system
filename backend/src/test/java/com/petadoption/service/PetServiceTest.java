@@ -67,10 +67,12 @@ class PetServiceTest {
         existing.setBreed("Beagle");
         existing.setAge(24);
         existing.setDescription("Old description");
+        existing.setImageUrl("old.jpg");
 
         Pet update = new Pet();
         update.setName("New");
         update.setAge(36);
+        update.setImageUrl("new.jpg");
 
         when(petRepository.findById(1)).thenReturn(Optional.of(existing));
         when(petRepository.save(existing)).thenReturn(existing);
@@ -82,6 +84,7 @@ class PetServiceTest {
         assertEquals("Beagle", result.getBreed());
         assertEquals(36, result.getAge());
         assertEquals("Old description", result.getDescription());
+        assertEquals("new.jpg", result.getImageUrl());
     }
 
     @Test

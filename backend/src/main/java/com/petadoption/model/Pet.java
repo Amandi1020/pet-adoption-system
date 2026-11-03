@@ -29,6 +29,9 @@ public class Pet {
 
     private String description;
 
+    @Column(name = "image_url", length = 1000)
+    private String imageUrl;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 

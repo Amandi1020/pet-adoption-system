@@ -1,40 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getPetById } from '../services/petService'
+import { getPetImage, getSpeciesFallbackImage } from '../utils/petImage'
 import '../styles/PetDetail.css'
-
-import brunoImg from '../assets/images/pets/bruno.jpg'
-import lunaImg from '../assets/images/pets/luna.jpg'
-import cocoImg from '../assets/images/pets/coco.jpg'
-import maxImg from '../assets/images/pets/max.jpg'
-import mimiImg from '../assets/images/pets/mimi.jpg'
-import sunnyImg from '../assets/images/pets/sunny.jpg'
-import bellaImg from '../assets/images/pets/bella.jpg'
-import daisyImg from '../assets/images/pets/daisy.jpg'
-import kiwiImg from '../assets/images/pets/kiwi.jpg'
-import miloImg from '../assets/images/pets/milo.jpg'
-import rosiImg from '../assets/images/pets/rosi.jpg'
-
-const petImagesByName = {
-  'bruno': brunoImg,
-  'luna': lunaImg,
-  'coco': cocoImg,
-  'max': maxImg,
-  'mimi': mimiImg,
-  'sunny': sunnyImg,
-  'bella': bellaImg,
-  'daisy': daisyImg,
-  'kiwi': kiwiImg,
-  'milo': miloImg,
-  'rosi': rosiImg,
-}
-
-const speciesDefaults = {
-  'Dog': 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=80',
-  'Cat': 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=80',
-  'Bird': 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=800&q=80',
-  'Rabbit': 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=800&q=80',
-}
 
 function PetDetail() {
   const { id } = useParams()
@@ -74,21 +42,17 @@ function PetDetail() {
     </div>
   )
 
-  const getImage = () => {
-    const nameKey = pet.name?.toLowerCase()
-    return petImagesByName[nameKey] || speciesDefaults[pet.species] || speciesDefaults['Dog']
-  }
-
   return (
     <div className="detail-page">
       <div className="detail-container">
 
         <div className="detail-img-wrap">
           <img
-            src={getImage()}
-            alt={pet.name}
+            src={getPetImage(pet)}
+            alt={`${pet.name}, ${pet.breed || pet.species}`}
+            decoding="async"
             onError={e => {
-              e.target.src = speciesDefaults[pet.species] || speciesDefaults['Dog']
+              e.target.src = getSpeciesFallbackImage(pet.species)
             }}
           />
           <span className={`detail-status ${pet.status === 'AVAILABLE' ? 'status-available' : 'status-adopted'}`}>

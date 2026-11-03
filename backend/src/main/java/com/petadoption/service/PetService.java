@@ -48,6 +48,9 @@ public class PetService {
         if (updatedPet.getDescription() != null) {
             existing.setDescription(updatedPet.getDescription());
         }
+        if (updatedPet.getImageUrl() != null) {
+            existing.setImageUrl(updatedPet.getImageUrl());
+        }
 
         return petRepository.save(existing);
     }

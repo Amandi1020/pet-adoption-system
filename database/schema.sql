@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS pets (
   size ENUM('Small', 'Medium', 'Large'),
   status ENUM('AVAILABLE', 'ADOPTED') DEFAULT 'AVAILABLE',
   description TEXT,
+  image_url VARCHAR(1000),
   added_by INT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (added_by) REFERENCES users(id)
