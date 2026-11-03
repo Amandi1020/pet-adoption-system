@@ -256,6 +256,12 @@
   background: #FFF8E7;
 }
 
+.pet-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
 /* DASHBOARD */
 .dash-header {
   display: flex;
