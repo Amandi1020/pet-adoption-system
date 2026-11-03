@@ -11,6 +11,7 @@ import AdminStories from './pages/admin/AdminStories'
 import Stories from './pages/Stories'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import PageMeta from './components/PageMeta'
 import Home from './pages/Home'
 import PetList from './pages/PetList'
 import Login from './pages/Login'
@@ -27,6 +28,7 @@ import { ADMIN_ROLES } from './utils/roles'
 function App() {
   return (
     <>
+      <PageMeta />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
