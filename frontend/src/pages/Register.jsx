@@ -37,15 +37,15 @@ function Register() {
     <div className="login-page">
 
       <div className="login-bg">
-        <img src={loginAnimal} alt="background" className="login-bg-img" />
+        <img src={loginAnimal} alt="" className="login-bg-img" />
         <div className="login-bg-overlay"></div>
       </div>
 
-      <div className="login-paw login-paw-1">🐾</div>
-      <div className="login-paw login-paw-2">🐾</div>
-      <div className="login-paw login-paw-3">🐾</div>
-      <div className="login-paw login-paw-4">🐾</div>
-      <div className="login-paw login-paw-5">🐾</div>
+      <div className="login-paw login-paw-1" aria-hidden="true">🐾</div>
+      <div className="login-paw login-paw-2" aria-hidden="true">🐾</div>
+      <div className="login-paw login-paw-3" aria-hidden="true">🐾</div>
+      <div className="login-paw login-paw-4" aria-hidden="true">🐾</div>
+      <div className="login-paw login-paw-5" aria-hidden="true">🐾</div>
 
       <div className="login-card">
 
@@ -61,9 +61,11 @@ function Register() {
 
           <form onSubmit={handleRegister}>
             <div className="login-form-group">
-              <label>Full Name</label>
+              <label htmlFor="register-name">Full Name</label>
               <input
+                id="register-name"
                 type="text"
+                autoComplete="name"
                 placeholder="Your full name"
                 value={name}
                 onChange={e => setName(e.target.value)}
@@ -71,9 +73,11 @@ function Register() {
               />
             </div>
             <div className="login-form-group">
-              <label>Email</label>
+              <label htmlFor="register-email">Email</label>
               <input
+                id="register-email"
                 type="email"
+                autoComplete="email"
                 placeholder="your@email.com"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
@@ -81,9 +85,11 @@ function Register() {
               />
             </div>
             <div className="login-form-group">
-              <label>Password</label>
+              <label htmlFor="register-password">Password</label>
               <input
+                id="register-password"
                 type="password"
+                autoComplete="new-password"
                 placeholder="Create a password (min. 6 characters)"
                 value={password}
                 onChange={e => setPassword(e.target.value)}

@@ -17,7 +17,7 @@ import dogDefault from '../assets/images/pets/dog-default.jpg'
 import catDefault from '../assets/images/pets/cat-default.jpg'
 import birdDefault from '../assets/images/pets/bird-default.jpg'
 import rabbitDefault from '../assets/images/pets/rabbit-default.jpg'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getAllPets } from '../services/petService'
 import { apiFetch } from '../services/api'
@@ -75,7 +75,6 @@ const speciesDefaults = {
 }
 
 function Home() {
-  const navigate = useNavigate()
   const [current, setCurrent] = useState(0)
   const [pets, setPets] = useState([])
   const [stories, setStories] = useState([])
@@ -119,7 +118,12 @@ function Home() {
       <div className="hero">
         {slides.map((slide, i) => (
           <div key={i} className={`slide ${i === current ? 'active' : ''}`}>
-            <img src={slide.img} alt={slide.alt} />
+            <img
+              src={slide.img}
+              alt={slide.alt}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
             <div className="slide-overlay"></div>
             <div className="slide-content">
               <span className="slide-tag">{slide.tag}</span>
@@ -132,11 +136,32 @@ function Home() {
             </div>
           </div>
         ))}
-        <button className="nav-arrow prev" onClick={() => setCurrent(c => (c - 1 + slides.length) % slides.length)}>‹</button>
-        <button className="nav-arrow next" onClick={() => setCurrent(c => (c + 1) % slides.length)}>›</button>
+        <button
+          type="button"
+          className="nav-arrow prev"
+          aria-label="Previous slide"
+          onClick={() => setCurrent(c => (c - 1 + slides.length) % slides.length)}
+        >
+          ‹
+        </button>
+        <button
+          type="button"
+          className="nav-arrow next"
+          aria-label="Next slide"
+          onClick={() => setCurrent(c => (c + 1) % slides.length)}
+        >
+          ›
+        </button>
         <div className="dots">
           {slides.map((_, i) => (
-            <button key={i} className={`dot ${i === current ? 'active' : ''}`} onClick={() => setCurrent(i)}></button>
+            <button
+              type="button"
+              key={i}
+              className={`dot ${i === current ? 'active' : ''}`}
+              aria-label={`Go to slide ${i + 1}`}
+              aria-current={i === current ? 'true' : undefined}
+              onClick={() => setCurrent(i)}
+            />
           ))}
         </div>
         <div className="slide-counter">{current + 1} / {slides.length}</div>
@@ -177,15 +202,17 @@ function Home() {
         </div>
         <div className="home-pets-grid">
           {pets.map(pet => (
-            <div
+            <Link
+              to={`/pets/${pet.id}`}
               className="home-pet-card"
               key={pet.id}
-              onClick={() => navigate(`/pets/${pet.id}`)}
             >
               <div className="home-pet-img">
                 <img
                   src={getImage(pet)}
-                  alt={pet.name}
+                  alt={`${pet.name}, ${pet.breed || pet.species}`}
+                  loading="lazy"
+                  decoding="async"
                   onError={e => { e.target.src = speciesDefaults[pet.species] || dogDefault }}
                 />
                 <span className="home-pet-badge badge-available">Available</span>
@@ -199,7 +226,7 @@ function Home() {
                 </p>
                 <p className="home-pet-species">{pet.species} · {pet.gender} · {pet.size}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -208,7 +235,12 @@ function Home() {
       <div className="home-why">
         <div className="home-why-inner">
           <div className="home-why-img">
-            <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=600&q=80" alt="Happy pet family" />
+            <img
+              src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=600&q=80"
+              alt="Happy pet family"
+              loading="lazy"
+              decoding="async"
+            />
             <div className="home-why-img-badge">
               <span>🏆</span>
               <p>Trusted by 87+ families</p>
@@ -354,7 +386,13 @@ function Home() {
       {/* QUIZ BANNER */}
       <div className="quiz-banner">
         <div className="quiz-banner-left">
-          <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=300&q=80" alt="Dog" className="quiz-banner-img" />
+          <img
+            src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=300&q=80"
+            alt="Dog"
+            className="quiz-banner-img"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
         <div className="quiz-banner-text">
           <span className="quiz-banner-tag">Free · Takes 2 minutes</span>
@@ -363,7 +401,13 @@ function Home() {
           <Link to="/quiz" className="quiz-banner-btn">Take the quiz →</Link>
         </div>
         <div className="quiz-banner-right">
-          <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300&q=80" alt="Cat" className="quiz-banner-img" />
+          <img
+            src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300&q=80"
+            alt="Cat"
+            className="quiz-banner-img"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </div>
 

@@ -205,8 +205,10 @@ function CareGuide() {
         <div className="care-tabs">
           {guides.map(g => (
             <button
+              type="button"
               key={g.species}
               className={`care-tab ${selected === g.species ? 'active' : ''}`}
+              aria-pressed={selected === g.species}
               onClick={() => setSelected(g.species)}
               style={selected === g.species ? {background: g.color, borderColor: g.color, color: '#FFF8E7'} : {}}
             >
@@ -222,7 +224,7 @@ function CareGuide() {
         {/* BANNER */}
         <div className="care-banner">
           <div className="care-banner-img">
-            <img src={guide.img} alt={guide.species} />
+            <img src={guide.img} alt={guide.species} loading="lazy" decoding="async" />
           </div>
           <div className="care-banner-text" style={{background: `linear-gradient(135deg, ${guide.color}, #3E2723)`}}>
             <span className="care-banner-emoji">{guide.emoji}</span>

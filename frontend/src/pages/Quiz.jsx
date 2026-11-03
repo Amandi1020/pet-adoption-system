@@ -133,7 +133,7 @@ function Quiz() {
       <div className="quiz-page">
         <div className="quiz-result">
           <div className="result-img-wrap">
-            <img src={result.img} alt={result.pet} />
+            <img src={result.img} alt={result.pet} loading="lazy" decoding="async" />
           </div>
           <div className="result-body">
             <p className="result-label">Your perfect match is</p>

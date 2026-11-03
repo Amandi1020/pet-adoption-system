@@ -96,6 +96,8 @@ function About() {
               <img
                 src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=500&q=80"
                 alt="Dog at shelter"
+                loading="lazy"
+                decoding="async"
               />
               <div className="about-mission-card-tag">
                 <span>🏠</span>

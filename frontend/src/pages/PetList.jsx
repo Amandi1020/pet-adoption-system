@@ -35,8 +35,10 @@ function PetList() {
       <div className="petlist-header">
         <h1>Find Your Companion</h1>
         <p>Browse all available pets</p>
+        <label htmlFor="pet-search" className="sr-only">Search pets by name</label>
         <input
-          type="text"
+          id="pet-search"
+          type="search"
           placeholder="Search by name..."
           className="search-input"
           value={search}
@@ -45,11 +47,13 @@ function PetList() {
       </div>
 
       <div className="petlist-body">
-        <div className="filter-bar">
+        <div className="filter-bar" role="group" aria-label="Filter pets by species">
           {['All', 'Dog', 'Cat', 'Bird', 'Rabbit'].map(f => (
             <button
+              type="button"
               key={f}
               className={`filter-btn ${filter === f ? 'active' : ''}`}
+              aria-pressed={filter === f}
               onClick={() => setFilter(f)}
             >
               {f}

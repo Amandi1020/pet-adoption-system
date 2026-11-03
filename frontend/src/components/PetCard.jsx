@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import '../styles/PetCard.css'
 
 import brunoImg from '../assets/images/pets/bruno.jpg'
@@ -35,19 +35,19 @@ const speciesDefaults = {
 }
 
 function PetCard({ pet }) {
-  const navigate = useNavigate()
-
   const getImage = () => {
     const nameKey = pet.name?.toLowerCase()
     return petImagesByName[nameKey] || speciesDefaults[pet.species] || speciesDefaults['Dog']
   }
 
   return (
-    <div className="pet-card" onClick={() => navigate(`/pets/${pet.id}`)}>
+    <Link to={`/pets/${pet.id}`} className="pet-card">
       <div className="pet-img-wrap">
         <img
           src={getImage()}
-          alt={pet.name}
+          alt={`${pet.name}, ${pet.breed || pet.species}`}
+          loading="lazy"
+          decoding="async"
           onError={e => {
             e.target.src = speciesDefaults[pet.species] || speciesDefaults['Dog']
           }}
@@ -65,12 +65,12 @@ function PetCard({ pet }) {
         </p>
         <p className="pet-gender">{pet.gender} · {pet.species}</p>
         {pet.status === 'AVAILABLE' ? (
-          <button className="adopt-btn">View & Adopt 🐾</button>
+          <span className="adopt-btn">View & Adopt 🐾</span>
         ) : (
-          <button className="adopted-btn">✓ Adopted</button>
+          <span className="adopted-btn">✓ Adopted</span>
         )}
       </div>
-    </div>
+    </Link>
   )
 }
 

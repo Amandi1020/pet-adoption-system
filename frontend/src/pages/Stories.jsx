@@ -52,6 +52,8 @@ function Stories() {
         </h1>
         {user?.role === 'ADOPTER' && (
           <button
+            type="button"
+            aria-expanded={showForm}
             onClick={() => setShowForm(!showForm)}
             style={{background:'#7F77DD',color:'white',border:'none',
               padding:'10px 20px',borderRadius:'8px',fontSize:'13px',
@@ -74,7 +76,9 @@ function Stories() {
           border:'1px solid #EEEDFE',marginBottom:'1.5rem'}}>
           <h3 style={{color:'#3C3489',marginBottom:'1rem'}}>Share your story</h3>
           <form onSubmit={handleSubmit}>
+            <label htmlFor="story-text" className="sr-only">Your adoption story</label>
             <textarea
+              id="story-text"
               placeholder="Tell us about your adopted pet..."
               value={storyText}
               onChange={e => setStoryText(e.target.value)}

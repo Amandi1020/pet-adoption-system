@@ -78,7 +78,9 @@
 }
 
 .adopt-btn {
+  display: block;
   width: 100%;
+  text-align: center;
   background: #8D6E63;
   color: #FFF8E7;
   border: none;
@@ -96,7 +98,9 @@
 }
 
 .adopted-btn {
+  display: block;
   width: 100%;
+  text-align: center;
   background: #EFEBE9;
   color: #8D6E63;
   border: 1px solid #D7CCC8;

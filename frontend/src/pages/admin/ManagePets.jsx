@@ -138,23 +138,31 @@ function ManagePets() {
     <div className="admin-page">
       <div className="admin-header">
         <h1 className="admin-title">🐾 Manage Pets</h1>
-        <button type="button" className="add-pet-btn" onClick={startAdd}>
+        <button
+          type="button"
+          className="add-pet-btn"
+          aria-expanded={showForm}
+          aria-controls="pet-form"
+          onClick={startAdd}
+        >
           {showForm && !editingId ? '✕ Cancel' : '+ Add New Pet'}
         </button>
       </div>
 
       {showForm && (
-        <div className="pet-form-card">
+        <div className="pet-form-card" id="pet-form">
           <h3>{editingId ? 'Edit Pet' : 'Add New Pet'}</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <input
+                aria-label="Pet name"
                 placeholder="Pet name"
                 value={formPet.name}
                 onChange={e => updateForm('name', e.target.value)}
                 required
               />
               <input
+                aria-label="Species"
                 placeholder="Species (Dog, Cat...)"
                 value={formPet.species}
                 onChange={e => updateForm('species', e.target.value)}
@@ -163,6 +171,7 @@ function ManagePets() {
             </div>
             <div className="form-row">
               <input
+                aria-label="Breed"
                 placeholder="Breed"
                 value={formPet.breed}
                 onChange={e => updateForm('breed', e.target.value)}
@@ -173,12 +182,14 @@ function ManagePets() {
                   background:'#FFF8E7'}}>
                   <button
                     type="button"
+                    aria-label="Decrease age"
                     onClick={() => updateForm('age', Math.max(0, (parseInt(formPet.age)||0) - 1))}
                     style={{background:'#EFEBE9', border:'none', padding:'10px 12px',
                       cursor:'pointer', fontSize:'16px', color:'#4E342E', fontWeight:'bold'}}
                   >−</button>
                   <input
                     type="number"
+                    aria-label="Age"
                     value={formPet.age}
                     onChange={e => updateForm('age', e.target.value)}
                     required
@@ -188,12 +199,14 @@ function ManagePets() {
                   />
                   <button
                     type="button"
+                    aria-label="Increase age"
                     onClick={() => updateForm('age', (parseInt(formPet.age)||0) + 1)}
                     style={{background:'#EFEBE9', border:'none', padding:'10px 12px',
                       cursor:'pointer', fontSize:'16px', color:'#4E342E', fontWeight:'bold'}}
                   >+</button>
                 </div>
                 <select
+                  aria-label="Age unit"
                   value={formPet.ageUnit}
                   onChange={e => updateForm('ageUnit', e.target.value)}
                   style={{padding:'10px', borderRadius:'8px', border:'1.5px solid #D7CCC8',
@@ -206,6 +219,7 @@ function ManagePets() {
             </div>
             <div className="form-row">
               <select
+                aria-label="Gender"
                 value={formPet.gender}
                 onChange={e => updateForm('gender', e.target.value)}
               >
@@ -213,6 +227,7 @@ function ManagePets() {
                 <option value="Female">Female</option>
               </select>
               <select
+                aria-label="Size"
                 value={formPet.size}
                 onChange={e => updateForm('size', e.target.value)}
               >
@@ -223,6 +238,7 @@ function ManagePets() {
             </div>
             <div className="form-row">
               <select
+                aria-label="Status"
                 value={formPet.status}
                 onChange={e => updateForm('status', e.target.value)}
               >
@@ -231,6 +247,7 @@ function ManagePets() {
               </select>
             </div>
             <textarea
+              aria-label="Description"
               placeholder="Description"
               value={formPet.description}
               onChange={e => updateForm('description', e.target.value)}

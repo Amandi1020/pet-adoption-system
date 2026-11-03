@@ -113,9 +113,11 @@ function AdoptForm() {
         <form onSubmit={handleSubmit}>
 
           <div className="form-group">
-            <label>Your Full Name</label>
+            <label htmlFor="adopt-name">Your Full Name</label>
             <input
+              id="adopt-name"
               type="text"
+              autoComplete="name"
               placeholder="Your full name"
               value={fullName}
               onChange={e => setFullName(e.target.value)}
@@ -124,9 +126,11 @@ function AdoptForm() {
           </div>
 
           <div className="form-group">
-            <label>Phone Number</label>
+            <label htmlFor="adopt-phone">Phone Number</label>
             <input
+              id="adopt-phone"
               type="tel"
+              autoComplete="tel"
               placeholder="+94 XX XXX XXXX"
               value={phone}
               onChange={e => setPhone(e.target.value)}
@@ -135,9 +139,11 @@ function AdoptForm() {
           </div>
 
           <div className="form-group">
-            <label>Home Address</label>
+            <label htmlFor="adopt-address">Home Address</label>
             <input
+              id="adopt-address"
               type="text"
+              autoComplete="street-address"
               placeholder="Your home address"
               value={address}
               onChange={e => setAddress(e.target.value)}
@@ -146,8 +152,9 @@ function AdoptForm() {
           </div>
 
           <div className="form-group">
-            <label>Home Type</label>
+            <label htmlFor="adopt-home-type">Home Type</label>
             <select
+              id="adopt-home-type"
               value={homeType}
               onChange={e => setHomeType(e.target.value)}
               required
@@ -163,8 +170,9 @@ function AdoptForm() {
           </div>
 
           <div className="form-group">
-            <label>Do you have children at home?</label>
+            <label htmlFor="adopt-children">Do you have children at home?</label>
             <select
+              id="adopt-children"
               value={hasChildren}
               onChange={e => setHasChildren(e.target.value === 'true')}
               style={{width:'100%',padding:'10px',borderRadius:'8px',
@@ -177,8 +185,9 @@ function AdoptForm() {
           </div>
 
           <div className="form-group">
-            <label>Previous pet experience</label>
+            <label htmlFor="adopt-experience">Previous pet experience</label>
             <input
+              id="adopt-experience"
               type="text"
               placeholder="Describe your experience with pets..."
               value={experience}
@@ -188,8 +197,9 @@ function AdoptForm() {
           </div>
 
           <div className="form-group">
-            <label>Why do you want to adopt {pet?.name || 'this pet'}?</label>
+            <label htmlFor="adopt-reason">Why do you want to adopt {pet?.name || 'this pet'}?</label>
             <textarea
+              id="adopt-reason"
               placeholder="Tell us why you want to adopt..."
               value={reason}
               onChange={e => setReason(e.target.value)}

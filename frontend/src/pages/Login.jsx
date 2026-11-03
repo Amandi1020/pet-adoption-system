@@ -31,15 +31,15 @@ function Login() {
     <div className="login-page">
 
       <div className="login-bg">
-        <img src={loginAnimal} alt="background" className="login-bg-img" />
+        <img src={loginAnimal} alt="" className="login-bg-img" />
         <div className="login-bg-overlay"></div>
       </div>
 
-      <div className="login-paw login-paw-1">🐾</div>
-      <div className="login-paw login-paw-2">🐾</div>
-      <div className="login-paw login-paw-3">🐾</div>
-      <div className="login-paw login-paw-4">🐾</div>
-      <div className="login-paw login-paw-5">🐾</div>
+      <div className="login-paw login-paw-1" aria-hidden="true">🐾</div>
+      <div className="login-paw login-paw-2" aria-hidden="true">🐾</div>
+      <div className="login-paw login-paw-3" aria-hidden="true">🐾</div>
+      <div className="login-paw login-paw-4" aria-hidden="true">🐾</div>
+      <div className="login-paw login-paw-5" aria-hidden="true">🐾</div>
 
       <div className="login-card">
 
@@ -55,9 +55,11 @@ function Login() {
 
           <form onSubmit={handleLogin}>
             <div className="login-form-group">
-              <label>Email</label>
+              <label htmlFor="login-email">Email</label>
               <input
+                id="login-email"
                 type="email"
+                autoComplete="email"
                 placeholder="your@email.com"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
@@ -65,9 +67,11 @@ function Login() {
               />
             </div>
             <div className="login-form-group">
-              <label>Password</label>
+              <label htmlFor="login-password">Password</label>
               <input
+                id="login-password"
                 type="password"
+                autoComplete="current-password"
                 placeholder="Your password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}

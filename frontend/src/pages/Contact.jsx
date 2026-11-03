@@ -101,7 +101,7 @@ function Contact() {
             </div>
 
             {status === 'success' && (
-              <div className="contact-success">
+              <div className="contact-success" role="status">
                 <span>✅</span>
                 <div>
                   <p className="contact-success-title">Message sent successfully!</p>
@@ -111,7 +111,7 @@ function Contact() {
             )}
 
             {status === 'error' && (
-              <div className="contact-error-msg">
+              <div className="contact-error-msg" role="alert">
                 ❌ Something went wrong. Please email us directly at info@pawfind.com
               </div>
             )}
@@ -119,10 +119,12 @@ function Contact() {
             <form ref={form} onSubmit={handleSubmit}>
               <div className="contact-form-row">
                 <div className="contact-form-group">
-                  <label>Full Name *</label>
+                  <label htmlFor="contact-name">Full Name *</label>
                   <input
+                    id="contact-name"
                     type="text"
                     name="user_name"
+                    autoComplete="name"
                     placeholder="Your full name"
                     value={formData.user_name}
                     onChange={handleChange}
@@ -130,10 +132,12 @@ function Contact() {
                   />
                 </div>
                 <div className="contact-form-group">
-                  <label>Email Address *</label>
+                  <label htmlFor="contact-email">Email Address *</label>
                   <input
+                    id="contact-email"
                     type="email"
                     name="user_email"
+                    autoComplete="email"
                     placeholder="your@email.com"
                     value={formData.user_email}
                     onChange={handleChange}
@@ -144,18 +148,21 @@ function Contact() {
 
               <div className="contact-form-row">
                 <div className="contact-form-group">
-                  <label>Phone Number</label>
+                  <label htmlFor="contact-phone">Phone Number</label>
                   <input
+                    id="contact-phone"
                     type="tel"
                     name="user_phone"
+                    autoComplete="tel"
                     placeholder="+94 XX XXX XXXX"
                     value={formData.user_phone}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="contact-form-group">
-                  <label>Subject *</label>
+                  <label htmlFor="contact-subject">Subject *</label>
                   <select
+                    id="contact-subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
@@ -173,8 +180,9 @@ function Contact() {
               </div>
 
               <div className="contact-form-group">
-                <label>Message *</label>
+                <label htmlFor="contact-message">Message *</label>
                 <textarea
+                  id="contact-message"
                   name="message"
                   placeholder="Tell us how we can help you..."
                   value={formData.message}
