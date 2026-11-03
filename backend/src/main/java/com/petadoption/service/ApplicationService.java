@@ -70,6 +70,8 @@ public class ApplicationService {
         application.setPet(pet);
         application.setAdopter(adopter);
         application.setStatus(AdoptionApplication.Status.PENDING);
+        application.setPhone(request.phone());
+        application.setAddress(request.address());
         application.setHomeType(request.homeType());
         application.setHasChildren(request.hasChildren());
         application.setExperience(request.experience());

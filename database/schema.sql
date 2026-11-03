@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS applications (
   pet_id INT NOT NULL,
   adopter_id INT NOT NULL,
   status ENUM('PENDING', 'REVIEWING', 'APPROVED', 'REJECTED') DEFAULT 'PENDING',
+  phone VARCHAR(30),
+  address VARCHAR(255),
   home_type VARCHAR(100),
   has_children BOOLEAN,
   experience VARCHAR(255),

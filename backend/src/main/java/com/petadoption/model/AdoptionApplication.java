@@ -24,6 +24,12 @@ public class AdoptionApplication {
     @Enumerated(EnumType.STRING)
     private Status status = Status.PENDING;
 
+    @Column(length = 30)
+    private String phone;
+
+    @Column(length = 255)
+    private String address;
+
     @Column(name = "home_type")
     private String homeType;
 

@@ -83,6 +83,8 @@ function Applications() {
               </div>
               <div className="app-details">
                 <p><strong>Adopter:</strong> {app.adopter?.name}</p>
+                <p><strong>Phone:</strong> {app.phone || 'Not provided'}</p>
+                <p><strong>Address:</strong> {app.address || 'Not provided'}</p>
                 <p><strong>Pet:</strong> {app.pet?.name}</p>
                 <p><strong>Home Type:</strong> {app.homeType}</p>
                 <p><strong>Has Children:</strong> {app.hasChildren ? 'Yes' : 'No'}</p>

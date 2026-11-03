@@ -79,6 +79,8 @@ function MyApplications() {
                   </span>
                 </div>
                 <div className="myapp-details">
+                  <p><strong>Phone:</strong> {app.phone || 'Not provided'}</p>
+                  <p><strong>Address:</strong> {app.address || 'Not provided'}</p>
                   <p><strong>Home type:</strong> {app.homeType}</p>
                   <p><strong>Has children:</strong> {app.hasChildren ? 'Yes' : 'No'}</p>
                   <p><strong>Experience:</strong> {app.experience}</p>

@@ -51,7 +51,7 @@ class ApplicationServiceTest {
         Pet pet = pet(10, Pet.Status.AVAILABLE);
         User adopter = user(20);
         ApplicationRequest request = new ApplicationRequest(
-                10, "Apartment", true, "experienced", "because"
+                10, "+94771234567", "12 Shelter Road", "Apartment", true, "experienced", "because"
         );
 
         when(petRepository.findById(10)).thenReturn(Optional.of(pet));
@@ -67,6 +67,8 @@ class ApplicationServiceTest {
         assertEquals(AdoptionApplication.Status.PENDING, saved.getStatus());
         assertEquals(pet, saved.getPet());
         assertEquals(adopter, saved.getAdopter());
+        assertEquals("+94771234567", saved.getPhone());
+        assertEquals("12 Shelter Road", saved.getAddress());
         assertEquals("Apartment", saved.getHomeType());
         assertEquals(true, saved.getHasChildren());
         assertEquals("experienced", saved.getExperience());
@@ -283,6 +285,8 @@ class ApplicationServiceTest {
     }
 
     private ApplicationRequest request(Integer petId) {
-        return new ApplicationRequest(petId, "House", false, "none", "reason");
+        return new ApplicationRequest(
+                petId, "+94771234567", "12 Shelter Road", "House", false, "none", "reason"
+        );
     }
 }

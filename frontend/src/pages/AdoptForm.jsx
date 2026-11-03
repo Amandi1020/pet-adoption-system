@@ -63,10 +63,12 @@ function AdoptForm() {
 
     const application = {
       petId: parseInt(petId),
+      phone,
+      address,
       homeType,
       hasChildren,
       experience,
-      reason: `Applicant: ${fullName} | Phone: ${phone} | Address: ${address}\n\nReason for adopting: ${reason}`,
+      reason,
     }
 
     try {
