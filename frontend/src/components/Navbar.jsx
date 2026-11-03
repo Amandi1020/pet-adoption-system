@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAuth from '../context/useAuth'
 import { ADMIN_ROLES } from '../utils/roles'
@@ -7,8 +8,11 @@ function Navbar() {
   const navigate = useNavigate()
   const location = useLocation()
   const { user, logout } = useAuth()
+  const [openPath, setOpenPath] = useState(null)
+  const menuOpen = openPath === location.pathname
 
   const handleLogout = () => {
+    setOpenPath(null)
     logout()
     navigate('/login')
   }
@@ -26,7 +30,18 @@ function Navbar() {
         </Link>
       </div>
 
-      <div className="navbar-links">
+      <button
+        type="button"
+        className="navbar-toggle"
+        aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        aria-expanded={menuOpen}
+        aria-controls="primary-navigation"
+        onClick={() => setOpenPath(menuOpen ? null : location.pathname)}
+      >
+        <span aria-hidden="true">{menuOpen ? '✕' : '☰'}</span>
+      </button>
+
+      <div id="primary-navigation" className={`navbar-links ${menuOpen ? 'open' : ''}`}>
 
         <Link to="/" className={`nav-link ${isActive('/') ? 'nav-active' : ''}`}>Home</Link>
           <Link to="/pets" className={`nav-link ${isActive('/pets') ? 'nav-active' : ''}`}>Browse Pets</Link>

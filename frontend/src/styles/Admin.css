@@ -228,12 +228,14 @@
 .pets-table {
   background: white;
   border-radius: 12px;
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid #D7CCC8;
 }
 
 .pets-table table {
   width: 100%;
+  min-width: 720px;
   border-collapse: collapse;
 }
 
@@ -480,4 +482,28 @@
   padding: 3px 10px;
   border-radius: 10px;
   white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .admin-page {
+    padding: 1rem;
+  }
+
+  .admin-header,
+  .app-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pet-form-card {
+    padding: 1rem;
+  }
+
+  .app-details {
+    grid-template-columns: 1fr;
+  }
 }
