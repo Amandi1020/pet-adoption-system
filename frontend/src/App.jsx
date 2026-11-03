@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import FAQ from './pages/FAQ'
 import CareGuide from './pages/CareGuide'
 import About from './pages/About'
@@ -21,39 +21,88 @@ import ManagePets from './pages/admin/ManagePets'
 import Applications from './pages/admin/Applications'
 import BackToTop from './components/BackToTop'
 import Messages from './pages/admin/Messages'
-
-
+import ProtectedRoute from './components/ProtectedRoute'
+import { ADMIN_ROLES } from './utils/roles'
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pets" element={<PetList />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/adopt" element={<AdoptForm />} />
-        <Route path="/adopt/:petId" element={<AdoptForm />} />
-        <Route path="/admin" element={<Dashboard />} />
-        <Route path="/admin/pets" element={<ManagePets />} />
-        <Route path="/admin/applications" element={<Applications />} />
+        <Route path="/adopt" element={<Navigate to="/pets" replace />} />
+        <Route
+          path="/adopt/:petId"
+          element={(
+            <ProtectedRoute>
+              <AdoptForm />
+            </ProtectedRoute>
+          )}
+        />
+        <Route
+          path="/my-applications"
+          element={(
+            <ProtectedRoute>
+              <MyApplications />
+            </ProtectedRoute>
+          )}
+        />
+        <Route
+          path="/admin"
+          element={(
+            <ProtectedRoute allowedRoles={ADMIN_ROLES}>
+              <Dashboard />
+            </ProtectedRoute>
+          )}
+        />
+        <Route
+          path="/admin/pets"
+          element={(
+            <ProtectedRoute allowedRoles={ADMIN_ROLES}>
+              <ManagePets />
+            </ProtectedRoute>
+          )}
+        />
+        <Route
+          path="/admin/applications"
+          element={(
+            <ProtectedRoute allowedRoles={ADMIN_ROLES}>
+              <Applications />
+            </ProtectedRoute>
+          )}
+        />
+        <Route
+          path="/admin/stories"
+          element={(
+            <ProtectedRoute allowedRoles={ADMIN_ROLES}>
+              <AdminStories />
+            </ProtectedRoute>
+          )}
+        />
+        <Route
+          path="/admin/messages"
+          element={(
+            <ProtectedRoute allowedRoles={ADMIN_ROLES}>
+              <Messages />
+            </ProtectedRoute>
+          )}
+        />
         <Route path="/stories" element={<Stories />} />
-        <Route path="/admin/stories" element={<AdminStories />} />
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/pets/:id" element={<PetDetail />} />
-        <Route path="/my-applications" element={<MyApplications />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/care-guide" element={<CareGuide />} />
         <Route path="/faq" element={<FAQ />} />
-        <Route path="/admin/messages" element={<Messages />} />
       </Routes>
       <Footer />
 
       <BackToTop />
-    </BrowserRouter>
+    </>
   )
 }
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import BASE_URL, { getApiErrorMessage } from '../../services/api'
+import { apiFetch } from '../../services/api'
 import Toast from '../../components/Toast'
 import '../../styles/Admin.css'
 
@@ -10,33 +10,37 @@ function AdminStories() {
   const closeToast = useCallback(() => setToast(null), [])
 
   useEffect(() => {
-    fetch(`${BASE_URL}/stories/all`)
-      .then(res => res.json())
+    let cancelled = false
+
+    apiFetch('/stories/all', { fallbackMessage: 'Failed to load stories.' })
       .then(data => {
-        setStories(data)
-        setLoading(false)
+        if (!cancelled) setStories(data)
       })
+      .catch(err => {
+        if (!cancelled) {
+          setToast({ message: err.message || 'Failed to load stories.', type: 'error' })
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   const approveStory = async (id) => {
     try {
-      const response = await fetch(
-        `${BASE_URL}/stories/${id}/approve`,
-        { method: 'PUT' }
-      )
-      if (!response.ok) {
-        const message = await getApiErrorMessage(
-          response,
-          'Failed to approve story.'
-        )
-        setToast({ message, type: 'error' })
-        return
-      }
+      await apiFetch(`/stories/${id}/approve`, {
+        method: 'PUT',
+        fallbackMessage: 'Failed to approve story.',
+      })
       setStories(current => current.map(s =>
         s.id === id ? { ...s, isApproved: true } : s
       ))
-    } catch {
-      setToast({ message: 'Failed to approve story.', type: 'error' })
+    } catch (err) {
+      setToast({ message: err.message || 'Failed to approve story.', type: 'error' })
     }
   }
 

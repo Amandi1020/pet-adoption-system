@@ -1,14 +1,15 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import BASE_URL from '../services/api'
+import { apiFetch } from '../services/api'
+import useAuth from '../context/useAuth'
 import Spinner from '../components/Spinner'
 import Toast from '../components/Toast'
 import '../styles/MyApplications.css'
 
 function MyApplications() {
-  const [applications, setApplications] = useState([])
-  const user = JSON.parse(localStorage.getItem('user'))
+  const { user } = useAuth()
   const userId = user?.id
+  const [applications, setApplications] = useState([])
   const [loading, setLoading] = useState(Boolean(userId))
   const [toast, setToast] = useState(null)
   const closeToast = useCallback(() => setToast(null), [])
@@ -17,14 +18,16 @@ function MyApplications() {
     if (!userId) {
       return
     }
-    fetch(`${BASE_URL}/applications/adopter/${userId}`)
-      .then(res => res.json())
+
+    apiFetch(`/applications/adopter/${userId}`, {
+      fallbackMessage: 'Failed to load applications.',
+    })
       .then(data => {
         setApplications(data)
         setLoading(false)
       })
-      .catch(() => {
-        setToast({ message: 'Failed to load applications.', type: 'error' })
+      .catch(err => {
+        setToast({ message: err.message || 'Failed to load applications.', type: 'error' })
         setLoading(false)
       })
   }, [userId])

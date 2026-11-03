@@ -1,19 +1,22 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import useAuth from '../context/useAuth'
+import { ADMIN_ROLES } from '../utils/roles'
 import '../styles/Navbar.css'
 
 function Navbar() {
   const navigate = useNavigate()
   const location = useLocation()
-  const user = JSON.parse(localStorage.getItem('user'))
+  const { user, logout } = useAuth()
 
   const handleLogout = () => {
-    localStorage.removeItem('user')
+    logout()
     navigate('/login')
   }
+
   const isActive = (path) => {
-  if (path === '/') return location.pathname === '/'
-  return location.pathname.startsWith(path)
-}
+    if (path === '/') return location.pathname === '/'
+    return location.pathname.startsWith(path)
+  }
 
   return (
     <nav className="navbar">
@@ -24,7 +27,7 @@ function Navbar() {
       </div>
 
       <div className="navbar-links">
-        
+
         <Link to="/" className={`nav-link ${isActive('/') ? 'nav-active' : ''}`}>Home</Link>
           <Link to="/pets" className={`nav-link ${isActive('/pets') ? 'nav-active' : ''}`}>Browse Pets</Link>
           <Link to="/care-guide" className={`nav-link ${isActive('/care-guide') ? 'nav-active' : ''}`}>Care Guide</Link>
@@ -33,7 +36,7 @@ function Navbar() {
 
           {user ? (
             <>
-              {user.role === 'ADMIN' && (
+              {ADMIN_ROLES.includes(user.role) && (
                 <Link to="/admin" className={`nav-link admin-link ${isActive('/admin') ? 'nav-active' : ''}`}>
                   ⚙️ Admin
                 </Link>

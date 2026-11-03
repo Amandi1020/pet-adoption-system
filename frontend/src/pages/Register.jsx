@@ -1,7 +1,6 @@
-import { useState, useCallback } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { registerUser } from '../services/authService'
-import Toast from '../components/Toast'
+import { useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import useAuth from '../context/useAuth'
 import loginAnimal from '../assets/images/other/login-animal.jpeg'
 import '../styles/Login.css'
 
@@ -9,27 +8,28 @@ function Register() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [toast, setToast] = useState(null)
+  const [submitting, setSubmitting] = useState(false)
   const navigate = useNavigate()
-  const closeToast = useCallback(() => setToast(null), [])
+  const location = useLocation()
+  const { register, showToast } = useAuth()
 
   const handleRegister = async (e) => {
     e.preventDefault()
     if (password.length < 6) {
-      setToast({ message: 'Password must be at least 6 characters.', type: 'error' })
+      showToast('Password must be at least 6 characters.', 'error')
       return
     }
+
+    setSubmitting(true)
+
     try {
-      const result = await registerUser({ name, email, password, role: 'ADOPTER' })
-      if (result.id) {
-        localStorage.setItem('user', JSON.stringify(result))
-        setToast({ message: 'Account created! Welcome to PawFind 🐾', type: 'success' })
-        setTimeout(() => navigate('/'), 2000)
-      } else {
-        setToast({ message: 'Registration failed. Try again.', type: 'error' })
-      }
+      await register({ name, email, password })
+      showToast('Account created! Welcome to PawFind 🐾', 'success')
+      navigate(location.state?.from || '/', { replace: true })
     } catch (err) {
-      setToast({ message: err.message || 'Something went wrong.', type: 'error' })
+      showToast(err.message || 'Something went wrong.', 'error')
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -90,17 +90,19 @@ function Register() {
                 required
               />
             </div>
-            <button type="submit" className="login-btn">Create Account</button>
+            <button type="submit" className="login-btn" disabled={submitting}>
+              {submitting ? 'Creating account...' : 'Create Account'}
+            </button>
           </form>
 
           <p className="login-switch">
-            Already have an account? <Link to="/login">Login</Link>
+            Already have an account?{' '}
+            <Link to="/login" state={{ from: location.state?.from }}>Login</Link>
           </p>
         </div>
 
       </div>
 
-      {toast && <Toast message={toast.message} type={toast.type} onClose={closeToast} />}
     </div>
   )
 }

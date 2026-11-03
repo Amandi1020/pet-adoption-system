@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import BASE_URL from '../services/api'
+import { apiFetch } from '../services/api'
+import useAuth from '../context/useAuth'
 import '../styles/Stories.css'
 
 function Stories() {
@@ -8,12 +9,12 @@ function Stories() {
   const [showForm, setShowForm] = useState(false)
   const [storyText, setStoryText] = useState('')
   const [message, setMessage] = useState('')
-
-  const user = JSON.parse(localStorage.getItem('user'))
+  const { user } = useAuth()
 
   useEffect(() => {
-    fetch(`${BASE_URL}/stories`)
-      .then(res => res.json())
+    apiFetch('/stories', {
+      fallbackMessage: 'Failed to load stories.',
+    })
       .then(data => {
         setStories(data)
         setLoading(false)
@@ -27,24 +28,18 @@ function Stories() {
       setMessage('Please login first!')
       return
     }
+
     try {
-      const response = await fetch(`${BASE_URL}/stories`, {
+      await apiFetch('/stories', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          adopter: { id: user.id },
-          pet: { id: 1 },
-          storyText,
-          isApproved: false
-        })
+        body: { petId: 1, storyText },
+        fallbackMessage: 'Error submitting story.',
       })
-      if (response.ok) {
-        setMessage('Story submitted! Waiting for approval.')
-        setStoryText('')
-        setShowForm(false)
-      }
-    } catch {
-      setMessage('Error submitting story.')
+      setMessage('Story submitted! Waiting for approval.')
+      setStoryText('')
+      setShowForm(false)
+    } catch (err) {
+      setMessage(err.message || 'Error submitting story.')
     }
   }
 
@@ -55,7 +50,7 @@ function Stories() {
         <h1 style={{fontSize:'1.8rem',fontWeight:'bold',color:'#3C3489'}}>
           🌟 Success Stories
         </h1>
-        {user && (
+        {user?.role === 'ADOPTER' && (
           <button
             onClick={() => setShowForm(!showForm)}
             style={{background:'#7F77DD',color:'white',border:'none',

@@ -20,7 +20,7 @@ import rabbitDefault from '../assets/images/pets/rabbit-default.jpg'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getAllPets } from '../services/petService'
-import BASE_URL from '../services/api'
+import { apiFetch } from '../services/api'
 import '../styles/Home.css'
 
 const slides = [
@@ -40,7 +40,7 @@ const slides = [
     title: 'Cats looking for cozy loving homes',
     sub: 'Gentle, playful and affectionate — our cats are ready to curl up with you.',
     btn1: 'Meet the cats', btn1Link: '/pets',
-    btn2: 'Apply now', btn2Link: '/adopt',
+    btn2: 'Apply now', btn2Link: '/pets',
   },
   {
     img: slide3,
@@ -79,7 +79,7 @@ function Home() {
   const [current, setCurrent] = useState(0)
   const [pets, setPets] = useState([])
   const [stories, setStories] = useState([])
-  const [stats, setStats] = useState({ available: 0, adopted: 0, pending: 0, species: 0 })
+  const [stats, setStats] = useState({ available: 0, adopted: 0, species: 0 })
 
   useEffect(() => {
     const timer = setInterval(() => setCurrent(c => (c + 1) % slides.length), 4500)
@@ -97,22 +97,13 @@ function Home() {
         available: available.length,
         adopted,
         species: speciesSet.size,
-        pending: 0,
       })
     })
-    fetch(`${BASE_URL}/applications`)
-      .then(res => res.json())
-      .then(data => {
-        const pending = data.filter(a => a.status === 'PENDING').length
-        setStats(prev => ({...prev, pending}))
-      })
-      .catch(() => {})
   }, [])
 
   useEffect(() => {
-    fetch(`${BASE_URL}/stories`)
-      .then(res => res.json())
-      .then(data => setStories(data.slice(0, 3)))
+    apiFetch('/stories', { fallbackMessage: 'Failed to load stories.' })
+      .then(data => setStories(data))
       .catch(() => {})
   }, [])
 
@@ -164,9 +155,9 @@ function Home() {
           <p>Successfully adopted</p>
         </div>
         <div className="stat-item">
-          <span className="stat-icon">📋</span>
-          <h2>{stats.pending}</h2>
-          <p>Applications pending</p>
+          <span className="stat-icon">🌟</span>
+          <h2>{stories.length}</h2>
+          <p>Success stories</p>
         </div>
         <div className="stat-item">
           <span className="stat-icon">🌿</span>
@@ -389,7 +380,7 @@ function Home() {
           {stories.length === 0 ? (
             <p className="sec-sub">No success stories yet. Be the first to share one!</p>
           ) : (
-            stories.map(story => (
+            stories.slice(0, 3).map(story => (
               <div className="story-card" key={story.id}>
                 <div className="story-quote">❝</div>
                 <p className="story-text">{story.storyText}</p>

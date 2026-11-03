@@ -1,20 +1,20 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import BASE_URL, { getApiErrorMessage } from '../services/api'
+import { apiFetch } from '../services/api'
 import { getPetById } from '../services/petService'
+import useAuth from '../context/useAuth'
 import Toast from '../components/Toast'
 import '../styles/Auth.css'
 
 function AdoptForm() {
   const { petId } = useParams()
   const navigate = useNavigate()
+  const { user } = useAuth()
 
   const [pet, setPet] = useState(null)
   const [loadingPet, setLoadingPet] = useState(Boolean(petId))
 
-  const [fullName, setFullName] = useState(
-    () => JSON.parse(localStorage.getItem('user'))?.name || ''
-  )
+  const [fullName, setFullName] = useState(user?.name || '')
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [homeType, setHomeType] = useState('')
@@ -24,8 +24,6 @@ function AdoptForm() {
   const [submitting, setSubmitting] = useState(false)
   const [toast, setToast] = useState(null)
   const closeToast = useCallback(() => setToast(null), [])
-
-  const user = JSON.parse(localStorage.getItem('user'))
 
   useEffect(() => {
     if (!petId) return
@@ -64,34 +62,23 @@ function AdoptForm() {
     setSubmitting(true)
 
     const application = {
-      adopter: { id: user.id },
-      pet: { id: parseInt(petId) },
+      petId: parseInt(petId),
       homeType,
       hasChildren,
       experience,
       reason: `Applicant: ${fullName} | Phone: ${phone} | Address: ${address}\n\nReason for adopting: ${reason}`,
-      status: 'PENDING'
     }
 
     try {
-      const response = await fetch(`${BASE_URL}/applications`, {
+      await apiFetch('/applications', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(application)
+        body: application,
+        fallbackMessage: 'Error submitting application.',
       })
-
-      if (response.ok) {
-        setToast({ message: `Application for ${pet?.name || 'this pet'} submitted successfully! 🐾`, type: 'success' })
-        setTimeout(() => navigate('/my-applications'), 2000)
-      } else {
-        const message = await getApiErrorMessage(
-          response,
-          'Something went wrong. Try again.'
-        )
-        setToast({ message, type: 'error' })
-      }
-    } catch {
-      setToast({ message: 'Error submitting application.', type: 'error' })
+      setToast({ message: `Application for ${pet?.name || 'this pet'} submitted successfully! 🐾`, type: 'success' })
+      setTimeout(() => navigate('/my-applications'), 2000)
+    } catch (err) {
+      setToast({ message: err.message || 'Error submitting application.', type: 'error' })
     } finally {
       setSubmitting(false)
     }

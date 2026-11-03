@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import BASE_URL, { getApiErrorMessage } from '../../services/api'
+import { apiFetch } from '../../services/api'
 import Toast from '../../components/Toast'
 import '../../styles/Admin.css'
 
@@ -10,14 +10,9 @@ function Applications() {
   const closeToast = useCallback(() => setToast(null), [])
 
   const loadApplications = useCallback(async () => {
-    const response = await fetch(`${BASE_URL}/applications`)
-    if (!response.ok) {
-      throw new Error(await getApiErrorMessage(
-        response,
-        'Failed to load applications.'
-      ))
-    }
-    return response.json()
+    return apiFetch('/applications', {
+      fallbackMessage: 'Failed to load applications.',
+    })
   }, [])
 
   useEffect(() => {
@@ -47,21 +42,13 @@ function Applications() {
 
   const updateStatus = async (id, status) => {
     try {
-      const response = await fetch(
-        `${BASE_URL}/applications/${id}/status?status=${status}`,
-        { method: 'PUT' }
-      )
-      if (!response.ok) {
-        const message = await getApiErrorMessage(
-          response,
-          'Failed to update application.'
-        )
-        setToast({ message, type: 'error' })
-        return
-      }
+      await apiFetch(`/applications/${id}/status?status=${status}`, {
+        method: 'PUT',
+        fallbackMessage: 'Failed to update application.',
+      })
       setApplications(await loadApplications())
-    } catch {
-      setToast({ message: 'Failed to update application.', type: 'error' })
+    } catch (err) {
+      setToast({ message: err.message || 'Failed to update application.', type: 'error' })
     }
   }
 

@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import BASE_URL from '../services/api'
+import { apiFetch } from '../services/api'
 import contactBanner from '../assets/images/other/contactbanner.jpg'
 import '../styles/Contact.css'
 
@@ -20,24 +20,20 @@ function Contact() {
     setLoading(true)
 
     try {
-      const response = await fetch(`${BASE_URL}/contact`, {
+      await apiFetch('/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        body: {
           name: formData.user_name,
           email: formData.user_email,
           phone: formData.user_phone,
           subject: formData.subject,
           message: formData.message
-        })
+        },
+        fallbackMessage: 'Something went wrong. Please try again.',
       })
 
-      if (response.ok) {
-        setStatus('success')
-        setFormData({ user_name: '', user_email: '', user_phone: '', subject: '', message: '' })
-      } else {
-        setStatus('error')
-      }
+      setStatus('success')
+      setFormData({ user_name: '', user_email: '', user_phone: '', subject: '', message: '' })
     } catch {
       setStatus('error')
     } finally {

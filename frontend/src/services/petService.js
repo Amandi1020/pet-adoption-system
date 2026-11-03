@@ -1,46 +1,30 @@
-import BASE_URL from './api'
+import { apiFetch } from './api'
 
-export const getAllPets = async () => {
-  const response = await fetch(`${BASE_URL}/pets`)
-  const data = await response.json()
-  return data
-}
+export const getAllPets = () => apiFetch('/pets', {
+  fallbackMessage: 'Failed to load pets.',
+})
 
-export const getAvailablePets = async () => {
-  const response = await fetch(`${BASE_URL}/pets/available`)
-  const data = await response.json()
-  return data
-}
+export const getAvailablePets = () => apiFetch('/pets/available', {
+  fallbackMessage: 'Failed to load available pets.',
+})
 
-export const getPetById = async (id) => {
-  const response = await fetch(`${BASE_URL}/pets/${id}`)
-  if (!response.ok) {
-    throw new Error('Pet not found')
-  }
-  const data = await response.json()
-  return data
-}
+export const getPetById = (id) => apiFetch(`/pets/${id}`, {
+  fallbackMessage: 'Pet not found.',
+})
 
-export const addPet = async (pet) => {
-  const response = await fetch(`${BASE_URL}/pets`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(pet)
-  })
-  return response.json()
-}
+export const addPet = (pet) => apiFetch('/pets', {
+  method: 'POST',
+  body: pet,
+  fallbackMessage: 'Failed to add pet.',
+})
 
-export const updatePet = async (id, pet) => {
-  const response = await fetch(`${BASE_URL}/pets/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(pet)
-  })
-  return response.json()
-}
+export const updatePet = (id, pet) => apiFetch(`/pets/${id}`, {
+  method: 'PUT',
+  body: pet,
+  fallbackMessage: 'Failed to update pet.',
+})
 
-export const deletePet = async (id) => {
-  await fetch(`${BASE_URL}/pets/${id}`, {
-    method: 'DELETE'
-  })
-}
+export const deletePet = (id) => apiFetch(`/pets/${id}`, {
+  method: 'DELETE',
+  fallbackMessage: 'Failed to delete pet.',
+})

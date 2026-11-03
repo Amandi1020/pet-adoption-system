@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import BASE_URL from '../../services/api'
+import { apiFetch } from '../../services/api'
 import Spinner from '../../components/Spinner'
+import Toast from '../../components/Toast'
 import '../../styles/Admin.css'
 
 function Dashboard() {
@@ -16,11 +17,13 @@ function Dashboard() {
   })
   const [loading, setLoading] = useState(true)
   const [recentApps, setRecentApps] = useState([])
+  const [toast, setToast] = useState(null)
+  const closeToast = useCallback(() => setToast(null), [])
 
   useEffect(() => {
   Promise.all([
-    fetch(`${BASE_URL}/pets`).then(res => res.json()),
-    fetch(`${BASE_URL}/applications`).then(res => res.json())
+    apiFetch('/pets', { fallbackMessage: 'Failed to load pets.' }),
+    apiFetch('/applications', { fallbackMessage: 'Failed to load applications.' })
   ]).then(([pets, applications]) => {
     const availablePets = pets.filter(p => p.status === 'AVAILABLE')
     const adoptedPets = pets.filter(p => p.status === 'ADOPTED')
@@ -35,7 +38,10 @@ function Dashboard() {
     })
     setRecentApps(applications.slice(-5).reverse())
     setLoading(false)
-  }).catch(() => setLoading(false))
+  }).catch(err => {
+    setToast({ message: err.message || 'Failed to load dashboard.', type: 'error' })
+    setLoading(false)
+  })
 }, [])
 
   const statCards = [
@@ -157,6 +163,8 @@ function Dashboard() {
 
         </>
       )}
+
+      {toast && <Toast message={toast.message} type={toast.type} onClose={closeToast} />}
     </div>
   )
 }

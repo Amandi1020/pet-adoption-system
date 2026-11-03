@@ -1,30 +1,29 @@
-import { useState, useCallback } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { loginUser } from '../services/authService'
-import Toast from '../components/Toast'
+import { useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import useAuth from '../context/useAuth'
 import loginAnimal from '../assets/images/other/login-animal.jpeg'
 import '../styles/Login.css'
 
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [toast, setToast] = useState(null)
+  const [submitting, setSubmitting] = useState(false)
   const navigate = useNavigate()
-  const closeToast = useCallback(() => setToast(null), [])
+  const location = useLocation()
+  const { login, showToast } = useAuth()
 
   const handleLogin = async (e) => {
     e.preventDefault()
+    setSubmitting(true)
+
     try {
-      const result = await loginUser({ email, password })
-      if (result && result.id) {
-        localStorage.setItem('user', JSON.stringify(result))
-        setToast({ message: 'Login successful! Welcome back 🐾', type: 'success' })
-        setTimeout(() => navigate('/'), 1500)
-      } else {
-        setToast({ message: 'Invalid email or password.', type: 'error' })
-      }
+      await login({ email, password })
+      showToast('Login successful! Welcome back 🐾', 'success')
+      navigate(location.state?.from || '/', { replace: true })
     } catch (err) {
-      setToast({ message: err.message || 'Something went wrong. Try again.', type: 'error' })
+      showToast(err.message || 'Something went wrong. Try again.', 'error')
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -75,17 +74,19 @@ function Login() {
                 required
               />
             </div>
-            <button type="submit" className="login-btn">Login</button>
+            <button type="submit" className="login-btn" disabled={submitting}>
+              {submitting ? 'Logging in...' : 'Login'}
+            </button>
           </form>
 
           <p className="login-switch">
-            Don't have an account? <Link to="/register">Sign Up</Link>
+            Don't have an account?{' '}
+            <Link to="/register" state={{ from: location.state?.from }}>Sign Up</Link>
           </p>
         </div>
 
       </div>
 
-      {toast && <Toast message={toast.message} type={toast.type} onClose={closeToast} />}
     </div>
   )
 }

@@ -14,7 +14,7 @@ function Footer() {
             <p className="footer-col-title">Adopt</p>
             <Link to="/pets">Browse pets</Link>
             <Link to="/quiz">Match quiz</Link>
-            <Link to="/adopt">Apply now</Link>
+            <Link to="/pets">Apply now</Link>
           </div>
           <div className="footer-col">
             <p className="footer-col-title">Learn</p>

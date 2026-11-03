@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback} from 'react'
 import Toast from '../../components/Toast'
-import BASE_URL, { getApiErrorMessage } from '../../services/api'
+import { apiFetch } from '../../services/api'
 import '../../styles/Admin.css'
 
 function ManagePets() {
@@ -15,18 +15,27 @@ function ManagePets() {
   const [toast, setToast] = useState(null)
   const closeToast = useCallback(() => setToast(null), [])
 
-  const fetchPets = useCallback(() => {
-    fetch(`${BASE_URL}/pets`)
-      .then(res => res.json())
-      .then(data => {
-        setPets(data)
-        setLoading(false)
-      })
-  }, [])
-
   useEffect(() => {
-    fetchPets()
-  }, [fetchPets])
+    let cancelled = false
+
+    apiFetch('/pets', { fallbackMessage: 'Failed to load pets.' })
+      .then(data => {
+        if (!cancelled) {
+          setPets(data)
+          setLoading(false)
+        }
+      })
+      .catch(err => {
+        if (!cancelled) {
+          setToast({ message: err.message || 'Failed to load pets.', type: 'error' })
+          setLoading(false)
+        }
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const handleAddPet = async (e) => {
   e.preventDefault()
@@ -47,33 +56,26 @@ function ManagePets() {
         `${newPet.name} is a lovely ${newPet.species?.toLowerCase()}`
     }
 
-    const response = await fetch(`${BASE_URL}/pets`, {
+    const createdPet = await apiFetch('/pets', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(petToSend)
+      body: petToSend,
+      fallbackMessage: 'Failed to add pet. Please try again.',
     })
 
-    if (response.ok) {
-      setToast({
-        message: `🐾 ${newPet.name} was added successfully!`,
-        type: 'success'
-      })
-      setShowForm(false)
-      setNewPet({
-        name: '', species: '', breed: '',
-        age: 1, ageUnit: 'years', gender: 'Male',
-        size: 'Medium', status: 'AVAILABLE', description: ''
-      })
-      fetchPets()
-    } else {
-      setToast({
-        message: 'Failed to add pet. Please try again.',
-        type: 'error'
-      })
-    }
-  } catch {
+    setPets(current => [...current, createdPet])
     setToast({
-      message: 'Error adding pet. Check your connection.',
+      message: `🐾 ${newPet.name} was added successfully!`,
+      type: 'success'
+    })
+    setShowForm(false)
+    setNewPet({
+      name: '', species: '', breed: '',
+      age: 1, ageUnit: 'years', gender: 'Male',
+      size: 'Medium', status: 'AVAILABLE', description: ''
+    })
+  } catch (err) {
+    setToast({
+      message: err.message || 'Error adding pet. Check your connection.',
       type: 'error'
     })
   }
@@ -83,18 +85,13 @@ function ManagePets() {
     if (!window.confirm('Are you sure you want to delete this pet?')) return
 
     try {
-      const response = await fetch(`${BASE_URL}/pets/${id}`, { method: 'DELETE' })
-      if (!response.ok) {
-        const message = await getApiErrorMessage(
-          response,
-          'Failed to delete pet.'
-        )
-        setToast({ message, type: 'error' })
-        return
-      }
+      await apiFetch(`/pets/${id}`, {
+        method: 'DELETE',
+        fallbackMessage: 'Failed to delete pet.',
+      })
       setPets(current => current.filter(p => p.id !== id))
-    } catch {
-      setToast({ message: 'Failed to delete pet.', type: 'error' })
+    } catch (err) {
+      setToast({ message: err.message || 'Failed to delete pet.', type: 'error' })
     }
   }
 

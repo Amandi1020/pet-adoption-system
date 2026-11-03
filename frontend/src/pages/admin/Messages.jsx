@@ -1,25 +1,46 @@
-import { useState, useEffect } from 'react'
-import BASE_URL from '../../services/api'
+import { useState, useEffect, useCallback } from 'react'
+import { apiFetch } from '../../services/api'
 import Spinner from '../../components/Spinner'
+import Toast from '../../components/Toast'
 import '../../styles/Admin.css'
 
 function Messages() {
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(true)
+  const [toast, setToast] = useState(null)
+  const closeToast = useCallback(() => setToast(null), [])
 
   useEffect(() => {
-    fetch(`${BASE_URL}/contact`)
-      .then(res => res.json())
+    let cancelled = false
+
+    apiFetch('/contact', { fallbackMessage: 'Failed to load messages.' })
       .then(data => {
-        setMessages(data.reverse())
-        setLoading(false)
+        if (!cancelled) setMessages([...data].reverse())
       })
-      .catch(() => setLoading(false))
+      .catch(err => {
+        if (!cancelled) {
+          setToast({ message: err.message || 'Failed to load messages.', type: 'error' })
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   const markRead = async (id) => {
-    await fetch(`${BASE_URL}/contact/${id}/read`, { method: 'PUT' })
-    setMessages(messages.map(m => m.id === id ? {...m, isRead: true} : m))
+    try {
+      await apiFetch(`/contact/${id}/read`, {
+        method: 'PUT',
+        fallbackMessage: 'Failed to mark message as read.',
+      })
+      setMessages(current => current.map(m => m.id === id ? {...m, isRead: true} : m))
+    } catch (err) {
+      setToast({ message: err.message || 'Failed to mark message as read.', type: 'error' })
+    }
   }
 
   return (
@@ -51,6 +72,7 @@ function Messages() {
           ))}
         </div>
       )}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={closeToast} />}
     </div>
   )
 }
