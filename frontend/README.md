@@ -1,64 +1,33 @@
-# 🐾 PawFind — Pet Adoption & Care Info System
+# PawFind Frontend
 
-A full-stack web application that digitizes the pet adoption process for animal shelters. Built with React, Spring Boot, and MySQL.
+React 19 and Vite frontend for the PawFind pet adoption system. See the root [README](../README.md) for full setup, API, roles, and database details.
 
-## 🌟 Features
+## Run locally
 
-- Browse and search pets by species, age, size and gender
-- Adopter personality match quiz
-- Online adoption application with status tracking
-- Admin dashboard with real-time statistics
-- Vaccination and care records management
-- Success stories feed
-- Role-based access (Admin, Staff, Adopter)
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Frontend | React.js + CSS |
-| Backend | Spring Boot (Java) |
-| Database | MySQL |
-| Version Control | Git + GitHub |
-
-## 🚀 How to run
-
-### Prerequisites
-- Java 21
-- Node.js
-- MySQL
-
-### Backend
 ```bash
-cd backend
-# Update application.properties with your MySQL password
-./mvnw spring-boot:run
-```
-
-### Frontend
-```bash
-cd frontend
+cp .env.example .env
 npm install
 npm run dev
 ```
 
-### Database
-Run `database/schema.sql` in MySQL Workbench.
+On Windows, use `copy .env.example .env`. The app runs at `http://localhost:5173`.
 
-## 📱 Pages
+`VITE_API_URL` controls the API base URL and defaults to `http://localhost:8080/api`.
 
-- `/` — Home with carousel and stats
-- `/pets` — Pet listings with search and filter
-- `/pets/:id` — Pet detail page
-- `/quiz` — Adopter match quiz
-- `/adopt` — Adoption application form
-- `/my-applications` — Track application status
-- `/stories` — Success stories
-- `/admin` — Admin dashboard
-- `/admin/pets` — Manage pets
-- `/admin/applications` — Review applications
-- `/admin/stories` — Approve stories
+## Checks
 
-## 👩‍💻 Developer
+```bash
+npm run lint
+npm run build
+```
 
-Built by Amandi — MIS Undergraduate Project 2025
+## Routes
+
+| Route | Access |
+|---|---|
+| `/`, `/pets`, `/pets/:id`, `/quiz`, `/stories`, `/care-guide`, `/about`, `/contact`, `/faq`, `/login`, `/register` | Public |
+| `/adopt` | Redirects to `/pets` |
+| `/adopt/:petId`, `/my-applications` | Authenticated |
+| `/admin`, `/admin/pets`, `/admin/applications`, `/admin/stories`, `/admin/messages` | Admin and Staff |
+
+Registration creates an `ADOPTER` account. Admin and staff roles must be assigned in the database.

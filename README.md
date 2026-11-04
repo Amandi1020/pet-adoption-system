@@ -1,259 +1,275 @@
-# 🐾 PawFind — Pet Adoption & Care Info System
+# PawFind - Pet Adoption & Care Information System
 
-> A full-stack web application that digitizes the pet adoption process for animal shelters in Sri Lanka.
+A full-stack web application for managing pet adoption listings, applications, success stories, contact messages, and pet care guidance.
 
-![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-4-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0.6-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 
----
-
-## 📖 About
-
-PawFind was built to solve a real problem — animal shelters in Sri Lanka manage hundreds of pets using paper registers and WhatsApp groups. This system digitizes the entire adoption process, making it easier, faster, and more transparent for shelters, staff, and adopters.
-
-## 📸 Screenshots
+## Screenshots
 
 ![PawFind Home](docs/screenshots/home.png)
 
----
+## Features
 
-### The problem it solves
+### Public and adopters
 
-| Before PawFind | After PawFind |
-|---|---|
-| Pet records on paper | Digital pet profiles with photos |
-| WhatsApp application chaos | Structured online adoption forms |
-| No status visibility | Real-time application tracking |
-| Manual vaccination records | Digital health & vaccination logs |
-| No analytics | Admin dashboard with live stats |
-| Word of mouth only | Public success stories feed |
-| No record of enquiries | Contact messages saved and viewable by admin |
+- Browse all pets, search by name, and filter by species.
+- View pet details including photo, breed, age, gender, size, status, and description.
+- Take a 7-question match quiz that suggests a dog, cat, bird, or rabbit.
+- Register and log in; new registrations are always assigned the `ADOPTER` role.
+- Submit a protected adoption application tied to a specific pet.
+- Track application status from a personal `My Applications` page.
+- Submit a success story after an approved adoption; stories remain private until an admin or staff member approves them.
+- Read approved success stories and pet care guides.
+- Send a contact message that is stored for admin/staff review.
+- Use the responsive navigation, keyboard-accessible controls, lazy-loaded images, and per-page metadata.
 
----
+### Admin and staff
 
-## ✨ Features
+- Access the protected admin pages at `/admin` through `/admin/messages`.
+- View summary statistics for pets and applications.
+- Create, edit, and delete pet listings, including image URL, status, and month/year age.
+- Review applications and move them through `PENDING`, `REVIEWING`, `APPROVED`, or `REJECTED`.
+- Approval marks the pet as `ADOPTED` and rejects other open applications for that pet.
+- Rejecting an application releases the pet back to `AVAILABLE` when no approved application exists.
+- Approve submitted success stories.
+- View contact messages and mark them as read.
+- Manage vaccination records through the API. There is currently no dedicated vaccination management screen.
 
-### For Adopters
-- Browse and search pets by species, age, size, and gender
-- View full pet profiles with photos and health records
-- Personality match quiz — 7 questions to find the right pet
-- Submit adoption applications tied to the specific pet viewed
-- Track application status in real time on a personal dashboard
-- Share success stories after adoption
-- Contact the shelter via a working contact form
-
-### For Admin
-- Real-time dashboard with stats and adoption rate
-- Manage pet listings — add (with month/year age stepper), edit, delete
-- Review and approve or reject applications
-- Pet status automatically updates to **Adopted** when approved (reverts to **Available** if rejected)
-- Moderate success stories before they go public
-- View and mark contact messages as read
-
-### For Shelter Staff
-- Add and update pet profiles
-- Log vaccination records per pet
-- Record vet visits and care notes
-
----
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Frontend | React.js 18 + Pure CSS |
-| Routing | React Router DOM |
-| Backend | Spring Boot 4 + Java 21 |
-| ORM | Spring Data JPA + Hibernate |
-| Database | MySQL 8 |
-| Email | EmailJS |
-| Version Control | Git + GitHub |
+| Frontend | React 19, Vite 8, React Router 7, CSS |
+| Backend | Spring Boot 4.0.6, Java 21 |
+| Persistence | Spring Data JPA, Hibernate, MySQL 8 |
+| Authentication | JWT bearer tokens, BCrypt password hashing, Spring Security |
+| Testing | JUnit 5, Mockito, MockMvc |
+| Version Control | Git and GitHub |
 
----
+## Project Structure
 
-## 📁 Project Structure
-
-```
+```text
 pet-adoption-system/
-├── frontend/                     ← React app
+├── frontend/
 │   └── src/
-│       ├── assets/images/        ← pet photos, carousel, UI, login/contact banners
-│       ├── components/           ← Navbar, PetCard, Footer, Toast, Spinner, BackToTop
-│       ├── pages/                ← Home, PetList, PetDetail, Quiz, Login, Register, etc.
-│       │   └── admin/            ← Dashboard, ManagePets, Applications, Stories, Messages
-│       ├── services/             ← API calls (api.js, petService.js, authService.js)
-│       └── styles/               ← CSS files
-├── backend/                      ← Spring Boot
+│       ├── assets/images/     Images and fallbacks
+│       ├── components/        Navbar, Footer, ProtectedRoute, PageMeta, etc.
+│       ├── context/           Authentication state
+│       ├── pages/             Public, adopter, auth, and admin pages
+│       ├── services/          API client and backend service wrappers
+│       ├── styles/            CSS files
+│       └── utils/             Roles and shared image helpers
+├── backend/
 │   └── src/main/java/com/petadoption/
-│       ├── controller/
-│       ├── service/
-│       ├── repository/
-│       └── model/
-└── database/
-    └── schema.sql
+│       ├── config/            Security and password configuration
+│       ├── controller/        REST controllers
+│       ├── dto/               Request/response records
+│       ├── exception/         API error handling
+│       ├── model/             JPA entities
+│       ├── repository/        Spring Data repositories
+│       ├── security/          JWT filter and token service
+│       └── service/           Business logic
+├── database/
+│   └── schema.sql             Database schema and optional sample pets
+└── docs/screenshots/          README screenshot
 ```
 
----
+## Configuration
 
-## 🗄️ Database Tables
+The backend reads database credentials and the JWT signing key from environment variables. Real configuration files are ignored by Git; committed examples are safe to share.
 
-| Table | Description |
-|---|---|
-| `users` | Admins, staff and adopters |
-| `pets` | All pet listings with status (AVAILABLE / ADOPTED) |
-| `applications` | Adoption applications, tied to a specific pet + adopter, with approval workflow |
-| `vaccinations` | Pet vaccination records |
-| `care_records` | Vet visits and care logs |
-| `success_stories` | Post-adoption stories pending/approved |
-| `contact_messages` | Messages submitted through the Contact page |
+| Variable | Required | Default | Purpose |
+|---|---|---|---|
+| `DB_URL` | No | `jdbc:mysql://localhost:3306/pet_adoption_db` | MySQL JDBC URL |
+| `DB_USERNAME` | No | `root` | MySQL username |
+| `DB_PASSWORD` | Yes | None | MySQL password |
+| `JWT_SECRET` | Yes | None | JWT signing secret; use at least 32 random bytes |
+| `JWT_EXPIRATION_MS` | No | `86400000` | Token lifetime in milliseconds |
+| `SERVER_PORT` | No | `8080` | Backend HTTP port |
+| `SHOW_SQL` | No | `false` | Hibernate SQL logging |
+| `VITE_API_URL` | No | `http://localhost:8080/api` | Frontend API base URL |
 
----
+## Getting Started
 
-## 🔌 API Endpoints
+### Prerequisites
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/pets` | Get all pets |
-| GET | `/api/pets/:id` | Get pet by ID |
-| GET | `/api/pets/available` | Get available pets |
-| POST | `/api/pets` | Add new pet |
-| PUT | `/api/pets/:id` | Update pet |
-| DELETE | `/api/pets/:id` | Delete pet |
-| POST | `/api/auth/login` | Login |
-| POST | `/api/users/register` | Register |
-| POST | `/api/applications` | Submit application (pet ID + adopter ID required) |
-| GET | `/api/applications` | Get all applications |
-| GET | `/api/applications/adopter/:id` | Get applications for one adopter |
-| PUT | `/api/applications/:id/status` | Update status — auto-updates pet status |
-| GET | `/api/vaccinations/pet/:id` | Get pet vaccinations |
-| POST | `/api/stories` | Submit story |
-| PUT | `/api/stories/:id/approve` | Approve story |
-| POST | `/api/contact` | Submit a contact message |
-| GET | `/api/contact` | Get all contact messages (admin) |
-| PUT | `/api/contact/:id/read` | Mark a message as read |
+- Java 21
+- Node.js and npm
+- MySQL 8
 
----
-
-## 📱 Pages
-
-| Route | Page |
-|---|---|
-| `/` | Home — carousel, real-time stats, featured pets, species browse |
-| `/pets` | Pet listings with search and species filter |
-| `/pets/:id` | Full pet profile with adopt button |
-| `/quiz` | Adopter match quiz |
-| `/adopt/:petId` | Adoption application form for a specific pet |
-| `/my-applications` | Track status of your own applications |
-| `/stories` | Success stories |
-| `/care-guide` | Pet care by species, with direct browse links |
-| `/about` | About PawFind |
-| `/contact` | Contact form |
-| `/faq` | FAQ |
-| `/login`, `/register` | Auth pages with glassmorphism design |
-| `/admin` | Admin dashboard |
-| `/admin/pets` | Manage pets |
-| `/admin/applications` | Review applications |
-| `/admin/stories` | Approve stories |
-| `/admin/messages` | View contact submissions |
-
----
-
-## 👥 User Roles
-
-| Role | Access |
-|---|---|
-| Admin | Full system, approve applications, manage all data |
-| Staff | Add pets, log care records |
-| Adopter | Browse, apply, track, share stories |
-
----
-
-## 🚀 Getting Started
-
-### 1 — Clone
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/Amandi1020/pet-adoption-system.git
 cd pet-adoption-system
 ```
 
-### 2 — Database
+### 2. Create the database
 
-Open MySQL Workbench and run `database/schema.sql`
+Run `database/schema.sql` in MySQL Workbench or the MySQL command line. The script creates `pet_adoption_db`, the application tables, and optional sample pet listings. It does not create default user accounts.
 
-### 3 — Backend
+### 3. Configure and start the backend
 
-Update `backend/src/main/resources/application.properties` with your MySQL password, then run in IntelliJ IDEA.
+Copy the example configuration, set the required environment variables, then start Spring Boot.
 
-Runs on: `http://localhost:8080`
+PowerShell:
 
-### 4 — Frontend
+```powershell
+Copy-Item backend\src\main\resources\application.properties.example backend\src\main\resources\application.properties
+$env:DB_PASSWORD = "your-mysql-password"
+$env:JWT_SECRET = "replace-with-at-least-32-random-characters"
+cd backend
+.\mvnw.cmd spring-boot:run
+```
+
+Bash:
+
+```bash
+cp backend/src/main/resources/application.properties.example backend/src/main/resources/application.properties
+export DB_PASSWORD="your-mysql-password"
+export JWT_SECRET="$(openssl rand -base64 48)"
+cd backend
+./mvnw spring-boot:run
+```
+
+The backend runs at `http://localhost:8080`. The copied `application.properties` is ignored by Git.
+
+### 4. Configure and start the frontend
 
 ```bash
 cd frontend
+cp .env.example .env
 npm install
 npm run dev
 ```
 
-Runs on: `http://localhost:5173`
+On Windows, use `copy .env.example .env` instead. The frontend runs at `http://localhost:5173`. The backend CORS configuration currently allows that origin.
 
-### 5 — Default Login Credentials
+### 5. Create an admin or staff account
 
-| Role | Email | Password |
+Register through `/register`; the account is created as an `ADOPTER`. To promote it, run:
+
+```sql
+UPDATE users SET role = 'ADMIN' WHERE email = 'your-email@example.com';
+```
+
+Use `STAFF` instead of `ADMIN` for a staff account. Admin and staff currently share the same protected admin pages and management permissions. No default credentials are seeded.
+
+## API
+
+All protected endpoints expect `Authorization: Bearer <token>`.
+
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| POST | `/api/auth/login` | Public | Log in and receive a JWT |
+| POST | `/api/users/register` | Public | Register an adopter |
+| GET | `/api/users/{id}` | Admin, Staff | Get a user without password data |
+| GET | `/api/pets` | Public | Get all pets |
+| GET | `/api/pets/available` | Public | Get available pets |
+| GET | `/api/pets/{id}` | Public | Get one pet |
+| POST | `/api/pets` | Admin, Staff | Add a pet |
+| PUT | `/api/pets/{id}` | Admin, Staff | Update a pet |
+| DELETE | `/api/pets/{id}` | Admin, Staff | Delete a pet |
+| POST | `/api/applications` | Adopter | Submit an application for the authenticated user |
+| GET | `/api/applications` | Admin, Staff | Get all applications |
+| GET | `/api/applications/adopter/{adopterId}` | Admin, Staff, owning Adopter | Get one adopter's applications |
+| PUT | `/api/applications/{id}/status?status=...` | Admin, Staff | Update application status |
+| GET | `/api/stories` | Public | Get approved stories |
+| GET | `/api/stories/all` | Admin, Staff | Get all stories |
+| POST | `/api/stories` | Adopter | Submit a pending success story |
+| PUT | `/api/stories/{id}/approve` | Admin, Staff | Approve a story |
+| POST | `/api/contact` | Public | Submit a contact message |
+| GET | `/api/contact` | Admin, Staff | Get all contact messages |
+| PUT | `/api/contact/{id}/read` | Admin, Staff | Mark a message as read |
+| GET | `/api/vaccinations/pet/{petId}` | Admin, Staff | Get vaccinations for a pet |
+| POST | `/api/vaccinations` | Admin, Staff | Add a vaccination record |
+| DELETE | `/api/vaccinations/{id}` | Admin, Staff | Delete a vaccination record |
+
+## Business Rules
+
+- Registration requires a name, unique email, and a password of at least 6 characters. The server ignores any client-supplied role and always creates an `ADOPTER`.
+- Passwords are hashed with BCrypt and are never returned in API responses.
+- A pet must be `AVAILABLE` before an application can be submitted.
+- An adopter cannot have more than one `PENDING`, `REVIEWING`, or `APPROVED` application for the same pet.
+- Application status transitions are restricted: `PENDING` can move to `REVIEWING`, `APPROVED`, or `REJECTED`; `REVIEWING` can move to `APPROVED` or `REJECTED`; finalized applications cannot change again.
+- Only one application per pet can be approved. Approval also rejects other open applications for that pet.
+- Success stories are created unapproved and only appear publicly after approval.
+
+## Routes
+
+| Route | Access | Page |
 |---|---|---|
-| Admin | admin@pawfind.com | admin123 |
-| Staff | staff@pawfind.com | staff123 |
-| Adopter | adopter@pawfind.com | adopter123 |
+| `/` | Public | Home with stats, featured pets, and species browse |
+| `/pets` | Public | Pet list with name search and species filter |
+| `/pets/:id` | Public | Pet details and adoption entry point |
+| `/quiz` | Public | 7-question pet match quiz |
+| `/login`, `/register` | Public | Authentication |
+| `/adopt` | Public | Redirects to `/pets` |
+| `/adopt/:petId` | Authenticated | Adoption application form |
+| `/my-applications` | Authenticated | Current user's applications |
+| `/stories` | Public | Approved success stories |
+| `/care-guide` | Public | Species care guides |
+| `/about`, `/contact`, `/faq` | Public | Informational pages |
+| `/admin` | Admin, Staff | Dashboard summary |
+| `/admin/pets` | Admin, Staff | Pet management |
+| `/admin/applications` | Admin, Staff | Application review |
+| `/admin/stories` | Admin, Staff | Story moderation |
+| `/admin/messages` | Admin, Staff | Contact messages |
 
----
+## Database Tables
 
-## 🎨 Color Palette
+| Table | Description |
+|---|---|
+| `users` | Admins, staff, and adopters |
+| `pets` | Pet listings with status and optional image URL |
+| `applications` | Adoption applications and review state |
+| `vaccinations` | Vaccination records exposed through the API |
+| `care_records` | Care record schema/model; no API or UI yet |
+| `success_stories` | Submitted stories with approval state |
+| `contact_messages` | Messages submitted through the contact form |
 
-| Color | Hex | Usage |
-|---|---|---|
-| Brown | `#8D6E63` | Primary, buttons, navbar |
-| Dark Brown | `#6D4C41` | Hover, accents |
-| Darker Brown | `#4E342E` | Text, footer |
-| Cream | `#FFF8E7` | Page backgrounds |
-| Beige | `#D7CCC8` | Borders, secondary |
-| Light Beige | `#EFEBE9` | Card backgrounds |
+## Tests
 
----
+The backend tests include service tests and MockMvc access-control tests. `BackendApplicationTests` loads the full Spring context, so a reachable MySQL database is required.
 
-## 🔭 Future Development
+PowerShell:
 
-### Near term
-- **Adoption certificate generation** — auto-generate a downloadable PDF certificate the moment an application is approved
-- **Real email delivery** — connect the Contact form and application status changes to EmailJS / SMTP so adopters and admins get actual email notifications
-- **JWT-based authentication** — replace the current localStorage-only session with proper JWT tokens and Spring Security, including BCrypt password hashing
-- **Pagination & lazy loading** — for pet listings and admin tables as the dataset grows
+```powershell
+$env:DB_PASSWORD = "your-mysql-password"
+$env:JWT_SECRET = "replace-with-at-least-32-random-characters"
+cd backend
+.\mvnw.cmd test
+```
 
-### Mid term
-- **Image upload for pets** — let admin/staff upload pet photos directly through the UI, storing files via S3 or local disk
-- **SMS notifications** — integrate Twilio so adopters get a text when their application status changes
-- **Advanced search** — filters for age range, multiple species, and full-text search across descriptions
-- **Vaccination & care record UI** — a dedicated admin screen for a pet's full medical history (backend API already exists)
+Bash:
 
-### Long term
-- **Deployment** — host frontend on Vercel and backend on Render/Railway with a managed MySQL instance
-- **Multi-shelter support** — extend the data model so multiple shelters can manage their own pets and staff
-- **Donation module** — allow public donations toward shelter operations, with receipts and a donor leaderboard
-- **Mobile app** — a React Native version sharing the same Spring Boot backend
-- **Analytics dashboard v2** — adoption trends over time, average time-to-adoption per species, staff performance metrics
+```bash
+cd backend
+DB_PASSWORD="your-mysql-password" JWT_SECRET="$(openssl rand -base64 48)" ./mvnw test
+```
 
----
+Frontend checks:
 
-## 👩‍💻 Author
+```bash
+cd frontend
+npm run lint
+npm run build
+```
 
-**Amandi Rajapaksha**
-BSc Management Information Systems · NSBM Green University · Sri Lanka
+## Not Implemented Yet
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Amandi_Rajapaksha-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/amandi-rajapaksha-397a21284/)
-[![GitHub](https://img.shields.io/badge/GitHub-Amandi1020-181717?style=for-the-badge&logo=github)](https://github.com/Amandi1020)
-[![Portfolio](https://img.shields.io/badge/🌐_Portfolio-Visit-B76E79?style=for-the-badge)](https://amandi1020.github.io/Amandi-Portfolio/)
+- Pet photo uploads; pet images are currently supplied as URLs.
+- Real email or SMS delivery. Contact messages are stored in the database.
+- Pagination for pet listings and admin tables.
+- Dedicated vaccination and care-record management screens.
+- Automated deployment configuration and multi-shelter support.
 
----
+## Author
 
-*Built with 🐾 to help shelter animals find their forever homes.*
+**Amandi Rajapaksha**<br>
+BSc Management Information Systems, NSBM Green University, Sri Lanka
+
+[LinkedIn](https://www.linkedin.com/in/amandi-rajapaksha-397a21284/) | [GitHub](https://github.com/Amandi1020) | [Portfolio](https://amandi1020.github.io/Amandi-Portfolio/)
