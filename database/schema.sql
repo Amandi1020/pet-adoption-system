@@ -88,16 +88,11 @@ CREATE TABLE IF NOT EXISTS contact_messages (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Sample Data
-INSERT INTO users (name, email, password, role) VALUES
-('Admin User', 'admin@pawfind.com', '$2a$10$efI3neGxjwemy02hZya1aeY5zjTFtPbT.t8BRTN9XqL5fPVz3PJnC', 'ADMIN'),
-('Staff Member', 'staff@pawfind.com', '$2a$10$BxqfgVhrXWXN0C5Hd34uYuibJBcBbZbm42l9Nr2XnxsdaZdUWcSOa', 'STAFF'),
-('Test Adopter', 'adopter@pawfind.com', '$2a$10$8oDWik1kIezyqT3Kkwx88OP4lmSCDoW7qjDpv23bR.WWNEjT9emyq', 'ADOPTER');
-
-INSERT INTO pets (name, species, breed, age, gender, size, status, description, added_by) VALUES
-('Bruno', 'Dog', 'Golden Retriever', 2, 'Male', 'Large', 'AVAILABLE', 'Friendly and energetic dog', 2),
-('Luna', 'Cat', 'Siamese', 1, 'Female', 'Small', 'AVAILABLE', 'Calm and playful indoor cat', 2),
-('Sunny', 'Bird', 'African Grey Parrot', 3, 'Male', 'Small', 'AVAILABLE', 'Vocal and intelligent parrot', 2),
-('Coco', 'Rabbit', 'Holland Lop', 1, 'Female', 'Small', 'ADOPTED', 'Gentle and calm rabbit', 2),
-('Max', 'Dog', 'Labrador', 4, 'Male', 'Large', 'AVAILABLE', 'Loyal and active dog', 2),
-('Mimi', 'Cat', 'Persian', 2, 'Female', 'Medium', 'AVAILABLE', 'Fluffy and gentle cat', 2);
+-- Optional sample pet listings. No default user accounts are seeded.
+INSERT INTO pets (name, species, breed, age, gender, size, status, description) VALUES
+('Bruno', 'Dog', 'Golden Retriever', 2, 'Male', 'Large', 'AVAILABLE', 'Friendly and energetic dog'),
+('Luna', 'Cat', 'Siamese', 1, 'Female', 'Small', 'AVAILABLE', 'Calm and playful indoor cat'),
+('Sunny', 'Bird', 'African Grey Parrot', 3, 'Male', 'Small', 'AVAILABLE', 'Vocal and intelligent parrot'),
+('Coco', 'Rabbit', 'Holland Lop', 1, 'Female', 'Small', 'ADOPTED', 'Gentle and calm rabbit'),
+('Max', 'Dog', 'Labrador', 4, 'Male', 'Large', 'AVAILABLE', 'Loyal and active dog'),
+('Mimi', 'Cat', 'Persian', 2, 'Female', 'Medium', 'AVAILABLE', 'Fluffy and gentle cat');

@@ -25,12 +25,15 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
@@ -67,11 +70,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         UserService.class
 })
 @TestPropertySource(properties = {
-        "app.jwt.secret=test-secret-key-that-is-long-enough-for-hs256",
         "app.jwt.expiration-ms=3600000",
         "spring.autoconfigure.exclude=org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoConfiguration"
 })
 class AccessControlTest {
+
+    @DynamicPropertySource
+    static void jwtProperties(DynamicPropertyRegistry registry) {
+        registry.add("app.jwt.secret", () -> UUID.randomUUID().toString() + UUID.randomUUID().toString());
+    }
 
     @Autowired
     private MockMvc mockMvc;
